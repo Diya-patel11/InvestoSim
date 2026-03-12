@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your First Investment: Step-by-Step | InvestoSim</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #0066cc;
+            --primary-dark: #003366;
+            --secondary: #ffcc00;
+            --accent: #00eeff;
+            --light: #f8f9fa;
+            --dark: #121212;
+            --success: #4caf50;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #003366, #001a33);
+            color: white;
+            line-height: 1.7;
+            padding: 0;
+            margin: 0;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem;
+            background: rgba(0, 26, 51, 0.8);
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+            animation: fadeIn 0.8s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        h1, h2, h3 {
+            color: var(--secondary);
+            margin-top: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        h1 {
+            text-align: center;
+            font-size: 2.5rem;
+            position: relative;
+            padding-bottom: 1rem;
+        }
+        
+        h1:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: var(--accent);
+            border-radius: 2px;
+        }
+        
+        h2 {
+            font-size: 1.8rem;
+            border-left: 4px solid var(--accent);
+            padding-left: 1rem;
+        }
+        
+        h3 {
+            font-size: 1.4rem;
+            color: var(--accent);
+        }
+        
+        p {
+            margin-bottom: 1.2rem;
+            font-size: 1.1rem;
+        }
+        
+        strong {
+            color: var(--secondary);
+            font-weight: 600;
+        }
+        
+        ul {
+            margin: 1.5rem 0;
+            padding-left: 2rem;
+        }
+        
+        li {
+            margin-bottom: 0.8rem;
+            padding-bottom: 0.8rem;
+            position: relative;
+            list-style-type: none;
+            padding-left: 1.5rem;
+        }
+        
+        li:before {
+            content: '•';
+            color: var(--accent);
+            font-size: 1.5rem;
+            position: absolute;
+            left: 0;
+            top: -3px;
+        }
+        
+        .highlight {
+            color: var(--accent);
+            font-weight: 500;
+        }
+        
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.8rem 1.5rem;
+            margin: 2rem auto;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--primary-dark);
+            background: linear-gradient(135deg, var(--secondary), #ffaa00);
+            border-radius: 8px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 204, 0, 0.3);
+            border: none;
+            cursor: pointer;
+        }
+        
+        .back-button i {
+            margin-right: 8px;
+        }
+        
+        .back-button:hover {
+            background: linear-gradient(135deg, #ffaa00, #ff8800);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(255, 170, 0, 0.4);
+        }
+        
+        .back-button:active {
+            transform: translateY(1px);
+        }
+        
+        .callout {
+            background: rgba(0, 238, 255, 0.1);
+            border-left: 4px solid var(--accent);
+            padding: 1.5rem;
+            border-radius: 0 8px 8px 0;
+            margin: 2rem 0;
+        }
+        
+        .quote {
+            font-style: italic;
+            position: relative;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .quote:before, .quote:after {
+            content: '"';
+            font-size: 3rem;
+            color: var(--secondary);
+            opacity: 0.3;
+            position: absolute;
+        }
+        
+        .quote:before {
+            top: -1rem;
+            left: -0.5rem;
+        }
+        
+        .quote:after {
+            bottom: -2rem;
+            right: -0.5rem;
+        }
+        
+        .tip-box {
+            background: rgba(0, 102, 204, 0.2);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .tip-box:before {
+            content: 'TIP';
+            position: absolute;
+            top: 0;
+            left: 0;
+            background: var(--accent);
+            color: var(--primary-dark);
+            padding: 0.2rem 1rem;
+            font-weight: 700;
+            font-size: 0.8rem;
+            border-radius: 0 0 8px 0;
+        }
+
+        .step-container {
+            counter-reset: step-counter;
+            margin: 2rem 0;
+        }
+
+        .step {
+            position: relative;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            background: rgba(0, 102, 204, 0.1);
+            border-radius: 8px;
+            border-left: 4px solid var(--accent);
+        }
+
+        .step:before {
+            counter-increment: step-counter;
+            content: counter(step-counter);
+            position: absolute;
+            left: -15px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 30px;
+            height: 30px;
+            background: var(--accent);
+            color: var(--primary-dark);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .broker-comparison {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+        }
+
+        .broker-comparison th {
+            background: var(--primary);
+            color: white;
+            padding: 1rem;
+            text-align: left;
+        }
+
+        .broker-comparison td {
+            padding: 0.8rem 1rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .broker-comparison tr:nth-child(even) {
+            background: rgba(0,102,204,0.1);
+        }
+
+        .broker-comparison tr:hover {
+            background: rgba(0,102,204,0.2);
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 1.5rem;
+                margin: 1rem;
+                border-radius: 12px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            h2 {
+                font-size: 1.5rem;
+            }
+
+            .broker-comparison {
+                display: block;
+                overflow-x: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1><i class="fas fa-map-signs"></i> Your First Investment: Step-by-Step</h1>
+        
+        <div class="callout">
+            <p><strong>Making your first investment can feel overwhelming</strong>, but breaking it down into simple steps makes the process manageable. Follow this guide to start your investment journey with confidence.</p>
+        </div>
+        
+        <div class="step-container">
+            <div class="step">
+                <h3>Set Clear Financial Goals</h3>
+                <p>Before investing, ask yourself:</p>
+                <ul>
+                    <li>What am I investing for? (Retirement, house, education)</li>
+                    <li>What is my time horizon? (Short-term vs long-term)</li>
+                    <li>How much risk am I comfortable with?</li>
+                </ul>
+                <p><span class="highlight">Example:</span> "I want ₹50 lakh for retirement in 20 years and can tolerate moderate risk."</p>
+            </div>
+            
+            <div class="step">
+                <h3>Build an Emergency Fund</h3>
+                <p>Before investing, ensure you have:</p>
+                <ul>
+                    <li>3-6 months of living expenses saved</li>
+                    <li>Funds in a liquid account (savings or liquid mutual fund)</li>
+                    <li>No high-interest debt (credit cards, personal loans)</li>
+                </ul>
+            </div>
+            
+            <div class="step">
+                <h3>Choose Your Investment Account</h3>
+                <p>Open an account with a SEBI-registered broker:</p>
+                
+                <table class="broker-comparison">
+                    <thead>
+                        <tr>
+                            <th>Broker</th>
+                            <th>Account Opening Fee</th>
+                            <th>Brokerage</th>
+                            <th>Good For</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Zerodha</td>
+                            <td>₹200</td>
+                            <td>₹20/trade or 0.03%</td>
+                            <td>Beginners, low-cost</td>
+                        </tr>
+                        <tr>
+                            <td>Upstox</td>
+                            <td>₹0</td>
+                            <td>₹20/trade</td>
+                            <td>Mobile trading</td>
+                        </tr>
+                        <tr>
+                            <td>ICICI Direct</td>
+                            <td>₹0</td>
+                            <td>0.55%</td>
+                            <td>Full-service</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <div class="tip-box">
+                    <p>Most brokers now offer completely online account opening with eKYC. You'll need PAN card, Aadhaar, and bank details.</p>
+                </div>
+            </div>
+            
+            <div class="step">
+                <h3>Start Small with Index Funds</h3>
+                <p>For your first investment, consider:</p>
+                <ul>
+                    <li><span class="highlight">Nifty 50 Index Fund</span> - Tracks top 50 Indian companies</li>
+                    <li><span class="highlight">Sensex ETF</span> - Tracks BSE Sensex</li>
+                    <li><span class="highlight">PPFAS Flexicap Fund</span> - Diversified equity fund</li>
+                </ul>
+                <p>You can start with as little as ₹500 per month through SIP (Systematic Investment Plan).</p>
+            </div>
+            
+            <div class="step">
+                <h3>Place Your First Order</h3>
+                <p>How to buy your first mutual fund:</p>
+                <ol>
+                    <li>Log in to your broker's platform</li>
+                    <li>Search for the fund (e.g., "Nippon India Nifty 50 Index Fund")</li>
+                    <li>Select "Invest" or "Buy"</li>
+                    <li>Choose amount (₹500 minimum typically)</li>
+                    <li>Select SIP (monthly) or one-time investment</li>
+                    <li>Confirm and complete payment</li>
+                </ol>
+            </div>
+            
+            <div class="step">
+                <h3>Monitor and Learn</h3>
+                <p>After investing:</p>
+                <ul>
+                    <li>Check quarterly statements (don't obsess over daily movements)</li>
+                    <li>Learn basic analysis techniques</li>
+                    <li>Gradually expand to other investments</li>
+                    <li>Stay invested for at least 5 years for best results</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="callout">
+            <h3><i class="fas fa-flask"></i> Practice First with InvestoSim</h3>
+            <p>Before using real money, try our simulator to:</p>
+            <ul>
+                <li>Experience the investment process risk-free</li>
+                <li>Test different strategies</li>
+                <li>Understand how market fluctuations affect your portfolio</li>
+            </ul>
+        </div>
+        
+        <div class="quote">
+            "The best time to plant a tree was 20 years ago. The second best time is now." — Chinese Proverb
+        </div>
+        
+        <h2><i class="fas fa-arrow-right"></i> What's Next?</h2>
+        <p>Now that you've made your first investment, learn about portfolio diversification and how to analyze company fundamentals to make informed decisions.</p>
+        
+        <center>
+            <a href="learn.html" class="back-button"><i class="fas fa-arrow-left"></i> Back to Learn More</a>
+        </center>
+    </div>
+</body>
+</html>

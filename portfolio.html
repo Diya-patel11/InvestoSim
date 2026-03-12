@@ -1,0 +1,1372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio Dashboard | InvestoSim</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom"></script>
+    
+    <style>
+        :root {
+            --primary: #4361ee;
+            --primary-light: #4895ef;
+            --primary-dark: #3a0ca3;
+            --secondary: #f72585;
+            --accent: #4cc9f0;
+            --success: #4caf50;
+            --warning: #ff9800;
+            --danger: #f44336;
+            --dark: #121212;
+            --darker: #0a0a0a;
+            --dark-gray: #1e1e1e;
+            --medium-gray: #2d2d2d;
+            --light-gray: #3d3d3d;
+            --light: #f8f9fa;
+            --card-bg: #1e1e1e;
+            --card-hover: #252525;
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --elevation-1: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+            --elevation-2: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+            --elevation-3: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+   
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--dark);
+            color: white;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+            color: white;
+            padding: 1rem 0;
+            box-shadow: var(--elevation-2);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .header-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            background: linear-gradient(to right, var(--accent), var(--primary-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .logo i {
+            font-size: 2rem;
+            background: linear-gradient(to right, var(--accent), var(--primary-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            gap: 2rem;
+        }
+        
+        nav ul li a {
+            color: rgba(255, 255, 255, 0.9);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+        }
+        
+        nav ul li a:hover {
+            color: white;
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+        
+        nav ul li a.active {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+        
+        nav ul li a i {
+            font-size: 1.1rem;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+        
+        .card {
+            background: var(--dark-gray);
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: var(--elevation-1);
+            transition: var(--transition);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--primary), var(--accent));
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--elevation-3);
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        .card h2 {
+            color: white;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            position: relative;
+            padding-bottom: 0.75rem;
+        }
+        
+        .card h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: linear-gradient(to right, var(--primary), var(--accent));
+            border-radius: 3px;
+        }
+        
+        .card h2 i {
+            font-size: 1.5rem;
+            background: linear-gradient(to right, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        
+        .portfolio-metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .metric {
+            background: var(--medium-gray);
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+            transition: var(--transition);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .metric::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(to right, var(--primary), var(--accent));
+        }
+        
+        .metric:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--elevation-2);
+        }
+        
+        .metric h3 {
+            font-size: 0.95rem;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 0.75rem;
+            font-weight: 500;
+        }
+        
+        .metric p {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        
+        .metric .change {
+            font-size: 0.9rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.25rem;
+        }
+        
+        .positive {
+            color: var(--success);
+        }
+        
+        .negative {
+            color: var(--danger);
+        }
+        
+        .neutral {
+            color: var(--warning);
+        }
+        /* Portfolio Dashboard Styles */
+
+        
+        .chart-container {
+            position: relative;
+            height: 400px;
+            width: 100%;
+            margin: 1.5rem 0;
+            background: var(--medium-gray);
+            border-radius: 10px;
+            padding: 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .timeframe-buttons {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            margin: 1.5rem 0;
+        }
+        
+        .timeframe-buttons button {
+            background: rgba(67, 97, 238, 0.1);
+            color: var(--primary-light);
+            padding: 0.6rem 1.25rem;
+            border: 1px solid var(--primary);
+            border-radius: 50px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+        
+        .timeframe-buttons button:hover {
+            background: rgba(67, 97, 238, 0.3);
+            color: white;
+        }
+        
+        .timeframe-buttons button.active {
+            background: var(--primary);
+            color: white;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(67, 97, 238, 0.3);
+        }
+        
+        #togglePerformanceHistory {
+            background: rgba(67, 97, 238, 0.1);
+            color: var(--primary-light);
+            padding: 0.9rem 1.5rem;
+            border: 1px solid var(--primary);
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: var(--transition);
+            margin: 1.5rem 0;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+        
+        #togglePerformanceHistory:hover {
+            background: rgba(67, 97, 238, 0.3);
+            color: white;
+        }
+        
+        #performanceHistory {
+            background: var(--medium-gray);
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-top: 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        #historyList {
+            list-style: none;
+        }
+        
+        #historyList li {
+            padding: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: var(--transition);
+        }
+        
+        #historyList li:hover {
+            background: rgba(255, 255, 255, 0.03);
+        }
+        
+        #historyList li:last-child {
+            border-bottom: none;
+        }
+        
+        #historyList li .date {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.9rem;
+        }
+        
+        #historyList li .value {
+            font-weight: 600;
+        }
+        
+        .quick-actions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+        
+        .action-card {
+            background: var(--medium-gray);
+            color: white;
+            padding: 2rem;
+            border-radius: 12px;
+            text-align: center;
+            transition: var(--transition);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .action-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(to right, var(--primary), var(--accent));
+        }
+        
+        .action-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--elevation-2);
+        }
+        
+        .action-card i {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(to right, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .action-card h3 {
+            margin-bottom: 0.75rem;
+            font-size: 1.3rem;
+        }
+        
+        .action-card p {
+            font-size: 0.95rem;
+            opacity: 0.8;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+        
+        .action-card a {
+            display: inline-block;
+            background: linear-gradient(to right, var(--primary), var(--primary-light));
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(67, 97, 238, 0.3);
+        }
+        
+        .action-card a:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(67, 97, 238, 0.4);
+        }
+        
+        @media (max-width: 1024px) {
+            .container {
+                padding: 0 1.5rem;
+            }
+            
+            .portfolio-metrics {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .header-container {
+                padding: 0 1rem;
+            }
+            
+            .container {
+                padding: 0 1rem;
+                gap: 1.5rem;
+            }
+            
+            .portfolio-metrics {
+                grid-template-columns: 1fr 1fr;
+            }
+            
+            .card {
+                padding: 1.5rem;
+            }
+            
+            .quick-actions {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            nav ul {
+                gap: 0.5rem;
+            }
+            
+            nav ul li a {
+                padding: 0.5rem;
+                font-size: 0.9rem;
+            }
+            
+            .portfolio-metrics {
+                grid-template-columns: 1fr;
+            }
+            
+            .metric p {
+                font-size: 1.5rem;
+            }
+            
+            .action-card {
+                padding: 1.5rem;
+            }
+        }
+
+        /* Table Styles */
+        #holdings-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1.5rem;
+            background: var(--medium-gray);
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        #holdings-table th, #holdings-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        #holdings-table th {
+            background-color: rgba(67, 97, 238, 0.1);
+            color: var(--primary-light);
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 0.5px;
+        }
+
+        #holdings-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        #holdings-table tr:hover {
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .stock-name {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .stock-symbol {
+            font-weight: 600;
+        }
+
+        .company-name {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+        }
+
+        /* Loading Animation */
+        @keyframes pulse {
+            0% { opacity: 0.6; }
+            50% { opacity: 1; }
+            100% { opacity: 0.6; }
+        }
+
+        .loading {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .loading::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255, 255, 255, 0.05),
+                transparent
+            );
+            animation: loadingShimmer 1.5s infinite;
+        }
+
+        @keyframes loadingShimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        /* Update Animation */
+        @keyframes highlightUpdate {
+            0% { background-color: rgba(67, 97, 238, 0.3); }
+            100% { background-color: transparent; }
+        }
+
+        .updated {
+            animation: highlightUpdate 1.5s ease-out;
+        }
+
+        /* Toast Notification */
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            color: white;
+            font-weight: 500;
+            box-shadow: var(--elevation-3);
+            z-index: 1000;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .toast.success {
+            background: var(--success);
+        }
+
+        .toast.error {
+            background: var(--danger);
+        }
+
+        /* Responsive Table */
+        @media (max-width: 768px) {
+            #holdings-table {
+                display: block;
+                overflow-x: auto;
+                white-space: nowrap;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <i class="fas fa-chart-line"></i>
+                <span>InvestoSim</span>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="dashboard.html" class="active"><i class="fas fa-home"></i> Dashboard</a></li>
+                    <li><a href="trade.html"><i class="fas fa-exchange-alt"></i> Trade</a></li>
+                    <li><a href="learn.html"><i class="fas fa-graduation-cap"></i> Learn</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <div class="container">
+        <section class="card portfolio-section">
+            <h2><i class="fas fa-chart-pie"></i> Portfolio Overview</h2>
+
+            
+            <div class="portfolio-metrics">
+            
+
+                <div class="metric">
+                    <h3>Current Value</h3>
+                    <p id="accountValue">₹0</p>
+                    <div class="change positive" id="todaysChange">
+                        <i class="fas fa-caret-up"></i> +0.00%
+                    </div>
+                </div>
+                <div class="metric">
+                    <h3>Available Cash</h3>
+                    <p id="available-cash">₹0</p>
+                    <div class="change neutral">
+                        <i class="fas fa-info-circle"></i> Ready to invest
+                    </div>
+                </div>
+                <div class="metric">
+                    <h3>Invested Amount</h3>
+                    <p id="investedAmount">₹0</p>
+                    <div class="change">
+                        <i class="fas fa-coins"></i> Total investments
+                    </div>
+                </div>
+                <div class="metric">
+                    <h3>Total Profit</h3>
+                    <p id="totalProfit" class="positive">₹0</p>
+                    <div class="change positive" id="annualReturn">
+                        <i class="fas fa-caret-up"></i> +0.00% all time
+                    </div>
+                </div>
+            </div>
+
+            <div class="chart-container">
+                <canvas id="portfolioPerformanceChart"></canvas>
+            </div>
+            
+            <div class="timeframe-buttons">
+                <button onclick="updateChartData('1W')" class="active">1 Week</button>
+                <button onclick="updateChartData('1M')">1 Month</button>
+                <button onclick="updateChartData('3M')">3 Months</button>
+                <button onclick="updateChartData('6M')">6 Months</button>
+                <button onclick="updateChartData('1Y')">1 Year</button>
+                <button onclick="updateChartData('ALL')">All Time</button>
+            </div>
+
+            <button id="togglePerformanceHistory"><i class="fas fa-history"></i> Show Performance History</button>
+            <div id="performanceHistory" style="display: none;">
+                <h3><i class="fas fa-list-alt"></i> Performance History</h3>
+                <ul id="historyList"></ul>
+            </div>
+
+            <h3 style="margin-top: 2rem;"><i class="fas fa-wallet"></i> Your Holdings</h3>
+            <table id="holdings-table">
+                <thead>
+                  <tr>
+                    <th>Stock</th>
+                    <th>Quantity</th>
+                    <th>Avg Price</th>
+                    <th>Current Price</th>
+                    <th>Current Value</th>
+                    <th>Profit/Loss</th>
+                  </tr>
+                </thead>
+                <tbody id="holdings-table-body"></tbody>
+              </table>
+              
+        </section>
+
+        <div class="quick-actions">
+            <div class="action-card">
+                <i class="fas fa-exchange-alt"></i>
+                <h3>Trade Stocks</h3>
+                <p>Buy and sell stocks in real-time with our advanced trading platform and get instant execution</p>
+                <a href="trade.html">Start Trading</a>
+            </div>
+            
+            <div class="action-card">
+                <i class="fas fa-chart-line"></i>
+                <h3>Market Research</h3>
+                <p>Access advanced market data, analytics, and research reports to make informed decisions</p>
+                <a href="#">Explore Research</a>
+            </div>
+            
+            <div class="action-card">
+                <i class="fas fa-graduation-cap"></i>
+                <h3>Learn Investing</h3>
+                <p>Comprehensive educational resources to improve your investing skills and knowledge</p>
+                <a href="learn.html">Start Learning</a>
+            </div>
+        </div>
+
+        <section class="card research-section">
+            <h2><i class="fas fa-newspaper"></i> Market News</h2>
+            <p>Latest market updates and financial news coming soon...</p>
+        </section>
+
+        <section class="card learn-section">
+            <h2><i class="fas fa-lightbulb"></i> Investment Tips</h2>
+            <p>Daily investment tips, strategies, and market insights coming soon...</p>
+        </section>
+    </div>
+
+    <script>
+        // Global variable to store symbol map
+let symbolMap = [];
+
+// Common symbols mapping as fallback
+const commonSymbols = {
+  'ADANIPORTS': 'ADANIPORTS.NS',
+  'RELIANCE': 'RELIANCE.NS',
+  'BAJAJCON': 'BAJAJCONS.NS',
+  'ADANIPOWER': 'ADANIPOWER.NS',
+  'JIOFIN': 'JIOFIN.NS',
+  'TATASTEEL': 'TATASTEEL.NS',
+  'TCS': 'TCS.NS',
+  'AWL': 'AWL.NS'
+};
+
+// Constants
+const CHART_COLORS = {
+    performance: '#4cc9f0',
+    allocation: ['#4361ee', '#3a0ca3', '#4895ef', '#3f37c9', '#f72585']
+};
+
+// DOM Elements
+const performanceChartCanvas = document.getElementById('portfolioPerformanceChart');
+const accountValueEl = document.getElementById('accountValue');
+const todaysChangeEl = document.getElementById('todaysChange');
+const holdingsTableBody = document.getElementById('holdings-table-body');
+
+//currency call
+
+
+
+
+// Chart instances
+let performanceChart = null;
+
+// Main Initialization
+document.addEventListener("DOMContentLoaded", async () => {
+    if (!localStorage.getItem("userId")) {
+        window.location.href = "login.html";
+        return;
+    }
+
+    await loadPortfolioData();
+    setupEventListeners();
+});
+
+function formatCurrency(amount) {
+    return new Intl.NumberFormat('en-IN', {
+        style: 'currency',
+        currency: 'INR',
+        minimumFractionDigits: 2
+    }).format(amount);
+}
+
+// UI Update Functions - Replace updateMetrics with this unified version
+function updateMetrics(summary) {
+    try {
+        // This now handles both the initial metrics and portfolio calculations
+        const availableCash = parseFloat(summary.availableCash) || 0;
+        
+        // Set basic cash-related metrics
+        document.getElementById("available-cash").textContent = formatCurrency(availableCash);
+        
+        // The rest will be calculated in updatePortfolioMetrics
+        // We call it here to ensure everything gets updated
+        updatePortfolioMetrics(summary);
+    } catch (error) {
+        console.error("Error in updateMetrics:", error);
+    }
+}
+
+// Modified loadPortfolioData to remove duplicate updateMetrics call
+async function loadPortfolioData() {
+    try {
+        showLoading(true);
+        
+        // Load symbol map first
+        const symbolMapRes = await fetch('./indian_stocks.json');
+        if (!symbolMapRes.ok) throw new Error("Failed to load symbol map");
+        symbolMap = await symbolMapRes.json();
+        
+        if (!Array.isArray(symbolMap)) {
+            throw new Error("Symbol map is not an array");
+        }
+        
+        const [summary, holdings, chartData] = await Promise.all([
+            fetchAccountSummary(),
+            fetchPortfolioHoldings(),
+            fetchChartData()
+        ]);
+
+        // First update basic metrics (cash)
+        updateMetrics(summary);
+        
+        // Then render holdings table (async)
+        await renderHoldingsTable(holdings);
+        
+        // Finally update all portfolio metrics based on rendered table
+        updatePortfolioMetrics(summary);
+
+        initializeCharts(chartData);
+        
+    } catch (error) {
+        console.error("Failed to load portfolio:", error);
+        showToast("Error loading portfolio data", false);
+    } finally {
+        showLoading(false);
+    }
+}
+// Data Fetching Functions
+async function fetchAccountSummary() {
+    const userId = localStorage.getItem("userId");
+    const response = await fetchWithErrorHandling(
+        `http://localhost:5001/api/account/${userId}`
+    );
+    return response;
+}
+
+async function fetchPortfolioHoldings() {
+    const userId = localStorage.getItem("userId");
+    const response = await fetchWithErrorHandling(
+        `http://localhost:5001/api/portfolio/${userId}`
+    );
+    return response;
+}
+
+async function fetchChartData() {
+    const userId = localStorage.getItem("userId");
+    const response = await fetchWithErrorHandling(
+        `http://localhost:5001/api/portfolio/chart-data/${userId}`
+    );
+    return response;
+}
+
+
+
+// Updated holdings table render function
+async function renderHoldingsTable(portfolio) {
+    try {
+        let html = '';
+        
+        // Add cash row
+        html += `
+            <tr>
+                <td>
+                    <div class="stock-name">
+                        <i class="fas fa-rupee-sign"></i>
+                        <div>
+                            <div class="stock-symbol">CASH</div>
+                            <div class="company-name">Available Funds</div>
+                        </div>
+                    </div>
+                </td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>₹${portfolio.availableCash.toLocaleString('en-IN')}</td>
+                <td class="neutral">-</td>
+            </tr>
+        `;
+        
+        // Add stock holdings
+        for (const holding of portfolio.stocks) {
+            try {
+                // Extract symbol from parentheses if available
+                const symbolMatch = holding.stockSymbol.match(/\(([^)]+)\)/);
+                const symbolOnly = symbolMatch ? symbolMatch[1] : holding.stockSymbol;
+                
+                let nseSymbol = commonSymbols[symbolOnly] || getNseSymbolFromName(holding.stockSymbol);
+                
+                if (!nseSymbol) {
+                    console.warn("⚠️ Could not match symbol:", holding.stockSymbol);
+                    html += `
+                        <tr>
+                            <td>
+                                <div class="stock-name">
+                                    <i class="fas fa-chart-line"></i>
+                                    <div>
+                                        <div class="stock-symbol">${holding.stockSymbol}</div>
+                                        <div class="company-name">${holding.companyName || 'N/A'}</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>${holding.quantity}</td>
+                            <td>₹${holding.avgPrice?.toFixed(2) || 'N/A'}</td>
+                            <td>N/A</td>
+                            <td>N/A</td>
+                            <td class="neutral">N/A</td>
+                        </tr>
+                    `;
+                    continue;
+                }
+
+                const currentPrice = await fetchStockPrice(nseSymbol);
+                
+                // Calculate values with proper checks
+                const avgPrice = parseFloat(holding.avgPrice) || 0;
+                const quantity = parseFloat(holding.quantity) || 0;
+                const currentValue = (currentPrice * quantity).toFixed(2);
+                const pnl = ((currentPrice - avgPrice) * quantity).toFixed(2);
+                const pnlPercent = ((currentPrice - avgPrice) / avgPrice * 100).toFixed(2);
+
+                html += `
+                    <tr>
+                        <td>
+                            <div class="stock-name">
+                                <i class="fas fa-chart-line"></i>
+                                <div>
+                                    <div class="stock-symbol">${symbolOnly}</div>
+                                    <div class="company-name">${holding.companyName || holding.stockSymbol.replace(`(${symbolOnly})`, '').trim()}</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td>${quantity}</td>
+                        <td>₹${avgPrice.toFixed(2)}</td>
+                        <td>₹${currentPrice.toFixed(2)}</td>
+                        <td>₹${parseFloat(currentValue).toLocaleString('en-IN')}</td>
+                        <td class="${pnl >= 0 ? 'positive' : 'negative'}">
+                            ₹${Math.abs(pnl).toLocaleString('en-IN')} (${pnl >= 0 ? '+' : ''}${pnlPercent}%)
+                        </td>
+                    </tr>
+                `;
+            } catch (error) {
+                console.error(`Error processing holding ${holding.stockSymbol}:`, error);
+                html += `
+                    <tr class="error-row">
+                        <td>
+                            <div class="stock-name">
+                                <i class="fas fa-exclamation-triangle"></i>
+                                <div>
+                                    <div class="stock-symbol">${holding.stockSymbol}</div>
+                                    <div class="company-name">Error loading data</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td>${holding.quantity || 'N/A'}</td>
+                        <td>₹${holding.avgPrice?.toFixed(2) || 'N/A'}</td>
+                        <td>Error</td>
+                        <td>Error</td>
+                        <td>Error</td>
+                    </tr>
+                `;
+            }
+        }
+        
+        holdingsTableBody.innerHTML = html;
+    } catch (error) {
+        console.error("Error rendering holdings table:", error);
+        holdingsTableBody.innerHTML = `
+            <tr>
+                <td colspan="6" class="error">Error loading holdings. Please try again.</td>
+            </tr>
+        `;
+    }
+}
+// UI Update Functions - This will handle ALL metric updates
+function updatePortfolioMetrics(summary) {
+    try {
+        const availableCash = parseFloat(summary.availableCash) || 0;
+        const totalInvestment = 1000000; // Fixed initial investment
+        
+        // Calculate invested amount in stocks
+        const investedAmount = totalInvestment - availableCash;
+        
+        // Get total profit/loss from the table
+        let totalProfit = 0;
+        let totalStockValue = 0;
+        
+        document.querySelectorAll('#holdings-table tbody tr').forEach(row => {
+            if (!row.classList.contains('neutral')) { // Skip cash row
+                const currentValueCell = row.cells[4]; // Current Value column
+                const profitCell = row.cells[5]; // Profit/Loss column
+                
+                if (currentValueCell && profitCell) {
+                    // Extract current value (for validation)
+                    const currentValue = parseFloat(
+                        currentValueCell.textContent.replace(/[^0-9.-]/g, '')
+                    ) || 0;
+                    
+                    // Extract profit
+                    const profitText = profitCell.textContent;
+                    const profit = parseFloat(
+                        profitText.split('₹')[1]?.split(' ')[0]?.replace(/,/g, '')
+                    ) || 0;
+                    const isNegative = profitCell.classList.contains('negative');
+                    
+                    totalStockValue += currentValue;
+                    totalProfit += isNegative ? -profit : profit;
+                }
+            }
+        });
+
+        // ================================================
+        // CHANGED ONLY THIS PART (YOUR REQUESTED FORMULA)
+        // Current Value = Initial Cash + Total Profit/Loss
+        const currentValue = totalInvestment + totalProfit; 
+        // ================================================
+        
+        // Rest remains identical
+        const initialValue = totalInvestment;
+        const valueChange = currentValue - initialValue;
+        const percentageChange = (valueChange / initialValue) * 100;
+
+        // Update the UI (unchanged)
+        document.getElementById("accountValue").textContent = formatCurrency(currentValue);
+        document.getElementById("available-cash").textContent = formatCurrency(availableCash);
+        document.getElementById("investedAmount").textContent = formatCurrency(investedAmount);
+        document.getElementById("totalProfit").textContent = formatCurrency(totalProfit);
+
+        // Update current value percentage change (unchanged)
+        const currentValueChangeElement = document.getElementById("todaysChange");
+        if (currentValueChangeElement) {
+            currentValueChangeElement.innerHTML = `
+                <i class="fas fa-caret-${percentageChange >= 0 ? 'up' : 'down'}"></i>
+                ${percentageChange >= 0 ? '+' : ''}${percentageChange.toFixed(2)}%
+            `;
+            currentValueChangeElement.className = `change ${percentageChange >= 0 ? 'positive' : 'negative'}`;
+        }
+
+        // Update profit/loss styling (unchanged)
+        const profitElement = document.getElementById("totalProfit");
+        profitElement.className = totalProfit >= 0 ? 'positive' : 'negative';
+        
+        // Update annual return percentage (unchanged)
+        const returnElement = document.getElementById("annualReturn");
+        if (returnElement) {
+            const returnPercentage = investedAmount > 0 ? 
+                (totalProfit / investedAmount * 100) : 0;
+            
+            returnElement.innerHTML = `
+                <i class="fas fa-caret-${returnPercentage >= 0 ? 'up' : 'down'}"></i>
+                ${Math.abs(returnPercentage).toFixed(2)}% all time
+            `;
+            returnElement.className = `change ${returnPercentage >= 0 ? 'positive' : 'negative'}`;
+        }
+        
+    } catch (error) {
+        console.error("Error updating portfolio metrics:", error);
+    }
+}
+// Modified loadPortfolioData
+async function loadPortfolioData() {
+    try {
+        showLoading(true);
+        
+        // Load symbol map first
+        const symbolMapRes = await fetch('./indian_stocks.json');
+        if (!symbolMapRes.ok) throw new Error("Failed to load symbol map");
+        symbolMap = await symbolMapRes.json();
+        
+        if (!Array.isArray(symbolMap)) {
+            throw new Error("Symbol map is not an array");
+        }
+        
+        const [summary, holdings, chartData] = await Promise.all([
+            fetchAccountSummary(),
+            fetchPortfolioHoldings(),
+            fetchChartData()
+        ]);
+
+        // First render the table
+        await renderHoldingsTable(holdings);
+        
+        // Then update all metrics
+        updatePortfolioMetrics(summary);
+
+        initializeCharts(chartData);
+        
+    } catch (error) {
+        console.error("Failed to load portfolio:", error);
+        showToast("Error loading portfolio data", false);
+    } finally {
+        showLoading(false);
+    }
+}
+// Remove updatePortfolioMetrics function completely since we've merged it into updateMetrics
+//await updatePortfolioMetrics(portfolio);
+
+// Function to match stock names to NSE symbols
+function getNseSymbolFromName(companyName) {
+    if (!symbolMap || symbolMap.length === 0) {
+        console.error("Symbol map is empty");
+        return null;
+    }
+
+    // Clean the input name
+    const cleanName = companyName.toLowerCase()
+        .replace(/ ltd| inc| pvt|\.|,|\(|\)/g, '')
+        .replace(/\s+/g, ' ')
+        .trim();
+
+    // Try exact symbol match first (extract symbol from parentheses)
+    const symbolMatch = companyName.match(/\(([^)]+)\)/);
+    const symbolOnly = symbolMatch ? symbolMatch[1] : companyName.split(' ').pop();
+    
+    let match = symbolMap.find(stock => 
+        stock.symbol === symbolOnly.toUpperCase()
+    );
+
+    // If no exact symbol match, try name matching
+    if (!match) {
+        match = symbolMap.find(stock => 
+            stock.name.toLowerCase().includes(cleanName) || 
+            cleanName.includes(stock.name.toLowerCase()) ||
+            (stock.symbol && cleanName.includes(stock.symbol.toLowerCase()))
+        );
+    }
+
+    return match ? `${match.symbol}.NS` : null;
+}
+
+// Function to fetch current stock price
+async function fetchStockPrice(symbol) {
+    try {
+        const res = await fetch(`http://127.0.0.1:5002/stock/${symbol}`);
+        
+        if (!res.ok) {
+            throw new Error(`HTTP error! status: ${res.status}`);
+        }
+        
+        const data = await res.json();
+
+        if (!data || typeof data.price !== "number") {
+            throw new Error(`Invalid price data for ${symbol}`);
+        }
+
+        return data.price;
+    } catch (error) {
+        console.error(`Error fetching stock price for ${symbol}:`, error);
+        return 0; // Return 0 to allow calculations to continue
+    }
+}
+
+// Chart Functions
+function initializeCharts(chartData) {
+    initializePerformanceChart(chartData.performance);
+}
+
+function initializePerformanceChart(performanceData) {
+    const ctx = performanceChartCanvas.getContext('2d');
+    
+    if (performanceChart) {
+        performanceChart.destroy();
+    }
+    
+    performanceChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: performanceData.dates,
+            datasets: [{
+                label: 'Portfolio Value',
+                data: performanceData.values,
+                borderColor: CHART_COLORS.performance,
+                backgroundColor: 'rgba(76, 201, 240, 0.1)',
+                borderWidth: 3,
+                fill: true,
+                tension: 0.3,
+                pointRadius: 0,
+                pointHoverRadius: 5,
+                pointBackgroundColor: CHART_COLORS.performance,
+                pointHoverBackgroundColor: 'white',
+                pointBorderWidth: 2,
+                pointHoverBorderWidth: 2,
+                pointHoverBorderColor: CHART_COLORS.performance
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false },
+                tooltip: {
+                    backgroundColor: 'rgba(30, 30, 30, 0.95)',
+                    borderColor: 'rgba(255, 255, 255, 0.1)',
+                    borderWidth: 1,
+                    titleColor: 'white',
+                    bodyColor: 'white',
+                    padding: 12,
+                    callbacks: {
+                        label: (ctx) => `₹${ctx.raw.toLocaleString('en-IN')}`,
+                        title: (items) => {
+                            if (!items.length) return '';
+                            const item = items[0];
+                            return item.label || '';
+                        }
+                    }
+                },
+                zoom: {
+                    zoom: {
+                        wheel: { enabled: true },
+                        pinch: { enabled: true },
+                        mode: 'xy',
+                        speed: 0.1
+                    },
+                    pan: {
+                        enabled: true,
+                        mode: 'xy',
+                        speed: 0.1
+                    }
+                }
+            },
+            interaction: {
+                intersect: false,
+                mode: 'index'
+            },
+            scales: {
+                y: {
+                    beginAtZero: false,
+                    ticks: {
+                        callback: (value) => `₹${value.toLocaleString('en-IN')}`,
+                        color: 'rgba(255, 255, 255, 0.7)'
+                    },
+                    grid: { 
+                        color: 'rgba(255,255,255,0.05)',
+                        drawBorder: false
+                    },
+                    border: {
+                        display: false
+                    }
+                },
+                x: {
+                    grid: { 
+                        color: 'rgba(255,255,255,0.05)',
+                        drawBorder: false
+                    },
+                    ticks: {
+                        color: 'rgba(255, 255, 255, 0.7)'
+                    },
+                    border: {
+                        display: false
+                    }
+                }
+            }
+        }
+    });
+}
+
+// Utility Functions
+async function fetchWithErrorHandling(url) {
+    try {
+        const response = await fetch(url);
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return await response.json();
+    } catch (error) {
+        console.error('Fetch error:', error);
+        showToast('Failed to load data. Please try again.', false);
+        throw error;
+    }
+}
+
+function showToast(message, isSuccess = true) {
+    const toast = document.createElement('div');
+    toast.className = `toast ${isSuccess ? 'success' : 'error'}`;
+    toast.textContent = message;
+    document.body.appendChild(toast);
+    
+    setTimeout(() => {
+        toast.classList.add('show');
+    }, 10);
+    
+    setTimeout(() => {
+        toast.classList.remove('show');
+        setTimeout(() => {
+            toast.remove();
+        }, 300);
+    }, 3000);
+}
+
+function showLoading(show) {
+    const containers = document.querySelectorAll('.card, .metric, .action-card');
+    containers.forEach(container => {
+        if (show) {
+            container.classList.add('loading');
+        } else {
+            container.classList.remove('loading');
+        }
+    });
+}
+
+// Event Handlers
+function setupEventListeners() {
+    // Timeframe buttons
+    document.querySelectorAll('.timeframe-buttons button').forEach(btn => {
+        btn.addEventListener('click', function() {
+            document.querySelectorAll('.timeframe-buttons button').forEach(b => 
+                b.classList.remove('active')
+            );
+            this.classList.add('active');
+            updateChartTimeframe(this.textContent.trim());
+        });
+    });
+    
+    // Toggle performance history
+    document.getElementById('togglePerformanceHistory').addEventListener('click', toggleHistory);
+}
+
+function toggleHistory() {
+    const history = document.getElementById('performanceHistory');
+    const isHidden = history.style.display === 'none';
+    
+    history.style.display = isHidden ? 'block' : 'none';
+    this.innerHTML = `<i class="fas fa-history"></i> ${isHidden ? 'Hide' : 'Show'} Performance History`;
+}
+
+async function updateChartTimeframe(timeframe) {
+    try {
+        showLoading(true);
+        const chartData = await fetchChartData(timeframe);
+        performanceChart.data.labels = chartData.performance.dates;
+        performanceChart.data.datasets[0].data = chartData.performance.values;
+        performanceChart.update();
+    } catch (error) {
+        console.error("Error updating chart:", error);
+    } finally {
+        showLoading(false);
+    }
+}
+
+    </script>
+</body>
+</html>
+

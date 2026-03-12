@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Power of Compound Interest | InvestoSim</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #0066cc;
+            --primary-dark: #003366;
+            --secondary: #ffcc00;
+            --accent: #00eeff;
+            --light: #f8f9fa;
+            --dark: #121212;
+            --success: #4caf50;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #003366, #001a33);
+            color: white;
+            line-height: 1.7;
+            padding: 0;
+            margin: 0;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem;
+            background: rgba(0, 26, 51, 0.8);
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+            animation: fadeIn 0.8s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        h1, h2, h3 {
+            color: var(--secondary);
+            margin-top: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        h1 {
+            text-align: center;
+            font-size: 2.5rem;
+            position: relative;
+            padding-bottom: 1rem;
+        }
+        
+        h1:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: var(--accent);
+            border-radius: 2px;
+        }
+        
+        h2 {
+            font-size: 1.8rem;
+            border-left: 4px solid var(--accent);
+            padding-left: 1rem;
+        }
+        
+        h3 {
+            font-size: 1.4rem;
+            color: var(--accent);
+        }
+        
+        p {
+            margin-bottom: 1.2rem;
+            font-size: 1.1rem;
+        }
+        
+        strong {
+            color: var(--secondary);
+            font-weight: 600;
+        }
+        
+        ul {
+            margin: 1.5rem 0;
+            padding-left: 2rem;
+        }
+        
+        li {
+            margin-bottom: 0.8rem;
+            padding-bottom: 0.8rem;
+            position: relative;
+            list-style-type: none;
+            padding-left: 1.5rem;
+        }
+        
+        li:before {
+            content: '•';
+            color: var(--accent);
+            font-size: 1.5rem;
+            position: absolute;
+            left: 0;
+            top: -3px;
+        }
+        
+        .highlight {
+            color: var(--accent);
+            font-weight: 500;
+        }
+        
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.8rem 1.5rem;
+            margin: 2rem auto;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--primary-dark);
+            background: linear-gradient(135deg, var(--secondary), #ffaa00);
+            border-radius: 8px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 204, 0, 0.3);
+            border: none;
+            cursor: pointer;
+        }
+        
+        .back-button i {
+            margin-right: 8px;
+        }
+        
+        .back-button:hover {
+            background: linear-gradient(135deg, #ffaa00, #ff8800);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(255, 170, 0, 0.4);
+        }
+        
+        .back-button:active {
+            transform: translateY(1px);
+        }
+        
+        .callout {
+            background: rgba(0, 238, 255, 0.1);
+            border-left: 4px solid var(--accent);
+            padding: 1.5rem;
+            border-radius: 0 8px 8px 0;
+            margin: 2rem 0;
+        }
+        
+        .quote {
+            font-style: italic;
+            position: relative;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .quote:before, .quote:after {
+            content: '"';
+            font-size: 3rem;
+            color: var(--secondary);
+            opacity: 0.3;
+            position: absolute;
+        }
+        
+        .quote:before {
+            top: -1rem;
+            left: -0.5rem;
+        }
+        
+        .quote:after {
+            bottom: -2rem;
+            right: -0.5rem;
+        }
+        
+        .tip-box {
+            background: rgba(0, 102, 204, 0.2);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .tip-box:before {
+            content: 'TIP';
+            position: absolute;
+            top: 0;
+            left: 0;
+            background: var(--accent);
+            color: var(--primary-dark);
+            padding: 0.2rem 1rem;
+            font-weight: 700;
+            font-size: 0.8rem;
+            border-radius: 0 0 8px 0;
+        }
+
+        .step-container {
+            counter-reset: step-counter;
+            margin: 2rem 0;
+        }
+
+        .step {
+            position: relative;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            background: rgba(0, 102, 204, 0.1);
+            border-radius: 8px;
+            border-left: 4px solid var(--accent);
+        }
+
+        .step:before {
+            counter-increment: step-counter;
+            content: counter(step-counter);
+            position: absolute;
+            left: -15px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 30px;
+            height: 30px;
+            background: var(--accent);
+            color: var(--primary-dark);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+        }
+
+        .comparison-table th {
+            background: var(--primary);
+            color: white;
+            padding: 1rem;
+            text-align: left;
+        }
+
+        .comparison-table td {
+            padding: 0.8rem 1rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .comparison-table tr:nth-child(even) {
+            background: rgba(0,102,204,0.1);
+        }
+
+        .comparison-table tr:hover {
+            background: rgba(0,102,204,0.2);
+        }
+        
+        .compound-chart {
+            width: 100%;
+            background: rgba(0, 102, 204, 0.1);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 2rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .chart-placeholder {
+            height: 300px;
+            background: rgba(0, 238, 255, 0.05);
+            border: 2px dashed var(--accent);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent);
+            font-weight: 500;
+        }
+        
+        .related-links {
+            background: rgba(0, 102, 204, 0.2);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 2rem 0;
+        }
+        
+        .related-links h3 {
+            margin-top: 0;
+        }
+        
+        .related-links ul {
+            margin: 0;
+            padding: 0;
+        }
+        
+        .related-links li {
+            padding: 0.5rem 0;
+        }
+        
+        .related-links li:before {
+            content: none;
+        }
+        
+        .related-links a {
+            color: var(--accent);
+            text-decoration: none;
+            transition: color 0.3s ease;
+            display: flex;
+            align-items: center;
+        }
+        
+        .related-links a:hover {
+            color: var(--secondary);
+        }
+        
+        .related-links i {
+            margin-right: 10px;
+            font-size: 0.8rem;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 1.5rem;
+                margin: 1rem;
+                border-radius: 12px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            h2 {
+                font-size: 1.5rem;
+            }
+
+            .comparison-table {
+                display: block;
+                overflow-x: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1><i class="fas fa-snowflake"></i> The Power of Compound Interest</h1>
+        
+        <div class="callout">
+            <p><strong>Compound interest is often called the "eighth wonder of the world"</strong> (attributed to Einstein) because it allows your money to grow exponentially over time. Understanding this concept is crucial for long-term wealth building.</p>
+        </div>
+        
+        <h2><i class="fas fa-calculator"></i> What is Compound Interest?</h2>
+        <p>Compound interest is the interest you earn on both your original investment <strong>and</strong> on the interest that accumulates. Unlike simple interest (which only grows linearly), compound interest grows exponentially because you earn "interest on interest."</p>
+        
+        <!--<div class="compound-chart">
+            <h3>Growth Comparison: Simple vs Compound Interest</h3>
+            <div class="chart-placeholder">
+                [Visualization: Exponential curve of compound interest vs straight line of simple interest]
+            </div>
+            <p>This chart shows how ₹10,000 invested at 10% interest would grow over 30 years. Simple interest would reach ₹40,000, while compound interest would grow to ₹174,494!</p>
+        </div>-->
+        
+        <div class="step-container">
+            <div class="step">
+                <h3>The Rule of 72</h3>
+                <p>A quick way to estimate how long it takes your money to double:</p>
+                <p style="text-align: center; font-size: 1.3rem;">
+                    <strong>72 ÷ Interest Rate = Years to Double</strong>
+                </p>
+                <ul>
+                    <li>At 6% return: 72 ÷ 6 = 12 years to double</li>
+                    <li>At 8% return: 72 ÷ 8 = 9 years to double</li>
+                    <li>At 12% return: 72 ÷ 12 = 6 years to double</li>
+                </ul>
+            </div>
+            
+            <div class="step">
+                <h3>Real-World Examples</h3>
+                <p>How starting early makes a massive difference:</p>
+                
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Investor</th>
+                            <th>Starts At</th>
+                            <th>Monthly SIP</th>
+                            <th>Stops At</th>
+                            <th>Value at 60</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Early Riya</td>
+                            <td>Age 25</td>
+                            <td>₹5,000</td>
+                            <td>Age 35 (10 yrs)</td>
+                            <td>₹1.47 crore*</td>
+                        </tr>
+                        <tr>
+                            <td>Late Raj</td>
+                            <td>Age 35</td>
+                            <td>₹5,000</td>
+                            <td>Age 60 (25 yrs)</td>
+                            <td>₹1.13 crore*</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p class="highlight">*Assuming 12% annual return, compounded monthly</p>
+                <p>Riya invested only ₹6 lakh total but ended with more than Raj who invested ₹15 lakh, just by starting 10 years earlier!</p>
+            </div>
+            
+            <div class="step">
+                <h3>How to Maximize Compound Growth</h3>
+                <ul>
+                    <li><strong>Start as early as possible</strong> - Time is your greatest ally</li>
+                    <li><strong>Be consistent</strong> - Regular investments (SIPs) work best</li>
+                    <li><strong>Reinvest dividends</strong> - Let all earnings compound</li>
+                    <li><strong>Avoid withdrawing</strong> - Breaking the cycle reduces final value dramatically</li>
+                    <li><strong>Increase amounts over time</strong> - As your income grows, increase investments</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="tip-box">
+            <p>The best time to start investing was yesterday. The second best time is today. Even small amounts invested early can grow to surprising sums.</p>
+        </div>
+        
+        <div class="callout">
+            <h3><i class="fas fa-chart-line"></i> Historical Context</h3>
+            <p>If your grandparents had invested just ₹10,000 in 1980 in the Sensex (which was at 100 points then):</p>
+            <ul>
+                <li>At 15% average annual return (Sensex historical average)</li>
+                <li>With dividends reinvested</li>
+                <li>That investment would be worth over ₹5 crore today!</li>
+            </ul>
+            <p>This demonstrates the incredible power of long-term compounding in the stock market.</p>
+        </div>
+        
+        <div class="quote">
+            "Compound interest is the eighth wonder of the world. He who understands it, earns it; he who doesn't, pays it." — Albert Einstein
+        </div>
+        
+        <div class="related-links">
+            <h3><i class="fas fa-book-reader"></i> Continue Learning</h3>
+            <ul>
+                <li><a href="blog10.html"><i class="fas fa-arrow-right"></i> Your First Investment: Step-by-Step</a></li>
+            </ul>
+        </div>
+        
+        <h2><i class="fas fa-lightbulb"></i> Key Takeaways</h2>
+        <ul>
+            <li>Compound growth accelerates over time - the longer you stay invested, the faster your money grows</li>
+            <li>Starting early is more powerful than investing larger amounts later</li>
+            <li>Consistency and patience are key - don't interrupt the compounding process</li>
+            <li>Even modest returns can create significant wealth over decades</li>
+        </ul>
+        
+        <center>
+            <a href="learn.html" class="back-button"><i class="fas fa-arrow-left"></i> Back to Learn More</a>
+        </center>
+    </div>
+</body>
+</html>

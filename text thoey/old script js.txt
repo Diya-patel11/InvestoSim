@@ -1,0 +1,783 @@
+/*
+// Constants
+const API_KEY = "P31QS86B14MHVVWC"; // Replace with your Alpha Vantage API key  "XY0PDPZ0MCKBEZ7X"
+const API_BASE_URL = "https://www.alphavantage.co/query";
+let stockList = [];
+
+// Retrieve userId
+const userId = localStorage.getItem("userId");
+
+// Initialize user's virtual money and portfolio value (if not set)
+if (!localStorage.getItem("availableCash")) {
+    localStorage.setItem("availableCash", 5000000); // Starting balance ₹5,000,000
+}
+if (!localStorage.getItem("portfolioValue")) {
+    localStorage.setItem("portfolioValue", 0); // Initial portfolio value
+}
+
+// Load NSE & BSE stock symbols from a JSON file
+async function loadStockSymbols() {
+    try {
+        console.log("⏳ Loading stock symbols...");
+        const response = await fetch("indianStocks.json");
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        stockList = await response.json();
+        console.log("✅ Stock symbols loaded successfully. Count:", stockList.length);
+        console.log("Sample stock:", stockList[0]); // Debug first item
+    } catch (error) {
+        console.error("❌ Error loading stock symbols:", error);
+        alert("Failed to load stock symbols. Please try again later.");
+    }
+}
+
+function searchStocks() {
+    const query = document.getElementById("stock-symbol").value.trim().toUpperCase();
+    const suggestionsDiv = document.getElementById("suggestions");
+
+    if (!stockList || stockList.length === 0) {
+        suggestionsDiv.style.display = "none";
+        return;
+    }
+
+    if (query.length < 2) {
+        suggestionsDiv.style.display = "none";
+        return;
+    }
+
+    const results = stockList.filter(stock => 
+        stock.symbol.toUpperCase().includes(query) || 
+        stock.name.toUpperCase().includes(query)
+    ).slice(0, 10);
+
+    if (results.length === 0) {
+        suggestionsDiv.innerHTML = "<div class='suggestion-item'>No results found</div>";
+        suggestionsDiv.style.display = "block";
+        return;
+    }
+
+    suggestionsDiv.innerHTML = results.map(stock => 
+        `<div class="suggestion-item" onclick="selectStock('${stock.symbol}', '${stock.name.replace(/'/g, "\\'")}')">
+            ${stock.name} (${stock.symbol})
+        </div>`
+    ).join("");
+    
+    suggestionsDiv.style.display = "block";
+}
+//emenm
+document.addEventListener('click', function(e) {
+    if (!e.target.closest('#stock-symbol') && !e.target.closest('#suggestions')) {
+        document.getElementById('suggestions').style.display = 'none';
+    }
+});
+
+// Select a stock from suggestions
+function selectStock(symbol, name) {
+    if (!symbol) {
+        console.error("❌ selectStock received an undefined symbol!");
+        alert("Please select a valid stock from the suggestions.");
+        return;
+    }
+
+    console.log(`✅ Selected stock: ${symbol} - ${name}`);
+    document.getElementById("stock-symbol").value = `${name} (${symbol})`;
+    document.getElementById("suggestions").innerHTML = "";
+    fetchStockData(symbol);
+}
+
+// Fetch real-time stock data from Alpha Vantage
+/*async function fetchStockData(symbol) {
+    console.log("📡 Fetching stock data for:", symbol); // Debugging log
+
+    if (!symbol) {
+        console.error("❌ fetchStockData received an undefined symbol!");
+        return;
+    }
+
+    console.log("⏳ Fetching stock data for:", symbol);
+    document.getElementById("stock-details").style.display = "none"; // Hide while loading
+    //document.getElementById("loading-indicator").style.display = "block";
+
+    const nseSymbol = `${symbol}.NSE`;
+    const bseSymbol = `${symbol}.BSE`;
+
+    try {
+        // Try NSE first
+        let response = await fetch(`${API_BASE_URL}?function=GLOBAL_QUOTE&symbol=${nseSymbol}&apikey=${API_KEY}`);
+        let stockData = await response.json();
+
+        // If NSE data is empty, try BSE
+        if (!stockData["Global Quote"] || Object.keys(stockData["Global Quote"]).length === 0) {
+            console.log("No NSE data, trying BSE...");
+            response = await fetch(`${API_BASE_URL}?function=GLOBAL_QUOTE&symbol=${bseSymbol}&apikey=${API_KEY}`);
+            stockData = await response.json();
+        }
+
+        if (!stockData["Global Quote"] || Object.keys(stockData["Global Quote"]).length === 0) {
+            throw new Error("Stock data not available");
+        }
+
+        const stock = stockData["Global Quote"];
+        console.log("Stock data received:", stock);
+
+        document.getElementById("stock-details").style.display = "block";
+        document.getElementById("stock-name").innerText = `${symbol}`;
+        document.getElementById("stock-price").innerText = `₹${parseFloat(stock["05. price"]).toFixed(2)}`;
+        document.getElementById("stock-change").innerText = `${stock["09. change"]} (${stock["10. change percent"]})`;
+        document.getElementById("stock-volume").innerText = `${stock["06. volume"]}`;
+
+        // Color coding for price change
+        const changeElement = document.getElementById("stock-change");
+        if (stock["09. change"].startsWith("-")) {
+            changeElement.style.color = "red";
+        } else {
+            changeElement.style.color = "green";
+            if (!stock["09. change"].startsWith("+")) {
+                changeElement.textContent = `+${changeElement.textContent}`;
+            }
+        }
+
+        fetchHistoricalData(nseSymbol);
+    } catch (error) {
+        console.error("❌ Error fetching stock details:", error);
+        alert("Failed to fetch stock details. Please try another stock or check back later.");
+    } finally {
+        document.getElementById("loading-indicator").style.display = "none";
+    }
+}
+
+
+// Fetch historical stock data and update chart
+async function fetchHistoricalData(symbol) {
+    if (!symbol) {
+        console.error("❌ fetchHistoricalData received undefined symbol");
+        return;
+    }
+
+    console.log("⏳ Fetching historical data for:", symbol);
+    document.getElementById("chart-loading").style.display = "block";
+
+    try {
+        const response = await fetch(`${API_BASE_URL}?function=TIME_SERIES_DAILY&symbol=${symbol}&apikey=${API_KEY}&outputsize=compact`);
+        const data = await response.json();
+
+        if (!data["Time Series (Daily)"]) {
+            throw new Error("No historical data available");
+        }
+
+        const historicalPrices = Object.entries(data["Time Series (Daily)"])
+            .map(([date, prices]) => ({
+                date,
+                close: parseFloat(prices["4. close"])
+            }))
+            .sort((a, b) => new Date(a.date) - new Date(b.date))
+            .slice(-30); // Get last 30 days
+
+        console.log("Historical prices:", historicalPrices);
+        updateChart(historicalPrices);
+    } catch (error) {
+        console.error("❌ Error fetching historical data:", error);
+        document.getElementById("stock-chart-container").innerHTML = "<p>Chart data not available</p>";
+    } finally {
+        document.getElementById("chart-loading").style.display = "none";
+    }
+}
+*/
+// Modified fetchStockData function
+/*async function fetchStockData(symbol) {
+    console.log("📡 Fetching stock data for:", symbol);
+
+    if (!symbol) {
+        console.error("❌ fetchStockData received an undefined symbol!");
+        return;
+    }
+
+    console.log("⏳ Fetching stock data for:", symbol);
+    
+    // Safely handle DOM elements
+    const stockDetails = document.getElementById("stock-details");
+    const loadingIndicator = document.getElementById("loading-indicator");
+    
+    if (stockDetails) stockDetails.style.display = "none";
+    if (loadingIndicator) loadingIndicator.style.display = "block";
+
+    const nseSymbol = `${symbol}.NSE`;
+    const bseSymbol = `${symbol}.BSE`;
+
+    try {
+        // Rest of your existing try block...
+    } catch (error) {
+        console.error("❌ Error fetching stock details:", error);
+        alert("Failed to fetch stock details. Please try another stock or check back later.");
+    } finally {
+        if (loadingIndicator) loadingIndicator.style.display = "none";
+    }
+}
+
+// Modified fetchHistoricalData function
+async function fetchHistoricalData(symbol) {
+    if (!symbol) {
+        console.error("❌ fetchHistoricalData received undefined symbol");
+        return;
+    }
+
+    console.log("⏳ Fetching historical data for:", symbol);
+    
+    const chartLoading = document.getElementById("chart-loading");
+    if (chartLoading) chartLoading.style.display = "block";
+
+    try {
+        // Your existing try block...
+    } catch (error) {
+        console.error("❌ Error fetching historical data:", error);
+        const chartContainer = document.getElementById("stock-chart-container");
+        if (chartContainer) {
+            chartContainer.innerHTML = "<p>Chart data not available</p>";
+        }
+    } finally {
+        if (chartLoading) chartLoading.style.display = "none";
+    }
+}
+// Update stock price chart
+function updateChart(priceData) {
+    console.log("Updating chart with data:", priceData);
+    const ctx = document.getElementById("stock-chart").getContext("2d");
+
+    if (window.stockChart) {
+        window.stockChart.destroy();
+    }
+
+    window.stockChart = new Chart(ctx, {
+        type: "line",
+        data: {
+            labels: priceData.map(data => data.date),
+            datasets: [{
+                label: "Closing Price",
+                data: priceData.map(data => data.close),
+                borderColor: "#4e73df",
+                backgroundColor: "rgba(78, 115, 223, 0.05)",
+                borderWidth: 2,
+                fill: true,
+                pointRadius: 3,
+                pointBackgroundColor: "#4e73df",
+                tension: 0.1
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: false
+                },
+                tooltip: {
+                    mode: "index",
+                    intersect: false
+                }
+            },
+            scales: {
+                x: {
+                    grid: {
+                        display: false
+                    },
+                    ticks: {
+                        maxRotation: 45,
+                        minRotation: 45
+                    }
+                },
+                y: {
+                    ticks: {
+                        callback: function(value) {
+                            return "₹" + value;
+                        }
+                    }
+                }
+            }
+        }
+    });
+}
+
+// Place an order (buy/sell)
+// Place an order (buy/sell)
+async function placeOrder() {
+    const action = document.getElementById("trade-action").value;
+    const quantity = parseInt(document.getElementById("trade-quantity").value, 10);
+    const orderType = document.getElementById("order-type").value;
+    const stockInput = document.getElementById("stock-symbol").value.trim();
+
+    // Validate inputs
+    if (!stockInput) {
+        alert("Please select a stock first");
+        return;
+    }
+
+    if (isNaN(quantity) || quantity <= 0) {
+        alert("Please enter a valid quantity (must be a positive number)");
+        return;
+    }
+
+    // Improved stock symbol parsing
+    const stockParts = stockInput.split("(");
+    if (stockParts.length < 2) {
+        alert("Invalid stock format. Please select from suggestions.");
+        return;
+    }
+
+    const companyName = stockParts[0].trim();
+    const stockSymbol = stockParts[1].replace(")", "").trim();
+    const stockPriceText = document.getElementById("stock-price")?.textContent;
+
+    if (!stockPriceText) {
+        alert("Unable to determine current price. Please refresh stock data.");
+        return;
+    }
+
+    // Extract numeric price (format: "₹123.45")
+    const priceMatch = stockPriceText.match(/₹([\d.]+)/);
+    if (!priceMatch) {
+        alert("Unable to determine current price. Please refresh stock data.");
+        return;
+    }
+
+    const stockPrice = parseFloat(priceMatch[1]);
+    if (isNaN(stockPrice)) {
+        alert("Invalid stock price. Please refresh stock data.");
+        return;
+    }
+    const totalCost = stockPrice * quantity;
+
+    const previewMessage = `
+        Order Preview:
+        - Action: ${action}
+        - Stock: ${stockSymbol} (${companyName})
+        - Quantity: ${quantity}
+        - Price per Share: ₹${stockPrice.toFixed(2)}
+        - Total Cost: ₹${totalCost.toFixed(2)}
+        - Order Type: ${orderType}
+    `;
+
+    const confirmOrder = confirm(`${previewMessage}\n\nDo you want to proceed with this order?`);
+    if (confirmOrder) {
+        executeTrade(action, stockSymbol, companyName, quantity, stockPrice);
+    }
+}
+
+// Execute a trade (buy/sell)
+async function executeTrade(action, stockSymbol, companyName, quantity, price) {
+    const userId = localStorage.getItem("userId");
+    if (!userId) {
+        alert("User ID not found. Please log in again.");
+        return;
+    }
+
+    try {
+        const endpoint = action === "buy" ? "/buy" : "/sell";
+        const payload = {
+            userId,
+            stockSymbol,
+            companyName,
+            quantity,
+            price
+        };
+
+        console.log("Sending payload to backend:", payload);
+
+        const response = await fetch(`http://localhost:5001/api/transactions${endpoint}`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload)
+        });
+
+        const data = await response.json();
+        if (!response.ok) throw new Error(data.error || "Failed to execute trade");
+
+        alert("Trade executed successfully!");
+        fetchTransactions();
+        fetchPortfolio();
+        fetchAccountSummary(); // Refresh account summary
+    } catch (error) {
+        console.error("Error executing trade:", error);
+        alert("Failed to execute trade. Please try again.");
+    }
+}
+
+// Fetch and display account summary
+async function fetchAccountSummary() {
+    const userId = localStorage.getItem("userId");
+    if (!userId) {
+        console.error("User ID not found!");
+        return;
+    }
+
+    try {
+        const response = await fetch(`http://localhost:5001/api/account/${userId}`);
+        const data = await response.json();
+
+        if (!response.ok) {
+            console.error("API error:", data.message);
+            return;
+        }
+
+        console.log("Received Account Summary:", data);
+        document.getElementById("user-id").innerText = `${data.userId || "N/A"}`;
+        document.getElementById("available-cash").innerText = `₹${data.availableCash.toLocaleString()}`;
+        document.getElementById("portfolio-value").innerText = `₹${data.portfolioValue.toLocaleString()}`;
+    } catch (error) {
+        console.error("Error fetching account summary:", error);
+    }
+}
+/*
+// Fetch and display transactions
+async function fetchTransactions() {
+    const userId = localStorage.getItem("userId");
+    if (!userId) {
+        console.error("User ID not found!");
+        return;
+    }
+
+    try {
+        const response = await fetch(`http://localhost:5001/api/transactions/${userId}`);
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const transactions = await response.json();
+        console.log("Transactions:", transactions);
+        displayTransactions(transactions);
+    } catch (error) {
+        console.error("Error fetching transactions:", error);
+        alert("Failed to fetch transactions. Please try again.");
+    }
+}
+
+// Display transactions in the table
+function displayTransactions(transactions) {
+    const transactionTableBody = document.getElementById("transaction-list");
+    transactionTableBody.innerHTML = ""; // Clear previous data
+
+    transactions.forEach(tx => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+            <td>${tx.stockSymbol}</td>
+            <td>${tx.companyName}</td>
+            <td>${tx.transactionType}</td>
+            <td>${tx.quantity}</td>
+            <td>₹${tx.price.toFixed(2)}</td>
+            <td>₹${tx.totalAmount.toFixed(2)}</td>
+            <td>${new Date(tx.date).toLocaleString()}</td>
+        `;
+        transactionTableBody.appendChild(row);
+    });
+}
+
+// Fetch and display portfolio
+async function fetchPortfolio() {
+    const userId = localStorage.getItem("userId");
+    if (!userId) {
+        console.error("User ID not found!");
+        return;
+    }
+
+    try {
+        const response = await fetch(`http://localhost:5001/api/portfolio/${userId}`);
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        console.log("Portfolio data:", data);
+
+        document.getElementById("available-cash").textContent = `₹${data.availableCash.toLocaleString()}`;
+        document.getElementById("portfolio-value").textContent = `₹${data.portfolioValue.toLocaleString()}`;
+    } catch (error) {
+        console.error("Error fetching portfolio:", error);
+        alert("Failed to fetch portfolio. Please try again.");
+    }
+}
+
+// Initialize the app
+document.addEventListener("DOMContentLoaded", () => {
+    if (!userId) {
+        console.error("❌ No userId found in localStorage! Redirecting to login...");
+        alert("Session expired! Please log in again.");
+        window.location.href = "login.html"; // Redirect to login page
+        return;
+    }
+
+    console.log(`🔍 Initializing app for userId: ${userId}`);
+    loadStockSymbols();
+    fetchAccountSummary();
+    fetchTransactions();
+    fetchPortfolio();
+});*/
+
+/*async function placeOrder() {
+    const action = document.getElementById("trade-action").value;
+    const quantity = parseInt(document.getElementById("trade-quantity").value, 10);
+    const orderType = document.getElementById("order-type").value;
+    const stockInput = document.getElementById("stock-symbol").value.trim();
+
+    // Validate inputs
+    if (!stockInput) {
+        alert("Please select a stock first");
+        return;
+    }
+
+    if (isNaN(quantity) || quantity <= 0) {
+        alert("Please enter a valid quantity (must be a positive number)");
+        return;
+    }
+
+    // Extract symbol and name (format: "Name (SYMBOL)")
+    const match = stockInput.match(/(.*)\s\(([^)]+)\)$/);
+    if (!match || match.length < 3) {
+        alert("Invalid stock format. Please select from suggestions.");
+        return;
+    }
+
+    const companyName = match[1].trim();
+    const stockSymbol = match[2].trim();
+    const stockPriceText = document.getElementById("stock-price").textContent;
+
+    // Extract numeric price (format: "₹123.45")
+    const priceMatch = stockPriceText.match(/₹([\d.]+)/);
+    if (!priceMatch) {
+        alert("Unable to determine current price. Please refresh stock data.");
+        return;
+    }
+
+    const stockPrice = parseFloat(priceMatch[1]);
+    if (isNaN(stockPrice)) {
+        alert("Invalid stock price. Please refresh stock data.");
+        return;
+    }
+
+    const totalCost = stockPrice * quantity;
+    const formattedPrice = stockPrice.toFixed(2);
+    const formattedTotal = totalCost.toFixed(2);
+
+    const previewMessage = `
+        Order Preview:
+        Action: ${action.toUpperCase()}
+        Stock: ${companyName} (${stockSymbol})
+        Quantity: ${quantity}
+        Price: ₹${formattedPrice}
+        Total: ₹${formattedTotal}
+        Order Type: ${orderType}
+    `;
+
+    if (!confirm(`${previewMessage}\n\nConfirm this order?`)) {
+        return;
+    }
+
+    try {
+        console.log("⏳ Executing trade...", {
+            action,
+            stockSymbol,
+            companyName,
+            quantity,
+            stockPrice
+        });
+
+        const response = await fetch(`http://localhost:5001/api/transactions/${action}`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                userId: localStorage.getItem("userId"),
+                stockSymbol,
+                companyName,
+                quantity,
+                price: stockPrice
+            })
+        });
+
+        if (!response.ok) {
+            const error = await response.json();
+            throw new Error(error.message || "Trade failed");
+        }
+
+        const result = await response.json();
+        console.log("Trade result:", result);
+        alert(`Order executed successfully!\nNew balance: ₹${result.newBalance.toFixed(2)}`);
+
+        // Refresh all data
+        fetchAccountSummary();
+        fetchTransactions();
+        fetchPortfolio();
+    } catch (error) {
+        console.error("❌ Trade error:", error);
+        alert(`Order failed: ${error.message}`);
+    }
+}
+
+// Fetch and display account summary
+async function fetchAccountSummary() {
+    const userId = localStorage.getItem("userId");
+    if (!userId) {
+        console.error("User ID not found");
+        return;
+    }
+
+    try {
+        console.log("⏳ Fetching account summary...");
+        const response = await fetch(`http://localhost:5001/api/account/${userId}`);
+        
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        console.log("Account summary:", data);
+
+        document.getElementById("user-id").textContent = data.userId || "N/A";
+        document.getElementById("available-cash").textContent = `₹${data.availableCash?.toLocaleString("en-IN") || "0"}`;
+        document.getElementById("portfolio-value").textContent = `₹${data.portfolioValue?.toLocaleString("en-IN") || "0"}`;
+    } catch (error) {
+        console.error("❌ Error fetching account summary:", error);
+        alert("Failed to load account summary. Please try again.");
+    }
+}*/
+
+// Fetch and display transactions
+/*async function fetchTransactions() {
+    const userId = localStorage.getItem("userId");
+    if (!userId) {
+        console.error("User ID not found");
+        return;
+    }
+
+    try {
+        console.log("⏳ Fetching transactions...");
+        const response = await fetch(`http://localhost:5001/api/transactions/${userId}`);
+        
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const transactions = await response.json();
+        console.log("Transactions:", transactions);
+        displayTransactions(transactions);
+    } catch (error) {
+        console.error("❌ Error fetching transactions:", error);
+        document.getElementById("transaction-list").innerHTML = 
+            `<tr><td colspan="7" class="error">Failed to load transactions</td></tr>`;
+    }
+}
+
+// Display transactions in the table
+function displayTransactions(transactions) {
+    const tbody = document.getElementById("transaction-list");
+    tbody.innerHTML = "";
+
+    if (!transactions || transactions.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="7">No transactions found</td></tr>`;
+        return;
+    }
+
+    // Sort by date (newest first)
+    transactions.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+    transactions.forEach(tx => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+            <td>${tx.stockSymbol}</td>
+            <td>${tx.companyName}</td>
+            <td class="${tx.transactionType.toLowerCase()}">${tx.transactionType}</td>
+            <td>${tx.quantity}</td>
+            <td>₹${tx.price.toFixed(2)}</td>
+            <td>₹${tx.totalAmount.toFixed(2)}</td>
+            <td>${new Date(tx.date).toLocaleString()}</td>
+        `;
+        tbody.appendChild(row);
+    });
+}
+
+// Fetch and display portfolio
+async function fetchPortfolio() {
+    const userId = localStorage.getItem("userId");
+    if (!userId) {
+        console.error("User ID not found");
+        return;
+    }
+
+    try {
+        console.log("⏳ Fetching portfolio...");
+        const response = await fetch(`http://localhost:5001/api/portfolio/${userId}`);
+        
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const portfolio = await response.json();
+        console.log("Portfolio:", portfolio);
+        displayPortfolio(portfolio);
+    } catch (error) {
+        console.error("❌ Error fetching portfolio:", error);
+        document.getElementById("portfolio-list").innerHTML = 
+            `<tr><td colspan="6" class="error">Failed to load portfolio</td></tr>`;
+    }
+}
+
+// Display portfolio holdings
+function displayPortfolio(portfolio) {
+    const tbody = document.getElementById("portfolio-list");
+    tbody.innerHTML = "";
+
+    if (!portfolio.holdings || portfolio.holdings.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="6">No holdings in portfolio</td></tr>`;
+        return;
+    }
+
+    portfolio.holdings.forEach(holding => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+            <td>${holding.stockSymbol}</td>
+            <td>${holding.companyName}</td>
+            <td>${holding.quantity}</td>
+            <td>₹${holding.avgPrice.toFixed(2)}</td>
+            <td>₹${holding.currentPrice?.toFixed(2) || "N/A"}</td>
+            <td class="${holding.pl >= 0 ? 'profit' : 'loss'}">
+                ₹${Math.abs(holding.pl).toFixed(2)} (${holding.plPercent >= 0 ? '+' : ''}${holding.plPercent.toFixed(2)}%)
+            </td>
+        `;
+        tbody.appendChild(row);
+    });
+}
+
+// Initialize the app
+document.addEventListener("DOMContentLoaded", () => {
+    console.log("🚀 Initializing Stock Trading App");
+
+    // Check authentication
+    if (!userId) {
+        alert("Please login to continue");
+        window.location.href = "login.html";
+        return;
+    }
+    
+
+    // Load initial data
+    loadStockSymbols();
+    fetchAccountSummary();
+    fetchTransactions();
+    fetchPortfolio();
+
+    // Setup event listeners
+    document.getElementById("stock-symbol").addEventListener("input", searchStocks);
+    document.getElementById("trade-form").addEventListener("submit", (e) => {
+        e.preventDefault();
+        placeOrder();
+    });
+
+    console.log("✅ App initialized successfully");
+});
+// Utility function to format numbers
+function formatNumber(num) {
+    return num?.toLocaleString("en-IN", {
+        maximumFractionDigits: 2,
+        minimumFractionDigits: 2
+    }) || "0.00";
+}*/

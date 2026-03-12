@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trade - InvestoSim</title>
+    
+    <script defer src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script defer src="script.js"></script> 
+    <script src="dashboard.js"></script>
+    <style>
+body {
+    font-family: 'Poppins', sans-serif;
+    
+    background-color: #f4f6fc;
+   
+    margin: 0;
+    padding: 0;
+}
+header {
+    background-color: #003366;
+    color: white;
+    padding: 15px;
+    text-align: center;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+}
+
+nav ul li {
+    display: inline;
+    margin: 10px;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+}
+
+main {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    /*background: white;*/
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px rgba(11, 3, 255, 0.161);
+}
+
+.stock-search input {
+    width: 70%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+#suggestions {
+    position: absolute;
+    background: white;
+    border: 1px solid #ddd;
+    max-height: 150px;
+    overflow-y: auto;
+    width: 250px;
+}
+
+#suggestions div {
+    padding: 10px;
+    cursor: pointer;
+}
+
+#suggestions div:hover {
+    background-color: #f1f1f1;
+}
+
+button {
+    padding: 10px 15px;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #2980b9;
+}
+.trade-container {
+    max-width: 900px;
+    margin: 20px auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+}
+
+.trade-title {
+    text-align: center;
+    color: #003366;
+}
+
+/*.account-summary {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+}
+
+.account-card {
+    background: #003366;
+    color: white;
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+    flex: 1;
+    margin: 0 10px;
+}*/
+
+.account-summary {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+}
+.account-card {
+    background: linear-gradient(135deg, #003366, #005f99);
+    color: white;
+    padding: 15px;
+    border-radius: 12px;
+    text-align: center;
+    flex: 1;
+    margin: 0 10px;
+    box-shadow: 0px 0px 15px rgba(0, 255, 255, 0.2);
+    transition: transform 0.3s ease;
+}
+.account-card:hover {
+    transform: scale(1.05);
+}
+
+.stock-search, .trade-actions, .transaction-history {
+    margin-top: 20px;
+}
+
+.suggestions-dropdown {
+    position: absolute;
+    background: white;
+    border: 1px solid #ddd;
+    max-height: 150px;
+    overflow-y: auto;
+    width: 100%;
+}
+
+.trade-actions {
+    padding: 15px;
+    background: #f9f9f9;
+    border-radius: 8px;
+}
+
+.trade-btn {
+    background-color: #27ae60;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.trade-btn:hover {
+    background-color: #219150;
+}
+
+.transaction-history table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+.transaction-history th, .transaction-history td {
+    padding: 10px;
+    border: 1px solid #ddd;
+}
+
+.transaction-history th {
+    background: #003366;
+    color: white;
+}
+    </style>
+</head>
+<body>
+    <header>
+       
+        <nav>
+            <ul>
+                <li><a href="dashboard.html">Home</a></li>
+                <li><a href="portfolio.html">Portfolio</a></li>
+                <li><a href="learn.html">learn</a></li>
+            </ul>
+        </nav>
+    </header>
+
+<main class="trade-container">
+    <h2 class="trade-title">Trade Stocks</h2>
+
+    <!-- Account Summary-->
+    <section class="account-summary">
+        <div class="account-card">
+            <h3>User ID</h3>
+            <p id="user-id">Loading...</p>
+        </div>
+        <div class="account-card">
+            <h3>Available Cash</h3>
+            <p id="available-cash">₹0</p>
+        </div>
+        <div class="account-card">
+            <h3>Portfolio Value</h3>
+            <p id="portfolio-value">₹0</p>
+        </div>
+    </section>
+    
+    <script>
+        fetchAccountSummary(); // Call function on page load
+    </script>
+    
+
+    <!-- Stock Search -->
+    <section class="stock-search">
+        <h3>Search Stock</h3>
+        <input type="text" id="stock-symbol" placeholder="Search NSE/BSE stock..." onkeyup="searchStocks()">
+        <div id="suggestions" class="suggestions-dropdown"></div>
+        <button class="search-btn" onclick="fetchStockData()">Search</button>
+    </section>
+
+    <!-- Stock Details-->
+    <section class="stock-details" id="stock-details" style="display: none;">
+        <h3 id="stock-name">Stock Name</h3>
+        <p id="stock-price">Price: --</p>
+        <p id="stock-change">Change: --</p>
+        <p id="stock-volume">Volume: --</p>
+        <canvas id="stock-chart"></canvas>
+    </section>
+
+    <!-- Trade Actions -->
+    <section class="trade-actions">
+        <h3>Execute Trade</h3>
+        <label for="trade-action">Action:</label>
+        <select id="trade-action">
+            <option value="buy">Buy</option>
+            <option value="sell">Sell</option>
+        </select>
+
+        <label for="trade-quantity">Quantity:</label>
+        <input type="number" id="trade-quantity" min="1">
+
+        <label for="order-type">Order Type:</label>
+        <select id="order-type">
+            <option value="market">Market</option>
+            <option value="limit">Limit</option>
+        </select>
+
+        <button class="trade-btn" onclick="placeOrder()">Preview Order</button>
+    </section>
+
+    <!-- Transaction History -->
+    <section class="transaction-history">
+        <h3>Recent Transactions</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Symbol</th>
+                    <th>Company</th>
+                    <th>Type</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                    <th>Total</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+            <tbody id="transaction-list">
+                <!-- Transactions dynamically added here -->
+            </tbody>
+
+        </table>
+    </section>
+   
+</main>
+</body>
+</html>
+
+

@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Read Financial News | InvestoSim</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Same CSS as previous blogs */
+        :root {
+            --primary: #0066cc;
+            --primary-dark: #003366;
+            --secondary: #ffcc00;
+            --accent: #00eeff;
+            --light: #f8f9fa;
+            --dark: #121212;
+            --success: #4caf50;
+            --warning: #cc0033;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #003366, #001a33);
+            color: white;
+            line-height: 1.7;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: rgba(0, 26, 51, 0.8);
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            animation: fadeIn 0.8s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        h1, h2, h3 { color: var(--secondary); margin-top: 1.5rem; margin-bottom: 1rem; }
+        
+        h1 {
+            text-align: center;
+            font-size: 2.5rem;
+            position: relative;
+            padding-bottom: 1rem;
+        }
+        
+        h1:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: var(--accent);
+            border-radius: 2px;
+        }
+        
+        h2 { font-size: 1.8rem; border-left: 4px solid var(--accent); padding-left: 1rem; }
+        h3 { font-size: 1.4rem; color: var(--accent); }
+        p { margin-bottom: 1.2rem; font-size: 1.1rem; }
+        strong { color: var(--secondary); font-weight: 600; }
+        
+        ul { margin: 1.5rem 0; padding-left: 2rem; }
+        li {
+            margin-bottom: 0.8rem;
+            padding-bottom: 0.8rem;
+            position: relative;
+            list-style-type: none;
+            padding-left: 1.5rem;
+        }
+        
+        li:before {
+            content: '•';
+            color: var(--accent);
+            font-size: 1.5rem;
+            position: absolute;
+            left: 0;
+            top: -3px;
+        }
+        
+        .highlight { color: var(--accent); font-weight: 500; }
+        
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.8rem 1.5rem;
+            margin: 2rem auto;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--primary-dark);
+            background: linear-gradient(135deg, var(--secondary), #ffaa00);
+            border-radius: 8px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 204, 0, 0.3);
+            cursor: pointer;
+        }
+        
+        .back-button:hover {
+            background: linear-gradient(135deg, #ffaa00, #ff8800);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(255, 170, 0, 0.4);
+        }
+        
+        .callout {
+            background: rgba(0, 238, 255, 0.1);
+            border-left: 4px solid var(--accent);
+            padding: 1.5rem;
+            border-radius: 0 8px 8px 0;
+            margin: 2rem 0;
+        }
+        
+        .quote {
+            font-style: italic;
+            position: relative;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .quote:before, .quote:after {
+            content: '"';
+            font-size: 3rem;
+            color: var(--secondary);
+            opacity: 0.3;
+            position: absolute;
+        }
+        
+        .quote:before { top: -1rem; left: -0.5rem; }
+        .quote:after { bottom: -2rem; right: -0.5rem; }
+        
+        .tip-box {
+            background: rgba(0, 102, 204, 0.2);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .tip-box:before {
+            content: 'TIP';
+            position: absolute;
+            top: 0;
+            left: 0;
+            background: var(--accent);
+            color: var(--primary-dark);
+            padding: 0.2rem 1rem;
+            font-weight: 700;
+            font-size: 0.8rem;
+            border-radius: 0 0 8px 0;
+        }
+
+        .warning-box {
+            background: rgba(204, 0, 51, 0.2);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-left: 4px solid var(--warning);
+            position: relative;
+        }
+
+        .warning-box:before {
+            content: 'WARNING';
+            position: absolute;
+            top: 0;
+            left: 0;
+            background: var(--warning);
+            color: white;
+            padding: 0.2rem 1rem;
+            font-weight: 700;
+            font-size: 0.8rem;
+            border-radius: 0 0 8px 0;
+        }
+
+        .news-source-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+        }
+
+        .news-source-table th {
+            background: var(--primary);
+            color: white;
+            padding: 1rem;
+            text-align: left;
+        }
+
+        .news-source-table td {
+            padding: 0.8rem 1rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .news-source-table tr:nth-child(even) {
+            background: rgba(0,102,204,0.1);
+        }
+
+        .related-links {
+            background: rgba(0, 102, 204, 0.2);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 2rem 0;
+        }
+        
+        .related-links ul { margin: 0; padding: 0; }
+        .related-links li { padding: 0.5rem 0; }
+        .related-links li:before { content: none; }
+        .related-links a {
+            color: var(--accent);
+            text-decoration: none;
+            transition: color 0.3s ease;
+            display: flex;
+            align-items: center;
+        }
+        
+        .related-links a:hover { color: var(--secondary); }
+        .related-links i { margin-right: 10px; font-size: 0.8rem; }
+        
+        @media (max-width: 768px) {
+            .container { padding: 1.5rem; margin: 1rem; border-radius: 12px; }
+            h1 { font-size: 2rem; }
+            h2 { font-size: 1.5rem; }
+            .news-source-table { display: block; overflow-x: auto; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1><i class="fas fa-newspaper"></i> How to Read Financial News</h1>
+        
+        <div class="callout">
+            <p><strong>Financial news can be overwhelming and contradictory.</strong> Learn to filter signal from noise with these professional techniques for consuming market information effectively.</p>
+        </div>
+        
+        <h2><i class="fas fa-filter"></i> Filtering the Noise</h2>
+        
+        <div class="warning-box">
+            <h3>Most Financial News is Entertainment</h3>
+            <p>24-hour financial networks need to fill airtime, and dramatic headlines get clicks. Much of daily market "analysis" is meaningless noise that can lead to poor decisions.</p>
+        </div>
+        
+        <div class="tip-box">
+            <p><strong>Ask these questions about every piece of financial news:</strong></p>
+            <ul>
+                <li>Is this actionable for my investment strategy?</li>
+                <li>Is this new information or just repackaged old news?</li>
+                <li>What's the source's track record and potential bias?</li>
+                <li>How would this affect my holdings in 5+ years?</li>
+            </ul>
+        </div>
+        
+        <h2><i class="fas fa-chart-line"></i> Understanding Market Reactions</h2>
+        
+        <p>Markets often react illogically to news in the short term. Learn to distinguish between:</p>
+        
+        <table class="news-source-table">
+            <thead>
+                <tr>
+                    <th>News Type</th>
+                    <th>Typical Market Reaction</th>
+                    <th>Investor Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Earnings surprises</td>
+                    <td>Short-term volatility</td>
+                    <td>Review fundamentals, not just headlines</td>
+                </tr>
+                <tr>
+                    <td>Macroeconomic data</td>
+                    <td>Sector-wide movements</td>
+                    <td>Assess long-term implications</td>
+                </tr>
+                <tr>
+                    <td>Geopolitical events</td>
+                    <td>Panic selling/buying</td>
+                    <td>Stay disciplined with your plan</td>
+                </tr>
+                <tr>
+                    <td>Regulatory changes</td>
+                    <td>Sustained sector impact</td>
+                    <td>Research actual policy details</td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <h2><i class="fas fa-globe"></i> Reliable News Sources</h2>
+        
+        <div class="tip-box">
+            <h3>Quality Over Quantity</h3>
+            <p>Limit your financial news intake to 2-3 high-quality sources. Too much information leads to analysis paralysis.</p>
+        </div>
+        
+        <ul>
+            <li><strong>For macroeconomic trends:</strong> RBI bulletins, Economic Times analysis pieces</li>
+            <li><strong>For company research:</strong> Annual reports, SEBI filings (ignore "analyst opinions")</li>
+            <li><strong>For market context:</strong> Livemint long-form articles, Moneycontrol special reports</li>
+            <li><strong>Avoid:</strong> Stock tips on social media, sensationalist headlines, most TV business channels</li>
+        </ul>
+        
+        <h2><i class="fas fa-brain"></i> Developing Critical Thinking</h2>
+        
+        <div class="callout">
+            <h3>The Headline vs Reality Test</h3>
+            <p>When you see dramatic financial headlines, practice this:</p>
+            <ol>
+                <li>Read past the headline - what are the actual facts?</li>
+                <li>Check if multiple reputable sources report the same</li>
+                <li>Consider what's NOT being said (omissions can be telling)</li>
+                <li>Ask "Does this change my investment thesis?"</li>
+            </ol>
+        </div>
+        
+        <div class="quote">
+            "The intelligent investor gets excited by falling prices, not rising ones. The whole point is to buy when others are panicking and sell when they're euphoric." — Jason Zweig
+        </div>
+        
+        <div class="related-links">
+            <h3><i class="fas fa-book-reader"></i> Continue Learning</h3>
+            <ul>
+                <li><a href="blog18.html"><i class="fas fa-arrow-right"></i> Emotional Investing & How to Avoid It</a></li>
+                <li><a href="blog7.html"><i class="fas fa-arrow-right"></i> Common Mistakes Beginners Make</a></li>
+            </ul>
+        </div>
+        
+        <h2><i class="fas fa-lightbulb"></i> Key Takeaways</h2>
+        <ul>
+            <li>Most daily financial news is irrelevant noise for long-term investors</li>
+            <li>Focus on fundamental data over opinions and predictions</li>
+            <li>Create a "news filter" checklist before making any decisions</li>
+            <li>Limit your sources to reduce anxiety and improve focus</li>
+            <li>Use news to understand context, not for trading signals</li>
+        </ul>
+        
+        <center>
+            <a href="learn.html" class="back-button"><i class="fas fa-arrow-left"></i> Back to Learn More</a>
+        </center>
+    </div>
+</body>
+</html>

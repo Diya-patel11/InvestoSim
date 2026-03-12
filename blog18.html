@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emotional Investing & How to Avoid It | InvestoSim</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Same CSS as previous blogs */
+        :root {
+            --primary: #0066cc;
+            --primary-dark: #003366;
+            --secondary: #ffcc00;
+            --accent: #00eeff;
+            --light: #f8f9fa;
+            --dark: #121212;
+            --success: #4caf50;
+            --warning: #cc0033;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #003366, #001a33);
+            color: white;
+            line-height: 1.7;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: rgba(0, 26, 51, 0.8);
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            animation: fadeIn 0.8s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        h1, h2, h3 { color: var(--secondary); margin-top: 1.5rem; margin-bottom: 1rem; }
+        
+        h1 {
+            text-align: center;
+            font-size: 2.5rem;
+            position: relative;
+            padding-bottom: 1rem;
+        }
+        
+        h1:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: var(--accent);
+            border-radius: 2px;
+        }
+        
+        h2 { font-size: 1.8rem; border-left: 4px solid var(--accent); padding-left: 1rem; }
+        h3 { font-size: 1.4rem; color: var(--accent); }
+        p { margin-bottom: 1.2rem; font-size: 1.1rem; }
+        strong { color: var(--secondary); font-weight: 600; }
+        
+        ul { margin: 1.5rem 0; padding-left: 2rem; }
+        li {
+            margin-bottom: 0.8rem;
+            padding-bottom: 0.8rem;
+            position: relative;
+            list-style-type: none;
+            padding-left: 1.5rem;
+        }
+        
+        li:before {
+            content: '•';
+            color: var(--accent);
+            font-size: 1.5rem;
+            position: absolute;
+            left: 0;
+            top: -3px;
+        }
+        
+        .highlight { color: var(--accent); font-weight: 500; }
+        
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.8rem 1.5rem;
+            margin: 2rem auto;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--primary-dark);
+            background: linear-gradient(135deg, var(--secondary), #ffaa00);
+            border-radius: 8px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 204, 0, 0.3);
+            cursor: pointer;
+        }
+        
+        .back-button:hover {
+            background: linear-gradient(135deg, #ffaa00, #ff8800);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(255, 170, 0, 0.4);
+        }
+        
+        .callout {
+            background: rgba(0, 238, 255, 0.1);
+            border-left: 4px solid var(--accent);
+            padding: 1.5rem;
+            border-radius: 0 8px 8px 0;
+            margin: 2rem 0;
+        }
+        
+        .quote {
+            font-style: italic;
+            position: relative;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .quote:before, .quote:after {
+            content: '"';
+            font-size: 3rem;
+            color: var(--secondary);
+            opacity: 0.3;
+            position: absolute;
+        }
+        
+        .quote:before { top: -1rem; left: -0.5rem; }
+        .quote:after { bottom: -2rem; right: -0.5rem; }
+        
+        .emotion-card {
+            background: rgba(0, 102, 204, 0.2);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-left: 4px solid var(--accent);
+        }
+        
+        .danger-card {
+            background: rgba(204, 0, 51, 0.2);
+            border-left: 4px solid var(--warning);
+        }
+        
+        .solution-card {
+            background: rgba(76, 175, 80, 0.2);
+            border-left: 4px solid var(--success);
+        }
+        
+        .psychology-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+        }
+        
+        .psychology-table th {
+            background: var(--primary);
+            color: white;
+            padding: 1rem;
+            text-align: left;
+        }
+        
+        .psychology-table td {
+            padding: 0.8rem 1rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .psychology-table tr:nth-child(even) {
+            background: rgba(0,102,204,0.1);
+        }
+        
+        .related-links {
+            background: rgba(0, 102, 204, 0.2);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 2rem 0;
+        }
+        
+        .related-links ul { margin: 0; padding: 0; }
+        .related-links li { padding: 0.5rem 0; }
+        .related-links li:before { content: none; }
+        .related-links a {
+            color: var(--accent);
+            text-decoration: none;
+            transition: color 0.3s ease;
+            display: flex;
+            align-items: center;
+        }
+        
+        .related-links a:hover { color: var(--secondary); }
+        .related-links i { margin-right: 10px; font-size: 0.8rem; }
+        
+        @media (max-width: 768px) {
+            .container { padding: 1.5rem; margin: 1rem; border-radius: 12px; }
+            h1 { font-size: 2rem; }
+            h2 { font-size: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1><i class="fas fa-brain"></i> Emotional Investing & How to Avoid It</h1>
+        
+        <div class="callout">
+            <p><strong>Your brain is wired against investment success.</strong> Learn to recognize these psychological traps and develop strategies to overcome them.</p>
+        </div>
+        
+        <h2><i class="fas fa-heart-broken"></i> Common Emotional Traps</h2>
+        
+        <div class="emotion-card danger-card">
+            <h3>Loss Aversion</h3>
+            <p><strong>The pain of losing ₹100 feels twice as intense as the pleasure of gaining ₹100.</strong> This leads to selling winners too early and holding losers too long.</p>
+        </div>
+        
+        <div class="emotion-card solution-card">
+            <h3>Solution: Predefined Rules</h3>
+            <ul>
+                <li>Set stop-loss limits when buying (e.g., "I'll sell if it drops 15%")</li>
+                <li>Rebalance portfolio quarterly to force selling high and buying low</li>
+                <li>Remember that paper losses aren't real until you sell</li>
+            </ul>
+        </div>
+        
+        <div class="emotion-card danger-card">
+            <h3>Recency Bias</h3>
+            <p>Giving more weight to recent events than long-term trends. After a market drop, assuming it will keep dropping. After gains, assuming they'll continue forever.</p>
+        </div>
+        
+        <div class="emotion-card solution-card">
+            <h3>Solution: Historical Perspective</h3>
+            <ul>
+                <li>Review long-term (10+ year) charts during volatile periods</li>
+                <li>Keep an investment journal to record your emotional states</li>
+                <li>Remember that mean reversion is powerful in markets</li>
+            </ul>
+        </div>
+        
+        <h2><i class="fas fa-chess"></i> Behavioral Finance Strategies</h2>
+        
+        <table class="psychology-table">
+            <thead>
+                <tr>
+                    <th>Emotion</th>
+                    <th>Effect on Decisions</th>
+                    <th>Professional Countermove</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Fear</td>
+                    <td>Panic selling at bottoms</td>
+                    <td>Automate buying during dips</td>
+                </tr>
+                <tr>
+                    <td>Greed</td>
+                    <td>Chasing overvalued assets</td>
+                    <td>Stick to valuation metrics</td>
+                </tr>
+                <tr>
+                    <td>Regret</td>
+                    <td>Holding losers too long</td>
+                    <td>Predefined exit strategy</td>
+                </tr>
+                <tr>
+                    <td>Overconfidence</td>
+                    <td>Excessive trading</td>
+                    <td>Limit # of trades/month</td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <h2><i class="fas fa-tools"></i> Practical Tools to Stay Disciplined</h2>
+        
+        <div class="emotion-card">
+            <h3>The 24-Hour Rule</h3>
+            <p>For any non-planned investment decision:</p>
+            <ol>
+                <li>Write down what you want to do and why</li>
+                <li>Wait 24 hours before acting</li>
+                <li>Re-evaluate with fresh eyes</li>
+            </ol>
+            <p>This simple practice prevents 80% of emotional mistakes.</p>
+        </div>
+        
+        <div class="emotion-card">
+            <h3>Investment Policy Statement (IPS)</h3>
+            <p>Create a written document that outlines:</p>
+            <ul>
+                <li>Your financial goals and time horizon</li>
+                <li>Asset allocation rules</li>
+                <li>Criteria for buying/selling</li>
+                <li>How you'll handle market downturns</li>
+            </ul>
+            <p>Refer to this during emotional times as your "constitution."</p>
+        </div>
+        
+        <div class="quote">
+            "The most important quality for an investor is temperament, not intellect. You need a temperament that neither derives great pleasure from being with the crowd or against the crowd." — Warren Buffett
+        </div>
+        
+        <div class="related-links">
+            <h3><i class="fas fa-book-reader"></i> Continue Learning</h3>
+            <ul>
+                <li><a href="blog17.html"><i class="fas fa-arrow-right"></i> How to Read Financial News</a></li>
+                <li><a href="blog10.html"><i class="fas fa-arrow-right"></i> The Power of Compound Interest</a></li>
+            </ul>
+        </div>
+        
+        <h2><i class="fas fa-lightbulb"></i> Key Takeaways</h2>
+        <ul>
+            <li>Recognize that emotional investing is biological - your brain will fight rational decisions</li>
+            <li>Create systems and rules to override emotional impulses</li>
+            <li>Automate as much as possible (SIPs, rebalancing)</li>
+            <li>Track your emotional state as carefully as your portfolio</li>
+            <li>Accept that discomfort is necessary for superior returns</li>
+        </ul>
+        
+        <center>
+            <a href="learn.html" class="back-button"><i class="fas fa-arrow-left"></i> Back to Learn More</a>
+        </center>
+    </div>
+</body>
+</html>

@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InvestoSim Dashboard</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap">
+    <style>
+        /* General Styling */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f5f5f5;
+            color: #ffffff;
+        }
+
+        /* Navigation Bar */
+        .navbar {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 40px;
+            background-color: #f4f6fc;
+            color: white;
+            height: 100px;
+            box-shadow: 4px 0 10px rgb(3, 121, 255);
+        }
+
+        .navbar .logo img {
+            height: 150px;
+            width: auto;
+        }
+
+        .navbar ul {
+            list-style-type: none;
+            display: flex;
+        }
+
+        .navbar ul li {
+            margin-left: 20px;
+        }
+
+        .navbar ul li a {
+            color: #004a99;
+            font-size: 20px;
+            text-decoration: none;
+            padding: 10px;
+            border-radius: 5px;
+            transition: 0.3s;
+        }
+
+        .navbar ul li a:hover {
+            background-color: #ffcc00;
+            color: #003366;
+            transform: scale(1.1);
+        }
+
+        /* Sidebar */
+        .sidebar {
+            background-color: #003366;
+            color: white;
+            position: fixed;
+            top: 30;
+            left: -260px;
+            width: 250px;
+            height: 100%;
+            padding: 30px;
+            transition: 0.4s;
+        }
+
+        .sidebar.active {
+            left: 0;
+        }
+
+        .sidebar ul li a {
+            color: #fff;
+            display: block;
+            padding: 10px;
+            margin: 10px 0;
+            text-decoration: none;
+            transition: 0.3s;
+            border-radius: 5px;
+        }
+
+        .sidebar ul li a:hover {
+            background-color: #ffcc00;
+            color: #003366;
+        }
+
+        /* Sidebar Toggle Button */
+        .sidebar-toggle {
+            position: fixed;
+            top: 120px;
+            left: 0;
+            background: #ffcc00;
+            color: #003366;
+            padding: 10px 15px;
+            border: none;
+            cursor: pointer;
+            font-size: 10px;
+            border-radius: 5px;
+            transition: 0.3s;
+            z-index: 1000;
+        }
+
+        .sidebar-toggle:hover {
+            background-color: #ffa500;
+        }
+
+        /* Portfolio Section */
+        .portfolio-section {
+            background-color: #002855;
+            color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            margin: 20px;
+        }
+
+        .portfolio-stats {
+            display: flex;
+            justify-content: space-around;
+            padding: 15px 0;
+        }
+
+        .stat-box {
+            background-color: #004a99;
+            padding: 15px;
+            border-radius: 8px;
+            min-width: 150px;
+        }
+
+        .stat-box h3 {
+            color: #ffcc00;
+            margin-bottom: 8px;
+        }
+
+        .portfolio-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        .portfolio-table th,
+        .portfolio-table td {
+            padding: 10px;
+            border: 1px solid #0081c6;
+            text-align: center;
+        }
+
+        .portfolio-table th {
+            background-color: #0081c6;
+            color: #ffffff;
+        }
+
+        /* Performance History Section */
+        #performanceHistory {
+            margin-top: 20px;
+            background-color: #004a99;
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        #performanceHistory.hidden {
+            display: none;
+        }
+
+        #performanceHistory table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        #performanceHistory th,
+        #performanceHistory td {
+            padding: 10px;
+            border: 1px solid #0081c6;
+            text-align: center;
+        }
+
+        #performanceHistory th {
+            background-color: #0081c6;
+            color: #ffffff;
+        }
+
+        #performanceHistoryBtn {
+            background-color: #ffcc00;
+            color: #003366;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        #performanceHistoryBtn:hover {
+            background-color: #ffa500;
+        }
+    </style>
+</head>
+<body>
+    <button class="sidebar-toggle">☰</button>
+    <header class="navbar">
+        <a href="#" class="logo">
+            <img src="https://i.ibb.co/BVzq2c0P/logo-is.png" alt="InvestoSim Logo">
+        </a>
+        <nav>
+            <ul>
+                <li><a href="#portfolio">Portfolio</a></li>
+                <li><a href="trade.html">Trade</a></li>
+                <li><a href="#research">Research</a></li>
+                <li><a href="learn.html">Learn</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <aside class="sidebar">
+        <h3 class="welcome">Welcome, User!</h3>
+        <ul>
+            <li><a href="#account">Account Settings</a></li>
+            <li><a href="#logout">Logout</a></li>
+        </ul>
+    </aside>
+
+    <div class="portfolio-section">
+        <h2>My Portfolio</h2>
+        <div class="portfolio-stats">
+            <div class="stat-box">
+                <h3>Available Cash</h3>
+                <p id="availableCash">$5000</p>
+            </div>
+            <div class="stat-box">
+                <h3>Portfolio Value</h3>
+                <p id="portfolioValue">$0</p>
+            </div>
+            <div class="stat-box">
+                <h3>Total Investments</h3>
+                <p id="totalInvestments">$0</p>
+            </div>
+        </div>
+
+        <h3>Stock Holdings</h3>
+        <table class="portfolio-table">
+            <thead>
+                <tr>
+                    <th>Stock</th>
+                    <th>Shares</th>
+                    <th>Avg. Price</th>
+                    <th>Current Price</th>
+                    <th>P/L</th>
+                </tr>
+            </thead>
+            <tbody id="portfolioTable">
+                <!-- Stocks dynamically inserted here -->
+            </tbody>
+        </table>
+
+        <h3>Portfolio Performance</h3>
+        <canvas id="portfolioChart"></canvas>
+
+        <!-- Performance History Button -->
+        <button id="performanceHistoryBtn">Performance History</button>
+
+        <!-- Performance History Table -->
+        <div id="performanceHistory" class="hidden">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Portfolio Value</th>
+                        <th>Daily Change</th>
+                        <th>Cumulative Return</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Rows will be dynamically inserted here -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            console.log("Website is ready!");
+
+            // Initialize Virtual Cash and Portfolio Values
+            if (!localStorage.getItem("availableCash")) localStorage.setItem("availableCash", 5000);
+            if (!localStorage.getItem("portfolioValue")) localStorage.setItem("portfolioValue", 0);
+            if (!localStorage.getItem("totalInvestments")) localStorage.setItem("totalInvestments", 0);
+
+            // Function to Update Portfolio
+            function updatePortfolio() {
+                const availableCash = localStorage.getItem("availableCash") || 5000;
+                const portfolioValue = localStorage.getItem("portfolioValue") || 0;
+                const totalInvestments = localStorage.getItem("totalInvestments") || 0;
+
+                document.getElementById("availableCash").textContent = `$${availableCash}`;
+                document.getElementById("portfolioValue").textContent = `$${portfolioValue}`;
+                document.getElementById("totalInvestments").textContent = `$${totalInvestments}`;
+
+                updatePortfolioChart();
+            }
+
+            // Portfolio Performance Chart
+            function updatePortfolioChart() {
+                let ctx = document.getElementById("portfolioChart").getContext("2d");
+
+                if (window.portfolioChart) window.portfolioChart.destroy();
+
+                window.portfolioChart = new Chart(ctx, {
+                    type: "line",
+                    data: {
+                        labels: ["Day 1", "Day 2", "Day 3", "Day 4", "Day 5"],
+                        datasets: [{
+                            label: "Portfolio Value",
+                            data: [4500, 4700, 4800, 4950, 5100],
+                            borderColor: "#ffcc00",
+                            backgroundColor: "rgba(255, 204, 0, 0.2)",
+                            borderWidth: 2,
+                            fill: true,
+                            pointRadius: 3,
+                            tension: 0.3
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        scales: {
+                            x: { title: { display: true, text: "Time" } },
+                            y: { title: { display: true, text: "Value ($)" } }
+                        }
+                    }
+                });
+            }
+
+            // Performance History Table
+            function showPerformanceHistory() {
+                const historyTable = document.getElementById("performanceHistory");
+                historyTable.classList.toggle("hidden");
+
+                if (!historyTable.classList.contains("hidden")) {
+                    // Populate the table with historical data (example data)
+                    const historyData = [
+                        { date: "2023-10-01", value: 10000, change: "+50.00", return: "0.50%" },
+                        { date: "2023-09-30", value: 9950, change: "-30.00", return: "-0.30%" }
+                    ];
+
+                    const tbody = historyTable.querySelector("tbody");
+                    tbody.innerHTML = historyData.map(item => `
+                        <tr>
+                            <td>${item.date}</td>
+                            <td>$${item.value}</td>
+                            <td>${item.change}</td>
+                            <td>${item.return}</td>
+                        </tr>
+                    `).join("");
+                }
+            }
+
+            // Add Event Listener for Performance History Button
+            document.getElementById("performanceHistoryBtn").addEventListener("click", showPerformanceHistory);
+
+            // Initialize Portfolio on Load
+            updatePortfolio();
+        });
+    </script>
+</body>
+</html>

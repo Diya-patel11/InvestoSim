@@ -1,0 +1,723 @@
+<!--<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Introduction to Crypto & ETFs</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #0081c6;
+            color: #ffffff;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+            background: #002855;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgb(255, 255, 255);
+            margin-top: 20px;
+        }
+        h1, h2 {
+            color: #ffcc00;
+        }
+        h1 {
+            text-align: center;
+        }
+        p, li {
+            line-height: 1.6;
+        }
+        ul {
+            padding-left: 20px;
+        }
+        .highlight {
+            color: #00eeff;
+            font-weight: bold;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table, th, td {
+            border: 1px solid #ffffff;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #004080;
+        }
+        .back-button {
+    display: inline-block;
+    padding: 12px 20px;
+    margin-top: 20px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #ffffff;
+    background: linear-gradient(135deg, #ffcc00, #ff9900);
+    border-radius: 8px;
+    text-decoration: none;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0px 4px 10px rgba(255, 153, 0, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.back-button:hover {
+    background: linear-gradient(135deg, #ff9900, #ff6600);
+    transform: translateY(-3px);
+    box-shadow: 0px 6px 15px rgba(255, 102, 0, 0.5);
+}
+
+.back-button::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 300%;
+    height: 300%;
+    background: rgba(255, 255, 255, 0.2);
+    transition: all 0.5s ease-in-out;
+    border-radius: 50%;
+    transform: translate(-50%, -50%) scale(0);
+}
+
+.back-button:hover::before {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0;
+}
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Introduction to Crypto & ETFs</h1>
+        
+        <h2>What is Cryptocurrency?</h2>
+        <p>Cryptocurrency is a <span class="highlight">digital currency</span> that uses blockchain technology to enable secure transactions without a central authority like a bank.</p>
+        <p><strong>Example:</strong> Bitcoin and Ethereum are popular cryptocurrencies. Imagine Bitcoin as "digital gold" that you can buy, sell, and trade online.</p>
+        
+        <h2>What are ETFs (Exchange-Traded Funds)?</h2>
+        <p>An ETF is a <span class="highlight">basket of investments</span> (stocks, bonds, or commodities) that you can trade like a stock on the exchange.</p>
+        <p><strong>Example:</strong> If you invest in an "Nifty 50 ETF," you’re investing in India’s top 50 companies without buying each stock separately.</p>
+        
+        <h2>Key Differences Between Crypto & ETFs</h2>
+        <table>
+            <tr>
+                <th>Aspect</th>
+                <th>Cryptocurrency</th>
+                <th>ETF</th>
+            </tr>
+            <tr>
+                <td>Type of Investment</td>
+                <td>Digital currency</td>
+                <td>Collection of stocks/assets</td>
+            </tr>
+            <tr>
+                <td>Regulation</td>
+                <td>Less regulated</td>
+                <td>Highly regulated</td>
+            </tr>
+            <tr>
+                <td>Risk Level</td>
+                <td>Very high (volatile)</td>
+                <td>Moderate (diversified)</td>
+            </tr>
+            <tr>
+                <td>Ownership</td>
+                <td>Direct (you own the crypto)</td>
+                <td>Indirect (you own shares of ETF)</td>
+            </tr>
+            <tr>
+                <td>Trading</td>
+                <td>Available 24/7</td>
+                <td>Only during stock market hours</td>
+            </tr>
+        </table>
+        
+        <h2>Should You Invest?</h2>
+        <ul>
+            <li><span class="highlight">Choose Crypto</span> if you are willing to take high risks for potentially high rewards.</li>
+            <li><span class="highlight">Choose ETFs</span> if you prefer stable, diversified investments.</li>
+        </ul>
+        
+        <h2>Learn Without Risk – Try InvestoSim!</h2>
+        <p>Want to explore crypto and ETFs without real money? <strong>InvestoSim</strong> lets you practice with virtual funds!</p>
+        
+        <h2>What’s Next?</h2>
+        <p>In the next guide, we’ll discuss common mistakes beginners make in investing and how to avoid them. Stay tuned! 🚀</p>
+    </div>
+</body>
+</html>
+</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #0081c6;
+            color: #ffffff;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+            background: #002855;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgb(255, 255, 255);
+            margin-top: 20px;
+        }
+        h1, h2 {
+            color: #ffcc00;
+        }
+        h1 {
+            text-align: center;
+        }
+        p, li {
+            line-height: 1.6;
+        }
+        ul {
+            padding-left: 20px;
+        }
+        .highlight {
+            color: #00eeff;
+            font-weight: bold;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table, th, td {
+            border: 1px solid #ffffff;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #004080;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Introduction to Crypto & ETFs</h1>
+        
+        <h2>What is Cryptocurrency?</h2>
+        <p>Cryptocurrency is a <span class="highlight">digital currency</span> that uses blockchain technology to enable secure transactions without a central authority like a bank.</p>
+        <p><strong>Example:</strong> Bitcoin and Ethereum are popular cryptocurrencies. Imagine Bitcoin as "digital gold" that you can buy, sell, and trade online.</p>
+        
+        <h2>What are ETFs (Exchange-Traded Funds)?</h2>
+        <p>An ETF is a <span class="highlight">basket of investments</span> (stocks, bonds, or commodities) that you can trade like a stock on the exchange.</p>
+        <p><strong>Example:</strong> If you invest in an "Nifty 50 ETF," you’re investing in India’s top 50 companies without buying each stock separately.</p>
+        
+        <h2>Key Differences Between Crypto & ETFs</h2>
+        <table>
+            <tr>
+                <th>Aspect</th>
+                <th>Cryptocurrency</th>
+                <th>ETF</th>
+            </tr>
+            <tr>
+                <td>Type of Investment</td>
+                <td>Digital currency</td>
+                <td>Collection of stocks/assets</td>
+            </tr>
+            <tr>
+                <td>Regulation</td>
+                <td>Less regulated</td>
+                <td>Highly regulated</td>
+            </tr>
+            <tr>
+                <td>Risk Level</td>
+                <td>Very high (volatile)</td>
+                <td>Moderate (diversified)</td>
+            </tr>
+            <tr>
+                <td>Ownership</td>
+                <td>Direct (you own the crypto)</td>
+                <td>Indirect (you own shares of ETF)</td>
+            </tr>
+            <tr>
+                <td>Trading</td>
+                <td>Available 24/7</td>
+                <td>Only during stock market hours</td>
+            </tr>
+        </table>
+        
+        <h2>Should You Invest?</h2>
+        <ul>
+            <li><span class="highlight">Choose Crypto</span> if you are willing to take high risks for potentially high rewards.</li>
+            <li><span class="highlight">Choose ETFs</span> if you prefer stable, diversified investments.</li>
+        </ul>
+        
+        <h2>Learn Without Risk – Try InvestoSim!</h2>
+        <p>Want to explore crypto and ETFs without real money? <strong>InvestoSim</strong> lets you practice with virtual funds!</p>
+        
+        <h2>What’s Next?</h2>
+        <p>In the next guide, we’ll discuss common mistakes beginners make in investing and how to avoid them. Stay tuned! 🚀</p>
+    </div>
+    <a href="learn.html" class="back-button">⬅ Back to Learn More</a>
+
+</body>
+</html>-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crypto & ETFs Explained | InvestoSim</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #0066cc;
+            --primary-dark: #003366;
+            --secondary: #ffcc00;
+            --accent: #00eeff;
+            --light: #f8f9fa;
+            --dark: #121212;
+            --crypto: #f7931a;
+            --etf: #4caf50;
+            --card-bg: rgba(0, 102, 204, 0.15);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #002244, #001a33);
+            color: white;
+            line-height: 1.7;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: rgba(0, 26, 51, 0.85);
+            border-radius: 16px;
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            animation: fadeIn 0.8s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        h1, h2, h3 {
+            color: var(--secondary);
+            margin-bottom: 1.25rem;
+        }
+        
+        h1 {
+            text-align: center;
+            font-size: 2.5rem;
+            position: relative;
+            padding-bottom: 1rem;
+        }
+        
+        h1:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 4px;
+            background: var(--accent);
+            border-radius: 2px;
+        }
+        
+        h2 {
+            font-size: 1.8rem;
+            border-left: 4px solid var(--accent);
+            padding-left: 1rem;
+            margin-top: 2.5rem;
+        }
+        
+        h3 {
+            font-size: 1.4rem;
+            color: var(--accent);
+        }
+        
+        p {
+            margin-bottom: 1.25rem;
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+        
+        .highlight {
+            color: var(--accent);
+            font-weight: 500;
+        }
+        
+        .investment-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+        
+        .investment-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+            border-top: 4px solid;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+        
+        .investment-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+        }
+        
+        .crypto-card {
+            border-top-color: var(--crypto);
+        }
+        
+        .etf-card {
+            border-top-color: var(--etf);
+        }
+        
+        .card-icon {
+            font-size: 2.75rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .crypto-icon {
+            color: var(--crypto);
+        }
+        
+        .etf-icon {
+            color: var(--etf);
+        }
+        
+        .example-box {
+            background: rgba(0, 238, 255, 0.1);
+            border-left: 4px solid var(--accent);
+            padding: 1.25rem;
+            border-radius: 0 8px 8px 0;
+            margin: 1.25rem 0;
+        }
+        
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 3rem 0;
+            background: rgba(0, 0, 0, 0.15);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+        
+        .comparison-table th, .comparison-table td {
+            padding: 1.25rem;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        
+        .comparison-table th {
+            background: rgba(0, 102, 204, 0.3);
+            font-weight: 600;
+            color: var(--secondary);
+        }
+        
+        .comparison-table tr:hover td {
+            background: rgba(255, 255, 255, 0.03);
+        }
+        
+        .pros-cons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        
+        .pros, .cons {
+            padding: 1.25rem;
+            border-radius: 8px;
+        }
+        
+        .pros {
+            background: rgba(76, 175, 80, 0.1);
+            border-left: 4px solid var(--etf);
+        }
+        
+        .cons {
+            background: rgba(247, 147, 26, 0.1);
+            border-left: 4px solid var(--crypto);
+        }
+        
+        .pros h3, .cons h3 {
+            margin-top: 0;
+            display: flex;
+            align-items: center;
+        }
+        
+        .pros h3 {
+            color: var(--etf);
+        }
+        
+        .cons h3 {
+            color: var(--crypto);
+        }
+        
+        .pros h3 i, .cons h3 i {
+            margin-right: 8px;
+        }
+        
+        .choice-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .choice-card {
+            background: rgba(0, 102, 204, 0.2);
+            border-radius: 8px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .choice-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+        
+        .practice-tip {
+            background: rgba(255, 204, 0, 0.08);
+            border-left: 4px solid var(--secondary);
+            padding: 2rem;
+            border-radius: 0 12px 12px 0;
+            margin: 3rem 0;
+        }
+        
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.9rem 2rem;
+            margin: 2rem auto;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--primary-dark);
+            background: linear-gradient(135deg, var(--secondary), #ffaa00);
+            border-radius: 8px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 204, 0, 0.3);
+        }
+        
+        .back-button:hover {
+            background: linear-gradient(135deg, #ffaa00, #ff8800);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(255, 170, 0, 0.4);
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 1.5rem;
+                margin: 1rem;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .investment-cards, .pros-cons, .choice-cards {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1><i class="fas fa-coins"></i> Crypto & ETFs Explained</h1>
+        
+        <p class="intro-text">Two of the most discussed investment options today are cryptocurrencies and ETFs. While fundamentally different, both offer unique opportunities for investors. Let's explore them in detail.</p>
+        
+        <div class="investment-cards">
+            <!-- Crypto Card -->
+            <div class="investment-card crypto-card">
+                <div class="card-icon crypto-icon"><i class="fab fa-bitcoin"></i></div>
+                <h2>Cryptocurrencies</h2>
+                <p>Digital or virtual currencies that use cryptography for security and operate on decentralized blockchain networks.</p>
+                
+                <div class="example-box">
+                    <p><strong>Example:</strong> Bitcoin (BTC) is often called "digital gold" - a store of value that isn't controlled by any government or central bank. Ethereum (ETH) enables smart contracts and decentralized applications.</p>
+                </div>
+                
+                <div class="pros-cons">
+                    <div class="pros">
+                        <h3><i class="fas fa-rocket"></i> Potential Benefits</h3>
+                        <ul>
+                            <li>Decentralized - no government control</li>
+                            <li>24/7 global markets</li>
+                            <li>Potential for high returns</li>
+                            <li>Innovative technology applications</li>
+                        </ul>
+                    </div>
+                    <div class="cons">
+                        <h3><i class="fas fa-exclamation-triangle"></i> Key Risks</h3>
+                        <ul>
+                            <li>Extreme price volatility</li>
+                            <li>Regulatory uncertainty</li>
+                            <li>Security concerns (hacks, scams)</li>
+                            <li>No intrinsic value backing</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- ETF Card -->
+            <div class="investment-card etf-card">
+                <div class="card-icon etf-icon"><i class="fas fa-chart-pie"></i></div>
+                <h2>Exchange-Traded Funds</h2>
+                <p>Investment funds that track indexes, commodities, or baskets of assets and trade on stock exchanges like individual stocks.</p>
+                
+                <div class="example-box">
+                    <p><strong>Example:</strong> A Nifty 50 ETF holds shares of India's top 50 companies, giving you instant diversification. A Gold ETF tracks gold prices without needing physical storage.</p>
+                </div>
+                
+                <div class="pros-cons">
+                    <div class="pros">
+                        <h3><i class="fas fa-shield-alt"></i> Key Advantages</h3>
+                        <ul>
+                            <li>Instant diversification</li>
+                            <li>Lower costs than mutual funds</li>
+                            <li>Transparent holdings</li>
+                            <li>Tax efficiency</li>
+                        </ul>
+                    </div>
+                    <div class="cons">
+                        <h3><i class="fas fa-balance-scale"></i> Limitations</h3>
+                        <ul>
+                            <li>Market risk still applies</li>
+                            <li>Some niche ETFs can be complex</li>
+                            <li>Trading costs can add up</li>
+                            <li>No potential for outsized gains</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <h2><i class="fas fa-not-equal"></i> Key Differences</h2>
+        
+        <table class="comparison-table">
+            <thead>
+                <tr>
+                    <th>Feature</th>
+                    <th>Cryptocurrencies</th>
+                    <th>ETFs</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Underlying Value</td>
+                    <td>Digital tokens/coins</td>
+                    <td>Basket of securities/assets</td>
+                </tr>
+                <tr>
+                    <td>Regulation</td>
+                    <td>Emerging/varies by country</td>
+                    <td>Highly regulated</td>
+                </tr>
+                <tr>
+                    <td>Market Hours</td>
+                    <td>24/7/365</td>
+                    <td>Exchange hours only</td>
+                </tr>
+                <tr>
+                    <td>Volatility</td>
+                    <td>Extreme (50%+ swings common)</td>
+                    <td>Market-dependent (typically lower)</td>
+                </tr>
+                <tr>
+                    <td>Ownership</td>
+                    <td>Direct via crypto wallets</td>
+                    <td>Indirect via fund shares</td>
+                </tr>
+                <tr>
+                    <td>Use Case</td>
+                    <td>Speculation, decentralized apps</td>
+                    <td>Portfolio diversification</td>
+                </tr>
+                <tr>
+                    <td>Typical Allocation</td>
+                    <td>1-5% of portfolio (high risk)</td>
+                    <td>Core portfolio holding</td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <h2><i class="fas fa-user-check"></i> Which Option Fits Your Strategy?</h2>
+        
+        <div class="choice-cards">
+            <div class="choice-card">
+                <h3><i class="fas fa-user-astronaut"></i> Crypto Investors</h3>
+                <p>May be right for you if:</p>
+                <ul>
+                    <li>You have high risk tolerance</li>
+                    <li>You believe in blockchain technology</li>
+                    <li>You can handle extreme volatility</li>
+                    <li>You want non-correlated assets</li>
+                </ul>
+            </div>
+            
+            <div class="choice-card">
+                <h3><i class="fas fa-user-tie"></i> ETF Investors</h3>
+                <p>May be right for you if:</p>
+                <ul>
+                    <li>You prefer stable, regulated markets</li>
+                    <li>You want broad market exposure</li>
+                    <li>You're building long-term wealth</li>
+                    <li>You value simplicity and liquidity</li>
+                </ul>
+            </div>
+            
+            <div class="choice-card">
+                <h3><i class="fas fa-user-cog"></i> Balanced Approach</h3>
+                <p>Many investors:</p>
+                <ul>
+                    <li>Use ETFs for core holdings</li>
+                    <li>Allocate small portion to crypto</li>
+                    <li>Rebalance periodically</li>
+                    <li>Adjust as regulations evolve</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="practice-tip">
+            <h3><i class="fas fa-vial"></i> Practice Before Investing Real Money</h3>
+            <p>InvestoSim's virtual platform lets you explore both options risk-free:</p>
+            <ul>
+                <li>Test crypto trading strategies</li>
+                <li>Experiment with ETF portfolios</li>
+                <li>Learn how each reacts to market events</li>
+                <li>Develop confidence before committing capital</li>
+            </ul>
+        </div>
+        
+        <center>
+            <a href="learn.html" class="back-button"><i class="fas fa-arrow-left"></i> Return to Learning Center</a>
+        </center>
+    </div>
+</body>
+</html>

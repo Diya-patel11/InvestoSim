@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Common Mistakes Beginners Make | InvestoSim</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #0066cc;
+            --primary-dark: #003366;
+            --secondary: #ffcc00;
+            --accent: #00eeff;
+            --light: #f8f9fa;
+            --dark: #121212;
+            --success: #4caf50;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #003366, #001a33);
+            color: white;
+            line-height: 1.7;
+            padding: 0;
+            margin: 0;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem;
+            background: rgba(0, 26, 51, 0.8);
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+            animation: fadeIn 0.8s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        h1, h2, h3 {
+            color: var(--secondary);
+            margin-top: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        h1 {
+            text-align: center;
+            font-size: 2.5rem;
+            position: relative;
+            padding-bottom: 1rem;
+        }
+        
+        h1:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: var(--accent);
+            border-radius: 2px;
+        }
+        
+        h2 {
+            font-size: 1.8rem;
+            border-left: 4px solid var(--accent);
+            padding-left: 1rem;
+        }
+        
+        h3 {
+            font-size: 1.4rem;
+            color: var(--accent);
+        }
+        
+        p {
+            margin-bottom: 1.2rem;
+            font-size: 1.1rem;
+        }
+        
+        strong {
+            color: var(--secondary);
+            font-weight: 600;
+        }
+        
+        ul {
+            margin: 1.5rem 0;
+            padding-left: 2rem;
+        }
+        
+        li {
+            margin-bottom: 0.8rem;
+            padding-bottom: 0.8rem;
+            position: relative;
+            list-style-type: none;
+            padding-left: 1.5rem;
+        }
+        
+        li:before {
+            content: '•';
+            color: var(--accent);
+            font-size: 1.5rem;
+            position: absolute;
+            left: 0;
+            top: -3px;
+        }
+        
+        .highlight {
+            color: var(--accent);
+            font-weight: 500;
+        }
+        
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.8rem 1.5rem;
+            margin: 2rem auto;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--primary-dark);
+            background: linear-gradient(135deg, var(--secondary), #ffaa00);
+            border-radius: 8px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 204, 0, 0.3);
+            border: none;
+            cursor: pointer;
+        }
+        
+        .back-button i {
+            margin-right: 8px;
+        }
+        
+        .back-button:hover {
+            background: linear-gradient(135deg, #ffaa00, #ff8800);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(255, 170, 0, 0.4);
+        }
+        
+        .back-button:active {
+            transform: translateY(1px);
+        }
+        
+        .callout {
+            background: rgba(0, 238, 255, 0.1);
+            border-left: 4px solid var(--accent);
+            padding: 1.5rem;
+            border-radius: 0 8px 8px 0;
+            margin: 2rem 0;
+        }
+        
+        .quote {
+            font-style: italic;
+            position: relative;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .quote:before, .quote:after {
+            content: '"';
+            font-size: 3rem;
+            color: var(--secondary);
+            opacity: 0.3;
+            position: absolute;
+        }
+        
+        .quote:before {
+            top: -1rem;
+            left: -0.5rem;
+        }
+        
+        .quote:after {
+            bottom: -2rem;
+            right: -0.5rem;
+        }
+        
+        .mistake-box {
+            background: rgba(204, 0, 51, 0.2);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            position: relative;
+            overflow: hidden;
+            border-left: 4px solid #cc0033;
+        }
+        
+        .mistake-box:before {
+            content: 'MISTAKE';
+            position: absolute;
+            top: 0;
+            left: 0;
+            background: #cc0033;
+            color: white;
+            padding: 0.2rem 1rem;
+            font-weight: 700;
+            font-size: 0.8rem;
+            border-radius: 0 0 8px 0;
+        }
+
+        .solution-box {
+            background: rgba(76, 175, 80, 0.2);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: -1rem 0 2rem 0;
+            position: relative;
+            border-left: 4px solid var(--success);
+        }
+
+        .solution-box:before {
+            content: 'SOLUTION';
+            position: absolute;
+            top: 0;
+            left: 0;
+            background: var(--success);
+            color: white;
+            padding: 0.2rem 1rem;
+            font-weight: 700;
+            font-size: 0.8rem;
+            border-radius: 0 0 8px 0;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+        }
+
+        .comparison-table th {
+            background: var(--primary);
+            color: white;
+            padding: 1rem;
+            text-align: left;
+        }
+
+        .comparison-table td {
+            padding: 0.8rem 1rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .comparison-table tr:nth-child(even) {
+            background: rgba(0,102,204,0.1);
+        }
+
+        .comparison-table tr:hover {
+            background: rgba(0,102,204,0.2);
+        }
+        
+        .related-links {
+            background: rgba(0, 102, 204, 0.2);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 2rem 0;
+        }
+        
+        .related-links h3 {
+            margin-top: 0;
+        }
+        
+        .related-links ul {
+            margin: 0;
+            padding: 0;
+        }
+        
+        .related-links li {
+            padding: 0.5rem 0;
+        }
+        
+        .related-links li:before {
+            content: none;
+        }
+        
+        .related-links a {
+            color: var(--accent);
+            text-decoration: none;
+            transition: color 0.3s ease;
+            display: flex;
+            align-items: center;
+        }
+        
+        .related-links a:hover {
+            color: var(--secondary);
+        }
+        
+        .related-links i {
+            margin-right: 10px;
+            font-size: 0.8rem;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 1.5rem;
+                margin: 1rem;
+                border-radius: 12px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            h2 {
+                font-size: 1.5rem;
+            }
+
+            .comparison-table {
+                display: block;
+                overflow-x: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1><i class="fas fa-exclamation-triangle"></i> Common Mistakes Beginners Make</h1>
+        
+        <div class="callout">
+            <p><strong>Every investor makes mistakes</strong>, but beginners often repeat the same avoidable errors. Learning from others' mistakes is the cheapest way to improve your investment journey.</p>
+        </div>
+        
+        <h2><i class="fas fa-money-bill-wave"></i> Investment Strategy Mistakes</h2>
+        
+        <div class="mistake-box">
+            <h3>Chasing Past Performance</h3>
+            <p>Buying funds/stocks simply because they've performed well recently, without understanding why they performed well or if the growth is sustainable.</p>
+        </div>
+        
+        <div class="solution-box">
+            <h3>What to Do Instead</h3>
+            <p>Look at long-term performance (5+ years) across market cycles. Understand the fundamentals behind the performance. Remember: "Past performance is not indicative of future results."</p>
+        </div>
+        
+        <div class="mistake-box">
+            <h3>Trying to Time the Market</h3>
+            <p>Waiting for the "perfect" time to invest or trying to predict market bottoms and tops.</p>
+        </div>
+        
+        <div class="solution-box">
+            <h3>What to Do Instead</h3>
+            <p>Practice rupee-cost averaging through SIPs. Time in the market beats timing the market. Start now with whatever amount you can and stay consistent.</p>
+        </div>
+        
+        <h2><i class="fas fa-chart-line"></i> Psychological Mistakes</h2>
+        
+        <div class="mistake-box">
+            <h3>Panic Selling During Dips</h3>
+            <p>Selling investments when markets fall, locking in losses instead of riding out volatility.</p>
+        </div>
+        
+        <div class="solution-box">
+            <h3>What to Do Instead</h3>
+            <p>Remember that market corrections are normal. If your fundamentals are sound, consider buying more at lower prices rather than selling.</p>
+        </div>
+        
+        <div class="mistake-box">
+            <h3>Overconfidence After Early Wins</h3>
+            <p>Making riskier bets after initial successes, mistaking luck for skill.</p>
+        </div>
+        
+        <div class="solution-box">
+            <h3>What to Do Instead</h3>
+            <p>Stick to your investment plan. Recognize that everyone gets lucky sometimes - consistent returns over decades matter more than short-term wins.</p>
+        </div>
+        
+        <h2><i class="fas fa-calculator"></i> Technical Mistakes</h2>
+        
+        <div class="mistake-box">
+            <h3>Ignoring Costs and Taxes</h3>
+            <p>Not accounting for brokerage fees, expense ratios, and tax implications that eat into returns.</p>
+        </div>
+        
+        <div class="solution-box">
+            <h3>What to Do Instead</h3>
+            <p>Compare expense ratios before choosing funds. Understand LTCG/STCG taxes. Use tax-saving instruments like ELSS where appropriate.</p>
+            
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Cost Factor</th>
+                        <th>Impact Over 20 Years</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1% higher expense ratio</td>
+                        <td>Reduces final value by ~18%</td>
+                    </tr>
+                    <tr>
+                        <td>Short-term trading (taxes)</td>
+                        <td>Loses 15-30% to taxes annually</td>
+                    </tr>
+                    <tr>
+                        <td>Frequent brokerage fees</td>
+                        <td>Can reduce returns by 2-5% annually</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="mistake-box">
+            <h3>Over-Diversification</h3>
+            <p>Owning too many funds/stocks without purpose, creating a "closet index fund" with higher costs.</p>
+        </div>
+        
+        <div class="solution-box">
+            <h3>What to Do Instead</h3>
+            <p>For most beginners, 1-3 index funds are sufficient. As you learn more, you might add 3-5 carefully selected individual stocks if desired.</p>
+        </div>
+        
+        <div class="quote">
+            "The investor's chief problem - and even his worst enemy - is likely to be himself." — Benjamin Graham
+        </div>
+        
+        <div class="related-links">
+            <h3><i class="fas fa-book-reader"></i> Continue Learning</h3>
+            <ul>
+                <li><a href="blog10.html"><i class="fas fa-arrow-right"></i> The Power of Compound Interest</a></li>
+                <li><a href="blog7.html"><i class="fas fa-arrow-right"></i> Your First Investment: Step-by-Step</a></li>
+            </ul>
+        </div>
+        
+        <h2><i class="fas fa-lightbulb"></i> Key Lessons</h2>
+        <ul>
+            <li>Have a written investment plan and stick to it</li>
+            <li>Focus on factors you can control (costs, diversification, time horizon)</li>
+            <li>Understand that volatility is normal - don't panic during downturns</li>
+            <li>Invest regularly regardless of market conditions</li>
+            <li>Keep learning but avoid constantly changing strategies</li>
+        </ul>
+        
+        <center>
+            <a href="learn.html" class="back-button"><i class="fas fa-arrow-left"></i> Back to Learn More</a>
+        </center>
+    </div>
+</body>
+</html>

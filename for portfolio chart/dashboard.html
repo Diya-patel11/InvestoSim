@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InvestoSim Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom"></script>
+
+
+</head>
+<body>
+    <nav class="top-nav">
+        <ul>
+            <li><a href="#">Portfolio</a></li>
+            <li><a href="#">Trade</a></li>
+            <li><a href="#">Research</a></li>
+            <li><a href="#">Learn</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <section class="portfolio-section">
+            <h2>Portfolio Overview</h2>
+            <div class="portfolio-metrics">
+                <div class="metric">
+                    <h3>Account Value</h3>
+                    <p id="accountValue">$0</p>
+                </div>
+                <div class="metric">
+                    <h3>Today's Change</h3>
+                    <p id="todaysChange" class="positive">+0.00%</p>
+                </div>
+                <div class="metric">
+                    <h3>Annual Return</h3>
+                    <p id="annualReturn">0.00%</p>
+                </div>
+            </div>
+
+            <div class="performance-chart">
+                <h3>Performance Chart</h3>
+                <canvas id="portfolioPerformanceChart"></canvas>
+                <div class="timeframe-buttons">
+                    <button onclick="updateChartData('1W')">1W</button>
+                    <button onclick="updateChartData('1M')">1M</button>
+                    <button onclick="updateChartData('3M')">3M</button>
+                    <button onclick="updateChartData('6M')">6M</button>
+                    <button onclick="updateChartData('1Y')">1Y</button>
+                </div>
+            </div>
+
+            <button id="togglePerformanceHistory">Show Performance History</button>
+            <div id="performanceHistory" style="display: none;">
+                <h3>Performance History</h3>
+                <ul id="historyList"></ul>
+            </div>
+        </section>
+
+        <!--<section class="chart-container">
+            <h2>Stock Market Chart</h2>
+            <div id="tradingview-widget"></div>
+        </section>
+    </main>
+    <script>
+        const API_KEY = "XY0PDPZ0MCKBEZ7X"; // Replace with your new Alpha Vantage API key
+        const API_BASE_URL = "https://www.alphavantage.co/query";
+    
+        async function fetchStockData() {
+            let symbol = document.getElementById("stock-symbol").value.trim().toUpperCase();
+            let nseSymbol = `${symbol}.NSE`;
+            let bseSymbol = `${symbol}.BSE`;
+    
+            try {
+                // Try NSE first
+                let response = await fetch(`${API_BASE_URL}?function=GLOBAL_QUOTE&symbol=${nseSymbol}&apikey=${API_KEY}`);
+                let stockData = await response.json();
+    
+                // If NSE data is empty, try BSE
+                if (!stockData["Global Quote"] || Object.keys(stockData["Global Quote"]).length === 0) {
+                    response = await fetch(`${API_BASE_URL}?function=GLOBAL_QUOTE&symbol=${bseSymbol}&apikey=${API_KEY}`);
+                    stockData = await response.json();
+                }
+    
+                if (!stockData["Global Quote"] || Object.keys(stockData["Global Quote"]).length === 0) {
+                    alert("Stock data not available. Try again later.");
+                    return;
+                }
+    
+                let stock = stockData["Global Quote"];
+    
+                document.getElementById("stock-details").style.display = "block";
+                document.getElementById("stock-name").innerText = `Stock: ${symbol}`;
+                document.getElementById("stock-price").innerText = `Price: ₹${stock["05. price"]}`;
+                document.getElementById("stock-change").innerText = `Change: ${stock["09. change"]} (${stock["10. change percent"]})`;
+                document.getElementById("stock-volume").innerText = `Volume: ${stock["06. volume"]}`;
+    
+                fetchHistoricalData(nseSymbol);
+            } catch (error) {
+                console.error("Error fetching stock details:", error);
+                alert("Failed to fetch stock details. Please try again.");
+            }
+        }
+    
+        async function fetchHistoricalData(symbol) {
+            try {
+                const response = await fetch(`${API_BASE_URL}?function=TIME_SERIES_DAILY&symbol=${symbol}&apikey=${API_KEY}`);
+                const data = await response.json();
+    
+                if (!data["Time Series (Daily)"]) {
+                    console.error("No historical data available");
+                    return;
+                }
+    
+                let historicalPrices = Object.entries(data["Time Series (Daily)"])
+                    .map(([date, prices]) => ({ date, close: parseFloat(prices["4. close"]) }))
+                    .slice(0, 30); // Get last 30 days
+    
+                updateChart(historicalPrices);
+            } catch (error) {
+                console.error("Error fetching historical stock data:", error);
+            }
+        }
+    
+        function updateChart(priceData) {
+            const ctx = document.getElementById("stock-chart").getContext("2d");
+    
+            if (window.stockChart) {
+                window.stockChart.destroy();
+            }
+    
+            window.stockChart = new Chart(ctx, {
+                type: "line",
+                data: {
+                    labels: priceData.map(data => data.date),
+                    datasets: [{
+                        label: "Stock Price",
+                        data: priceData.map(data => data.close),
+                        borderColor: "blue",
+                        borderWidth: 2,
+                        fill: false,
+                        pointRadius: 2,
+                        tension: 0.2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: { display: false }
+                    },
+                    scales: {
+                        x: { display: true, title: { display: true, text: "Date" } },
+                        y: { display: true, title: { display: true, text: "Price (₹)" } }
+                    }
+                }
+            });
+        }
+    </script>
+    <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+    <script>
+        new TradingView.widget({
+            "container_id": "tradingview-widget",
+            "width": "100%",
+            "height": 400,
+            "symbol": "BSE:SENSEX",
+            "interval": "D",
+            "theme": "light",
+            "style": "1",
+            "locale": "en",
+            "toolbar_bg": "#f1f3f6",
+            "hide_top_toolbar": false,
+            "allow_symbol_change": true,
+            "save_image": false
+        });
+    </script>
+    <script>
+        //togglebar in dashboard
+document.querySelector(".sidebar-toggle").addEventListener("click", function() {
+    document.querySelector(".sidebar").classList.toggle("active");
+});
+    </script>--->
+
+
+        <section class="trade-section">
+            <h2>Trade Stocks</h2>
+            <p>Coming Soon...</p>
+        </section>
+
+        <section class="research-section">
+            <h2>Market Research</h2>
+            <p>Coming Soon...</p>
+        </section>
+
+        <section class="learn-section">
+            <h2>Learn Investing</h2>
+            <p>Coming Soon...</p>
+        </section>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

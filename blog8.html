@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Understanding Stock Market Basics | InvestoSim</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #0066cc;
+            --primary-dark: #003366;
+            --secondary: #ffcc00;
+            --accent: #00eeff;
+            --light: #f8f9fa;
+            --dark: #121212;
+            --success: #4caf50;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #003366, #001a33);
+            color: white;
+            line-height: 1.7;
+            padding: 0;
+            margin: 0;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem;
+            background: rgba(0, 26, 51, 0.8);
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+            animation: fadeIn 0.8s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        h1, h2, h3 {
+            color: var(--secondary);
+            margin-top: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        h1 {
+            text-align: center;
+            font-size: 2.5rem;
+            position: relative;
+            padding-bottom: 1rem;
+        }
+        
+        h1:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: var(--accent);
+            border-radius: 2px;
+        }
+        
+        h2 {
+            font-size: 1.8rem;
+            border-left: 4px solid var(--accent);
+            padding-left: 1rem;
+        }
+        
+        h3 {
+            font-size: 1.4rem;
+            color: var(--accent);
+        }
+        
+        p {
+            margin-bottom: 1.2rem;
+            font-size: 1.1rem;
+        }
+        
+        strong {
+            color: var(--secondary);
+            font-weight: 600;
+        }
+        
+        ul {
+            margin: 1.5rem 0;
+            padding-left: 2rem;
+        }
+        
+        li {
+            margin-bottom: 0.8rem;
+            position: relative;
+            list-style-type: none;
+            padding-left: 1.5rem;
+        }
+        
+        li:before {
+            content: '•';
+            color: var(--accent);
+            font-size: 1.5rem;
+            position: absolute;
+            left: 0;
+            top: -3px;
+        }
+        
+        .highlight {
+            color: var(--accent);
+            font-weight: 500;
+        }
+        
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.8rem 1.5rem;
+            margin: 2rem auto;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--primary-dark);
+            background: linear-gradient(135deg, var(--secondary), #ffaa00);
+            border-radius: 8px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 204, 0, 0.3);
+            border: none;
+            cursor: pointer;
+        }
+        
+        .back-button i {
+            margin-right: 8px;
+        }
+        
+        .back-button:hover {
+            background: linear-gradient(135deg, #ffaa00, #ff8800);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(255, 170, 0, 0.4);
+        }
+        
+        .back-button:active {
+            transform: translateY(1px);
+        }
+        
+        .callout {
+            background: rgba(0, 238, 255, 0.1);
+            border-left: 4px solid var(--accent);
+            padding: 1.5rem;
+            border-radius: 0 8px 8px 0;
+            margin: 2rem 0;
+        }
+        
+        .quote {
+            font-style: italic;
+            position: relative;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .quote:before, .quote:after {
+            content: '"';
+            font-size: 3rem;
+            color: var(--secondary);
+            opacity: 0.3;
+            position: absolute;
+        }
+        
+        .quote:before {
+            top: -1rem;
+            left: -0.5rem;
+        }
+        
+        .quote:after {
+            bottom: -2rem;
+            right: -0.5rem;
+        }
+        
+        .tip-box {
+            background: rgba(0, 102, 204, 0.2);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .tip-box:before {
+            content: 'TIP';
+            position: absolute;
+            top: 0;
+            left: 0;
+            background: var(--accent);
+            color: var(--primary-dark);
+            padding: 0.2rem 1rem;
+            font-weight: 700;
+            font-size: 0.8rem;
+            border-radius: 0 0 8px 0;
+        }
+
+        .infographic {
+            background: rgba(0, 102, 204, 0.1);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border: 1px dashed var(--accent);
+            text-align: center;
+        }
+
+        .infographic-title {
+            color: var(--secondary);
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 1.5rem;
+                margin: 1rem;
+                border-radius: 12px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            h2 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1><i class="fas fa-university"></i> Understanding Stock Market Basics</h1>
+        
+        <div class="callout">
+            <p><strong>The stock market can seem like a complex machine</strong>, but at its core, it's simply a marketplace where buyers and sellers exchange ownership in companies. Let's break down how this powerful system works.</p>
+        </div>
+        
+        <h2><i class="fas fa-exchange-alt"></i> What Exactly is the Stock Market?</h2>
+        <p>The stock market is a collection of exchanges where shares of publicly traded companies are bought and sold. In India, the two major exchanges are:</p>
+        
+        <ul>
+            <li><span class="highlight">Bombay Stock Exchange (BSE)</span> - Asia's oldest stock exchange, established in 1875</li>
+            <li><span class="highlight">National Stock Exchange (NSE)</span> - India's largest exchange by daily turnover</li>
+        </ul>
+        
+        <div class="infographic">
+            <div class="infographic-title">How Stock Prices Move</div>
+            <p>Demand ↗️ → Price ↗️</p>
+            <p>Demand ↘️ → Price ↘️</p>
+            <p>Simple supply and demand economics!</p>
+        </div>
+        
+        <h2><i class="fas fa-users"></i> Key Players in the Market</h2>
+        <ul>
+            <li><span class="highlight">Investors</span> - Individuals or institutions buying for long-term growth</li>
+            <li><span class="highlight">Traders</span> - Those buying and selling frequently to profit from short-term movements</li>
+            <li><span class="highlight">Brokers</span> - Licensed intermediaries who execute trades (like Zerodha, ICICI Direct)</li>
+            <li><span class="highlight">Market Makers</span> - Ensure liquidity by always being ready to buy or sell</li>
+            <li><span class="highlight">Regulators</span> - SEBI (Securities and Exchange Board of India) oversees the market</li>
+        </ul>
+        
+        <div class="quote">
+            "The stock market is a device for transferring money from the impatient to the patient." — Warren Buffett
+        </div>
+        
+        <h2><i class="fas fa-chart-line"></i> How Stock Prices Are Determined</h2>
+        <p>Stock prices fluctuate based on:</p>
+        <ul>
+            <li><span class="highlight">Company performance</span> - Revenue, profits, and growth prospects</li>
+            <li><span class="highlight">Economic factors</span> - Interest rates, inflation, GDP growth</li>
+            <li><span class="highlight">Industry trends</span> - Sector-specific developments</li>
+            <li><span class="highlight">Market sentiment</span> - Investor psychology and news</li>
+            <li><span class="highlight">Global events</span> - Geopolitical situations, foreign investments</li>
+        </ul>
+        
+        <div class="tip-box">
+            <p><strong>Did You Know?</strong> The BSE Sensex and NSE Nifty are India's benchmark indices that track the performance of top companies, similar to how the Dow Jones or S&P 500 work in the US.</p>
+        </div>
+        
+        <h2><i class="fas fa-clock"></i> Market Hours in India</h2>
+        <p>Indian stock markets operate on weekdays (except holidays) with specific sessions:</p>
+        
+        <ul>
+            <li><span class="highlight">Pre-open session</span> - 9:00 AM to 9:15 AM</li>
+            <li><span class="highlight">Normal trading</span> - 9:15 AM to 3:30 PM</li>
+            <li><span class="highlight">Closing session</span> - 3:30 PM to 4:00 PM</li>
+        </ul>
+        
+        <h2><i class="fas fa-tags"></i> Common Order Types</h2>
+        <p>When you want to buy or sell stocks, you can place different types of orders:</p>
+        
+        <ul>
+            <li><span class="highlight">Market Order</span> - Buy/sell immediately at current price</li>
+            <li><span class="highlight">Limit Order</span> - Buy/sell only at specified price</li>
+            <li><span class="highlight">Stop-Loss Order</span> - Sell automatically if price drops to limit losses</li>
+            <li><span class="highlight">Bracket Order</span> - Combination with target and stop-loss</li>
+        </ul>
+        
+        <div class="callout">
+            <h3><i class="fas fa-graduation-cap"></i> Practice Makes Perfect</h3>
+            <p>Before risking real money, use <strong>InvestoSim</strong> to:</p>
+            <ul>
+                <li>Test different order types risk-free</li>
+                <li>Understand how market movements affect your portfolio</li>
+                <li>Develop confidence in your trading decisions</li>
+            </ul>
+        </div>
+        
+        <h2><i class="fas fa-arrow-right"></i> Next Steps</h2>
+        <p>Now that you understand the basics, you're ready to learn about different investment strategies and how to analyze companies. Remember, every expert investor started exactly where you are now!</p>
+        
+        <center>
+            <a href="learn.html" class="back-button"><i class="fas fa-arrow-left"></i> Back to Learn More</a>
+        </center>
+    </div>
+</body>
+</html>

@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tax Implications of Investing | InvestoSim</title>
+    <!-- Same head content as previous blogs -->
+     <style>
+                /* Same CSS structure as previous blogs */
+                :root {
+            --primary: #0066cc;
+            --primary-dark: #003366;
+            --secondary: #ffcc00;
+            --accent: #00eeff;
+            --light: #f8f9fa;
+            --dark: #121212;
+            --success: #4caf50;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #003366, #001a33);
+            color: white;
+            line-height: 1.7;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: rgba(0, 26, 51, 0.8);
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            animation: fadeIn 0.8s ease-out;
+        }
+                /* Same CSS structure as previous blogs */
+                :root {
+            --primary: #0066cc;
+            --primary-dark: #003366;
+            --secondary: #ffcc00;
+            --accent: #00eeff;
+            --light: #f8f9fa;
+            --dark: #121212;
+            --success: #4caf50;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #003366, #001a33);
+            color: white;
+            line-height: 1.7;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: rgba(0, 26, 51, 0.8);
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            animation: fadeIn 0.8s ease-out;
+        }
+        * Same CSS as previous blogs */
+        :root {
+            --primary: #0066cc;
+            --primary-dark: #003366;
+            --secondary: #ffcc00;
+            --accent: #00eeff;
+            --light: #f8f9fa;
+            --dark: #121212;
+            --success: #4caf50;
+            --warning: #cc0033;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #003366, #001a33);
+            color: white;
+            line-height: 1.7;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: rgba(0, 26, 51, 0.8);
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            animation: fadeIn 0.8s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        h1, h2, h3 { color: var(--secondary); margin-top: 1.5rem; margin-bottom: 1rem; }
+        
+        h1 {
+            text-align: center;
+            font-size: 2.5rem;
+            position: relative;
+            padding-bottom: 1rem;
+        }
+        
+        h1:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: var(--accent);
+            border-radius: 2px;
+        }
+        
+        h2 { font-size: 1.8rem; border-left: 4px solid var(--accent); padding-left: 1rem; }
+        h3 { font-size: 1.4rem; color: var(--accent); }
+        p { margin-bottom: 1.2rem; font-size: 1.1rem; }
+        strong { color: var(--secondary); font-weight: 600; }
+        
+        ul { margin: 1.5rem 0; padding-left: 2rem; }
+        li {
+            margin-bottom: 0.8rem;
+            padding-bottom: 0.8rem;
+            position: relative;
+            list-style-type: none;
+            padding-left: 1.5rem;
+        }
+        
+        li:before {
+            content: '•';
+            color: var(--accent);
+            font-size: 1.5rem;
+            position: absolute;
+            left: 0;
+            top: -3px;
+        }
+        
+        .highlight { color: var(--accent); font-weight: 500; }
+        
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.8rem 1.5rem;
+            margin: 2rem auto;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--primary-dark);
+            background: linear-gradient(135deg, var(--secondary), #ffaa00);
+            border-radius: 8px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 204, 0, 0.3);
+            cursor: pointer;
+        }
+        
+        .back-button:hover {
+            background: linear-gradient(135deg, #ffaa00, #ff8800);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(255, 170, 0, 0.4);
+        }
+        
+        .callout {
+            background: rgba(0, 238, 255, 0.1);
+            border-left: 4px solid var(--accent);
+            padding: 1.5rem;
+            border-radius: 0 8px 8px 0;
+            margin: 2rem 0;
+        }
+        
+        .quote {
+            font-style: italic;
+            position: relative;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .quote:before, .quote:after {
+            content: '"';
+            font-size: 3rem;
+            color: var(--secondary);
+            opacity: 0.3;
+            position: absolute;
+        }
+        
+        .quote:before { top: -1rem; left: -0.5rem; }
+        .quote:after { bottom: -2rem; right: -0.5rem; }
+        
+        .emotion-card {
+            background: rgba(0, 102, 204, 0.2);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-left: 4px solid var(--accent);
+        }
+        
+        .danger-card {
+            background: rgba(204, 0, 51, 0.2);
+            border-left: 4px solid var(--warning);
+        }
+        
+        .solution-card {
+            background: rgba(76, 175, 80, 0.2);
+            border-left: 4px solid var(--success);
+        }
+        
+        .psychology-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+        }
+        
+        .psychology-table th {
+            background: var(--primary);
+            color: white;
+            padding: 1rem;
+            text-align: left;
+        }
+        
+        .psychology-table td {
+            padding: 0.8rem 1rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .psychology-table tr:nth-child(even) {
+            background: rgba(0,102,204,0.1);
+        }
+        
+        .related-links {
+            background: rgba(0, 102, 204, 0.2);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 2rem 0;
+        }
+        
+        .related-links ul { margin: 0; padding: 0; }
+        .related-links li { padding: 0.5rem 0; }
+        .related-links li:before { content: none; }
+        .related-links a {
+            color: var(--accent);
+            text-decoration: none;
+            transition: color 0.3s ease;
+            display: flex;
+            align-items: center;
+        }
+        
+        .related-links a:hover { color: var(--secondary); }
+        .related-links i { margin-right: 10px; font-size: 0.8rem; }
+        
+        @media (max-width: 768px) {
+            .container { padding: 1.5rem; margin: 1rem; border-radius: 12px; }
+            h1 { font-size: 2rem; }
+            h2 { font-size: 1.5rem; }
+        }
+             
+        .comparison-table {
+  margin: 20px auto;
+  max-width: 900px;
+  overflow-x: auto;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  border-color: #e1e1e1;
+}
+
+.comparison-table table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: 'Segoe UI', sans-serif;
+  font-size: 15px;
+  color: #ffffff;
+  background: #003366;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.comparison-table thead th {
+  background: #ffe202;
+  color: black;
+  padding: 14px 20px;
+  text-align: left;
+  font-weight: 600;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  border-bottom: 2px solid #e1e1e1;
+}
+
+.comparison-table tbody td {
+  padding: 12px 20px;
+  border-bottom: 1px solid #eee;
+}
+
+.comparison-table tbody tr:nth-child(even) {
+  background: #003366;
+}
+
+.comparison-table tbody tr:hover {
+  background: #003366;
+  transition: background 0.2s ease;
+}
+     </style>
+</head>
+<body>
+    <div class="container">
+        <h1><i class="fas fa-file-invoice-dollar"></i> Tax Implications of Investing</h1>
+        
+        <div class="callout">
+            <p><strong>Taxes can significantly impact your investment returns.</strong> Understand how different investment vehicles are taxed in India to optimize your after-tax gains.</p>
+        </div>
+        
+        <h2><i class="fas fa-coins"></i> Capital Gains Tax</h2>
+        
+        <div class="step-container">
+            <div class="step">
+                <h3>Short-Term Capital Gains (STCG)</h3>
+                <p>For equity holdings sold within 12 months:</p>
+                <ul>
+                    <li>15% tax on profits (plus cess and surcharge)</li>
+                    <li>Applies regardless of amount</li>
+                    <li>No indexation benefit</li>
+                </ul>
+            </div>
+            
+            <div class="step">
+                <h3>Long-Term Capital Gains (LTCG)</h3>
+                <p>For equity holdings sold after 12 months:</p>
+                <ul>
+                    <li>10% tax on gains above ₹1 lakh/year</li>
+                    <li>First ₹1 lakh is tax-free</li>
+                    <li>No indexation benefit for equity</li>
+                </ul>
+            </div>
+        </div>
+        
+        <h2><i class="fas fa-percentage"></i> Dividend Taxation</h2>
+        
+        <div class="warning-box">
+            <h3>New Dividend Tax Rules</h3>
+            <p>Dividends are now taxed at the investor's income tax slab rate:</p>
+            <ul>
+                <li>Company pays DDT (Dividend Distribution Tax) before 2020</li>
+                <li>Now treated as income in hands of receiver</li>
+                <li>TDS @10% if dividend exceeds ₹5,000/year</li>
+            </ul>
+        </div>
+        
+        <h2><i class="fas fa-shield-alt"></i> Tax-Saving Instruments</h2>
+        
+        <table class="comparison-table">
+            <thead>
+                <tr>
+                    <th>Instrument</th>
+                    <th>Tax Benefit</th>
+                    <th>Lock-in</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>ELSS Funds</td>
+                    <td>₹1.5L under 80C</td>
+                    <td>3 years</td>
+                </tr>
+                <tr>
+                    <td>PPF</td>
+                    <td>₹1.5L under 80C</td>
+                    <td>15 years</td>
+                </tr>
+                <tr>
+                    <td>NPS</td>
+                    <td>Additional ₹50K under 80CCD(1B)</td>
+                    <td>Till retirement</td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <div class="related-links">
+            <h3><i class="fas fa-book-reader"></i> Continue Learning</h3>
+            <ul>
+                <li><a href="blog24.html"><i class="fas fa-arrow-right"></i> SIP vs Lump Sum Investments</a></li>
+                <li><a href="blog25.html"><i class="fas fa-arrow-right"></i> Building Your First Portfolio</a></li>
+            </ul>
+        </div>
+        
+        <center>
+            <a href="learn.html" class="back-button"><i class="fas fa-arrow-left"></i> Back to Learn More</a>
+        </center>
+    </div>
+</body>
+</html>

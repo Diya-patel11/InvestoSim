@@ -1,0 +1,1067 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InvestoSim Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom"></script>
+    <style>
+        :root {
+            --primary-color: #4361ee;
+            --primary-light: #5a75f5;
+            --secondary-color: #3a0ca3;
+            --accent-color: #4895ef;
+            --success-color: #4cc9f0;
+            --success-dark: #38b6db;
+            --danger-color: #f72585;
+            --warning-color: #f8961e;
+            --light-color: #f8f9fa;
+            --dark-color: #212529;
+            --gray-color: #6c757d;
+            --card-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            --card-shadow-hover: 0 8px 30px rgba(0, 0, 0, 0.12);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --sidebar-bg: #1a1a2e;
+            --card-bg: #ffffff;
+            --input-bg: #f1f3f5;
+            --border-radius: 12px;
+            --border-radius-sm: 8px;
+            --border-radius-lg: 16px;
+            --glass-effect: rgba(255, 255, 255, 0.08);
+            --glass-border: 1px solid rgba(255, 255, 255, 0.1);
+            --text-primary: #1a1a2e;
+            --text-secondary: #4a5568;
+            --bg-color: #f8fafc;
+            --text-color: #1e293b;
+            --navbar-bg: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        }
+        
+        /* Dark mode colors */
+        [data-theme="dark"] {
+            --bg-color: #0f172a;
+            --text-color: #f8fafc;
+            --card-bg: #1e293b;
+            --sidebar-bg: #0f172a;
+            --navbar-bg: linear-gradient(135deg, #1e40af, #1e3a8a);
+            --card-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            --gray-color: #94a3b8;
+            --input-bg: #334155;
+            --text-primary: #f8fafc;
+            --text-secondary: #cbd5e1;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            transition: var(--transition);
+            min-height: 100vh;
+        }
+        
+        /* Header Styles */
+        .navbar {
+            background: var(--navbar-bg);
+            color: white;
+            padding: 0.8rem 2rem;
+            box-shadow: var(--card-shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: var(--transition);
+            height: 70px;
+        }
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .logo i {
+            font-size: 1.8rem;
+            color: white;
+        }
+        
+        .dark-mode-toggle {
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: white;
+            font-size: 1rem;
+            cursor: pointer;
+            padding: 0.5rem 1rem;
+            border-radius: var(--border-radius);
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .dark-mode-toggle:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.05);
+        }
+        
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 1rem;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: var(--border-radius-sm);
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.95rem;
+        }
+        
+        nav ul li a:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+        
+        nav ul li a i {
+            font-size: 1.1rem;
+        }
+        
+        /* Sidebar Styles */
+        .sidebar-toggle {
+            position: fixed;
+            top: 90px;
+            left: 0;
+            background: var(--warning-color);
+            color: white;
+            padding: 0.8rem;
+            border: none;
+            border-radius: 0 var(--border-radius) var(--border-radius) 0;
+            cursor: pointer;
+            z-index: 101;
+            transition: var(--transition);
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .sidebar-toggle:hover {
+            background: #e67e22;
+            padding-left: 1rem;
+        }
+        
+        .sidebar {
+            background: var(--sidebar-bg);
+            color: white;
+            position: fixed;
+            top: 5;
+            left: -300px;
+            width: 280px;
+            height: 100%;
+            padding: 6rem 1.5rem 2rem;
+            transition: var(--transition);
+            z-index: 100;
+            box-shadow: 4px 0 15px rgba(0, 0, 0, 0.1);
+            overflow-y: auto;
+        }
+        
+        .sidebar.active {
+            left: 0;
+        }
+        
+        .welcome {
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .welcome h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        
+        .welcome p {
+            opacity: 0.8;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        .sidebar ul {
+            list-style: none;
+        }
+        
+        .sidebar ul li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .sidebar ul li a {
+            color: rgba(255, 255, 255, 0.9);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.8rem 1rem;
+            text-decoration: none;
+            border-radius: var(--border-radius-sm);
+            transition: var(--transition);
+            font-size: 0.95rem;
+        }
+        
+        .sidebar ul li a:hover, .sidebar ul li a.active {
+            background-color: rgba(255, 255, 255, 0.1);
+            transform: translateX(5px);
+            color: white;
+        }
+        
+        .sidebar ul li a i {
+            width: 24px;
+            text-align: center;
+            font-size: 1rem;
+        }
+
+        .positive {
+            color: var(--success-color);
+        }
+        .negative {
+            color: var(--danger-color);
+        }
+        .neutral {
+            color: var(--gray-color);
+        }
+        .error {
+            color: var(--danger-color);
+            text-align: center;
+            font-weight: bold;
+        }
+        
+        /* Main Content */
+        .content {
+            margin-left: 0;
+            padding: 6rem 2rem 2rem;
+            transition: var(--transition);
+        }
+        
+        .sidebar.active + .content {
+            margin-left: 280px;
+        }
+        
+        /* Dashboard Sections */
+        .dashboard-header {
+            margin-bottom: 2rem;
+            animation: fadeIn 0.6s ease-out;
+        }
+        
+        .dashboard-header h1 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--text-color);
+            margin-bottom: 0.5rem;
+            transition: var(--transition);
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            display: inline-block;
+        }
+        
+        .dashboard-header p {
+            color: var(--gray-color);
+            transition: var(--transition);
+            font-size: 1rem;
+        }
+        
+        /* Portfolio Metrics */
+        .portfolio-metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .metric-card {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            box-shadow: var(--card-shadow);
+            transition: var(--transition);
+            border-left: 4px solid var(--accent-color);
+            animation: fadeInUp 0.5s ease-out;
+        }
+        
+        .metric-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--card-shadow-hover);
+        }
+        
+        .metric-card h3 {
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--gray-color);
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: var(--transition);
+        }
+        
+        .metric-card h3 i {
+            font-size: 1.1rem;
+            color: var(--accent-color);
+        }
+        
+        .metric-card p {
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 0;
+            transition: var(--transition);
+            color: var(--text-color);
+        }
+        
+        /* Holdings Table */
+        .holdings-container {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            box-shadow: var(--card-shadow);
+            margin-bottom: 2rem;
+            transition: var(--transition);
+            overflow-x: auto;
+            animation: fadeIn 0.6s ease-out;
+        }
+        
+        .holdings-container h2 {
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-color);
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+        
+        .holdings-container h2 i {
+            color: var(--accent-color);
+        }
+        
+        #holdingsTable {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+        
+        #holdingsTable th {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 0.8rem 1rem;
+            text-align: left;
+            font-weight: 500;
+        }
+        
+        #holdingsTable td {
+            padding: 0.8rem 1rem;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            color: var(--text-color);
+        }
+        
+        #holdingsTable tr:last-child td {
+            border-bottom: none;
+        }
+        
+        #holdingsTable tr:hover td {
+            background-color: rgba(0, 0, 0, 0.02);
+        }
+        
+        [data-theme="dark"] #holdingsTable tr:hover td {
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+        
+        /* Chart Container */
+        .chart-container {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            box-shadow: var(--card-shadow);
+            margin-bottom: 2rem;
+            transition: var(--transition);
+            animation: fadeIn 0.7s ease-out;
+        }
+        
+        .chart-container h2 {
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            color: var(--text-color);
+            transition: var(--transition);
+        }
+        
+        .chart-container h2 i {
+            color: var(--accent-color);
+        }
+        
+        /* Quick Actions */
+        .quick-actions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .action-card {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 1.8rem 1.5rem;
+            box-shadow: var(--card-shadow);
+            transition: var(--transition);
+            text-align: center;
+            cursor: pointer;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            animation: fadeInUp 0.5s ease-out;
+        }
+        
+        .action-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--card-shadow-hover);
+            border-color: var(--accent-color);
+        }
+        
+        .action-card i {
+            font-size: 2.2rem;
+            margin-bottom: 1rem;
+            color: var(--accent-color);
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .action-card h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-color);
+            transition: var(--transition);
+            font-weight: 600;
+        }
+        
+        .action-card p {
+            color: var(--gray-color);
+            font-size: 0.9rem;
+            transition: var(--transition);
+        }
+        
+        /* Pie Chart Container */
+        .pie-chart-container {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            box-shadow: var(--card-shadow);
+            margin-bottom: 2rem;
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            animation: fadeIn 0.6s ease-out;
+        }
+        
+        .pie-chart-container h2 {
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-color);
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            align-self: flex-start;
+        }
+        
+        .pie-chart-container h2 i {
+            color: var(--accent-color);
+        }
+        
+        /* Responsive Adjustments */
+        @media (max-width: 1200px) {
+            .sidebar {
+                width: 260px;
+                left: -260px;
+            }
+            
+            .sidebar.active + .content {
+                margin-left: 260px;
+            }
+        }
+        
+        @media (max-width: 992px) {
+            .sidebar {
+                width: 240px;
+                left: -240px;
+                padding: 5rem 1rem 2rem;
+            }
+            
+            .sidebar.active + .content {
+                margin-left: 240px;
+            }
+            
+            .content {
+                padding: 6rem 1.5rem 2rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 0.8rem 1.5rem;
+            }
+            
+            .portfolio-metrics {
+                grid-template-columns: 1fr 1fr;
+            }
+            
+            .quick-actions {
+                grid-template-columns: 1fr 1fr;
+            }
+            
+            .sidebar-toggle {
+                top: 80px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .portfolio-metrics {
+                grid-template-columns: 1fr;
+            }
+            
+            .quick-actions {
+                grid-template-columns: 1fr;
+            }
+            
+            .navbar ul li a span {
+                display: none;
+            }
+            
+            .navbar ul li a i {
+                font-size: 1.3rem;
+            }
+            
+            .content {
+                padding: 6rem 1rem 2rem;
+            }
+            
+            .metric-card p {
+                font-size: 1.8rem;
+            }
+        }
+        
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Toggle -->
+    <button class="sidebar-toggle">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <!-- Header -->
+    <header class="navbar">
+        <div class="logo">
+            <i class="fas fa-chart-line"></i>
+            <span>InvestoSim</span>
+        </div>
+        <div>
+            <nav>
+                <ul>
+                    <li><a href="portfolio.html"><i class="fas fa-wallet"></i> <span>Portfolio</span></a></li>
+                    <li><a href="trade.html"><i class="fas fa-exchange-alt"></i> <span>Trade</span></a></li>
+                    <li><a href="research.html"><i class="fas fa-search-dollar"></i> <span>Research</span></a></li>
+                    <li><a href="learn.html"><i class="fas fa-graduation-cap"></i> <span>Learn</span></a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+     <!-- Sidebar -->
+     <aside class="sidebar">
+        <div class="welcome">
+            <h3>Welcome back, Investor!</h3>
+            <p>Track and grow your portfolio</p>
+        </div>
+        <ul>
+            <li>
+                <button class="dark-mode-toggle" id="darkModeToggle">
+                    <i class="fas fa-moon"></i>
+                    <span>Dark Mode</span>
+                </button>
+            </li>
+            
+            <li><a href="#dashboard" class="active"><i class="fas fa-home"></i> <span>Dashboard</span></a></li>
+            <li><a href="portfolio.html"><i class="fas fa-chart-pie"></i> <span>Portfolio</span></a></li>
+            <li><a href="trade.html"><i class="fas fa-exchange-alt"></i> <span>Trade Stocks</span></a></li>
+            <!--<li><a href="#transactions"><i class="fas fa-history"></i> <span>Transactions</span></a></li>-->
+            <!--<li><a href="#account"><i class="fas fa-user-cog"></i> <span>Account Settings</span></a></li>--> 
+            <li><a href="#logout"><i class="fas fa-sign-out-alt"></i> <span>Logout</span></a></li>
+        </ul>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="content">
+        <div class="dashboard-header">
+            <h1>Dashboard Overview</h1>
+            <p>Track your investments and market performance</p>
+        </div>
+        
+        <!-- Portfolio Metrics -->
+        <div class="portfolio-metrics">
+            <div class="metric-card">
+                <h3><i class="fas fa-rupee-sign"></i> Portfolio Value</h3>
+                <p id="accountValue">Loading...</p>
+            </div>
+          
+            <div class="metric-card">
+                <h3><i class="fas fa-coins"></i> Available Cash</h3>
+                <p id="availableCash">Loading...</p>
+            </div>
+            
+            <!--<div class="metric-card">
+                <h3><i class="fas fa-chart-line"></i> Today's Change</h3>
+                <p id="todaysChange">Loading...</p>
+            </div>-->
+        </div>
+        
+        <!-- Holdings Table -->
+        <div class="holdings-container">
+            <h2><i class="fas fa-list-ul"></i> Your Holdings</h2>
+            <table id="holdingsTable">
+                <thead>
+                    <tr>
+                        <th>Symbol</th>
+                        <th>Quantity</th>
+                        <th>Avg. Buy Price</th>
+                        <th>Current Price</th>
+                        <th>P&L</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Data will be inserted here -->
+                </tbody>
+            </table>
+        </div>
+        
+        <!-- Asset Allocation Pie Chart -->
+        <!--<div class="pie-chart-container">
+            <h2><i class="fas fa-chart-pie"></i> Asset Allocation</h2>
+            <canvas id="assetPieChart" width="300" height="300"></canvas>
+        </div>-->
+        
+        <!-- Quick Actions -->
+        <div class="quick-actions">
+            <div class="action-card" onclick="location.href='trade.html'">
+                <i class="fas fa-plus-circle"></i>
+                <h3>Buy Stocks</h3>
+                <p>Add to your portfolio</p>
+            </div>
+            <div class="action-card" onclick="location.href='trade.html'">
+                <i class="fas fa-minus-circle"></i>
+                <h3>Sell Stocks</h3>
+                <p>Liquidate positions</p>
+            </div>
+            <div class="action-card" onclick="location.href='portfolio.html'">
+                <i class="fas fa-chart-pie"></i>
+                <h3>Portfolio</h3>
+                <p>View your investments</p>
+            </div>
+            <div class="action-card" onclick="location.href='learn.html'">
+                <i class="fas fa-graduation-cap"></i>
+                <h3>Learn</h3>
+                <p>Improve your skills</p>
+            </div>
+        </div>
+        
+        <!-- Market Chart -->
+        <div class="chart-container">
+            <h2><i class="fas fa-chart-bar"></i> Market Overview</h2>
+            <div id="tradingview-widget"></div>
+        </div>
+    </main>
+    
+
+    <!-- TradingView Widget -->
+    <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+    <script>
+        // Initialize TradingView widget with current theme
+        function initializeTradingView(theme) {
+            new TradingView.widget({
+                "container_id": "tradingview-widget",
+                "width": "100%",
+                "height": 500,
+                "symbol": "BSE:SENSEX",
+                "interval": "D",
+                "timezone": "Asia/Kolkata",
+                "theme": theme,
+                "style": "1",
+                "locale": "en",
+                "toolbar_bg": theme === 'light' ? "#f1f3f6" : "#1e293b",
+                "enable_publishing": false,
+                "hide_top_toolbar": false,
+                "allow_symbol_change": true,
+                "details": true,
+                "hotlist": true,
+                "calendar": true,
+                "show_popup_button": true,
+                "popup_width": "1000",
+                "popup_height": "650"
+            });
+        }
+ // Global variable to store symbol map
+let symbolMap = [];
+
+// Common symbols mapping as fallback
+const commonSymbols = {
+  'ADANIPORTS': 'ADANIPORTS.NS',
+  'RELIANCE': 'RELIANCE.NS',
+  'BAJAJCON': 'BAJAJCONS.NS',
+  'ADANIPOWER': 'ADANIPOWER.NS',
+  'JIOFIN': 'JIOFIN.NS',
+  'TATASTEEL': 'TATASTEEL.NS',
+  'TCS': 'TCS.NS',
+  'AWL': 'AWL.NS'
+};
+
+// Define the fetchHoldings function
+async function fetchHoldings(userId) {
+  try {
+    console.log("Fetching portfolio data...");
+    const response = await fetch(`http://localhost:5001/api/portfolio/${userId}`);
+    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+    const data = await response.json();
+
+    console.log("Portfolio API data:", data);
+
+    const tableBody = document.querySelector("#holdingsTable tbody");
+    tableBody.innerHTML = "";
+
+    if (!Array.isArray(data.stocks)) {
+      throw new Error("Stocks is not an array");
+    }
+
+    // Process all holdings
+    for (const holding of data.stocks) {
+      try {
+        console.log("Processing holding:", holding);
+        
+        // Extract symbol from parentheses if available
+        const symbolMatch = holding.stockSymbol.match(/\(([^)]+)\)/);
+        const symbolOnly = symbolMatch ? symbolMatch[1] : holding.stockSymbol;
+        
+        let nseSymbol = commonSymbols[symbolOnly] || getNseSymbolFromName(holding.stockSymbol);
+        
+        if (!nseSymbol) {
+          console.warn("⚠️ Could not match symbol:", holding.stockSymbol);
+          tableBody.innerHTML += `
+            <tr>
+              <td>${holding.stockSymbol}</td>
+              <td>${holding.quantity}</td>
+              <td>₹${holding.avgPrice?.toFixed(2) || 'N/A'}</td>
+              <td>N/A</td>
+              <td class="neutral">N/A</td>
+            </tr>
+          `;
+          continue;
+        }
+
+        console.log("Found symbol:", nseSymbol);
+        const currentPrice = await fetchStockPrice(nseSymbol);
+        console.log("Current price:", currentPrice);
+        
+        // Calculate values with proper checks
+        const avgPrice = parseFloat(holding.avgPrice) || 0;
+        const quantity = parseFloat(holding.quantity) || 0;
+        const pnl = ((currentPrice - avgPrice) * quantity).toFixed(2);
+        const currentValue = (currentPrice * quantity).toFixed(2);
+
+        tableBody.innerHTML += `
+          <tr>
+            <td>${holding.stockSymbol}</td>
+            <td>${quantity}</td>
+            <td>₹${avgPrice.toFixed(2)}</td>
+            <td>₹${currentPrice.toFixed(2)}</td>
+            <td class="${pnl >= 0 ? 'positive' : 'negative'}">₹${pnl}</td>
+          </tr>
+        `;
+      } catch (error) {
+        console.error(`Error processing holding ${holding.stockSymbol}:`, error);
+        tableBody.innerHTML += `
+          <tr class="error-row">
+            <td>${holding.stockSymbol}</td>
+            <td>${holding.quantity || 'N/A'}</td>
+            <td>₹${holding.avgPrice?.toFixed(2) || 'N/A'}</td>
+            <td>Error</td>
+            <td>Error</td>
+          </tr>
+        `;
+      }
+    }
+  } catch (error) {
+    console.error("❌ Error in fetchHoldings:", error);
+    document.querySelector("#holdingsTable tbody").innerHTML = `
+      <tr>
+        <td colspan="5" class="error">Error loading holdings. Please try again.</td>
+      </tr>
+    `;
+  }
+}
+
+// Enhanced function to match stock names
+function getNseSymbolFromName(companyName) {
+  if (!symbolMap || symbolMap.length === 0) {
+    console.error("Symbol map is empty");
+    return null;
+  }
+
+  // Clean the input name
+  const cleanName = companyName.toLowerCase()
+    .replace(/ ltd| inc| pvt|\.|,|\(|\)/g, '')
+    .replace(/\s+/g, ' ')
+    .trim();
+
+  console.log(`Looking up: ${cleanName}`);
+
+  // Try exact symbol match first (extract symbol from parentheses)
+  const symbolMatch = companyName.match(/\(([^)]+)\)/);
+  const symbolOnly = symbolMatch ? symbolMatch[1] : companyName.split(' ').pop();
+  
+  let match = symbolMap.find(stock => 
+    stock.symbol === symbolOnly.toUpperCase()
+  );
+
+  // If no exact symbol match, try name matching
+  if (!match) {
+    match = symbolMap.find(stock => 
+      stock.name.toLowerCase().includes(cleanName) || 
+      cleanName.includes(stock.name.toLowerCase()) ||
+      (stock.symbol && cleanName.includes(stock.symbol.toLowerCase()))
+    );
+  }
+
+  return match ? `${match.symbol}.NS` : null;
+}
+
+// Function to fetch stock price
+async function fetchStockPrice(symbol) {
+  try {
+    console.log(`Fetching price for ${symbol}...`);
+    const res = await fetch(`http://127.0.0.1:5002/stock/${symbol}`);
+    
+    if (!res.ok) {
+      throw new Error(`HTTP error! status: ${res.status}`);
+    }
+    
+    const data = await res.json();
+    console.log(`Price data for ${symbol}:`, data);
+
+    if (!data || typeof data.price !== "number") {
+      throw new Error(`Invalid price data for ${symbol}`);
+    }
+
+    return data.price;
+  } catch (error) {
+    console.error(`❌ Error fetching stock price for ${symbol}:`, error);
+    return 0; // Return 0 to allow calculations to continue
+  }
+}
+
+// Single DOMContentLoaded listener
+document.addEventListener("DOMContentLoaded", async function () {
+  const userId = localStorage.getItem("userId");
+
+  if (!userId) {
+    alert("User not logged in");
+    window.location.href = "/login.html";
+    return;
+  }
+
+  try {
+    console.log("Loading symbol map...");
+    // Load symbol map first
+    const symbolMapRes = await fetch('./indian_stocks.json');
+    if (!symbolMapRes.ok) throw new Error("Failed to load symbol map");
+    symbolMap = await symbolMapRes.json();
+    
+    if (!Array.isArray(symbolMap)) {
+      throw new Error("Symbol map is not an array");
+    }
+    console.log("Symbol map loaded with", symbolMap.length, "entries");
+
+    // Try to load account data first
+    try {
+      const accountRes = await fetch(`http://localhost:5001/api/account/${userId}`);
+      if (accountRes.ok) {
+        const accountData = await accountRes.json();
+        console.log("Account data:", accountData);
+        document.getElementById("accountValue").textContent = `₹${accountData.portfolioValue?.toLocaleString('en-IN') || '0'}`;
+        document.getElementById("availableCash").textContent = `₹${accountData.availableCash?.toLocaleString('en-IN') || '0'}`;
+      } else {
+        console.error("Account API error:", accountRes.status);
+        document.getElementById("accountValue").textContent = "₹N/A";
+        document.getElementById("availableCash").textContent = "₹N/A";
+      }
+    } catch (accountError) {
+      console.error("Error loading account data:", accountError);
+      document.getElementById("accountValue").textContent = "₹N/A";
+      document.getElementById("availableCash").textContent = "₹N/A";
+    }
+
+    // Now load portfolio data
+    await fetchHoldings(userId);
+
+  } catch (error) {
+    console.error("❌ Error in fetching data:", error);
+    document.querySelector("#holdingsTable tbody").innerHTML = `
+      <tr>
+        <td colspan="5" class="error">Error loading data. Please try again later.</td>
+      </tr>
+    `;
+  }
+});
+
+//drawAssetChart(data.holdings)
+function drawAssetChart(holdings) {
+  const labels = holdings.map(h => h.symbol);
+  const values = holdings.map(h => h.quantity * h.avgBuyPrice);
+
+  const ctx = document.getElementById("assetPieChart").getContext("2d");
+
+  new Chart(ctx, {
+    type: "pie",
+    data: {
+      labels: labels,
+      datasets: [{
+        data: values,
+        backgroundColor: ['#4caf50', '#2196f3', '#ff9800', '#e91e63', '#9c27b0'],
+      }]
+    },
+    options: {
+      plugins: {
+        legend: {
+          position: 'right',
+        }
+      }
+    }
+  });
+}
+
+
+
+        // Dark Mode Toggle
+        document.addEventListener("DOMContentLoaded", function() {
+            // Dark mode functionality
+            const darkModeToggle = document.getElementById('darkModeToggle');
+            const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+            
+            // Check for saved user preference or use system preference
+            const currentTheme = localStorage.getItem('theme') || 
+                                (prefersDarkScheme.matches ? 'dark' : 'light');
+            
+            if (currentTheme === 'dark') {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                darkModeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+                initializeTradingView('dark');
+            } else {
+                initializeTradingView('light');
+            }
+            
+            // Toggle function
+            darkModeToggle.addEventListener('click', () => {
+                let theme;
+                if (document.documentElement.getAttribute('data-theme') === 'dark') {
+                    document.documentElement.removeAttribute('data-theme');
+                    theme = 'light';
+                    darkModeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+                    initializeTradingView('light');
+                } else {
+                    document.documentElement.setAttribute('data-theme', 'dark');
+                    theme = 'dark';
+                    darkModeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+                    initializeTradingView('dark');
+                }
+                localStorage.setItem('theme', theme);
+            });
+            
+            // Watch for system preference changes
+            prefersDarkScheme.addListener((e) => {
+                if (!localStorage.getItem('theme')) {
+                    const newTheme = e.matches ? 'dark' : 'light';
+                    document.documentElement.setAttribute('data-theme', newTheme);
+                    darkModeToggle.innerHTML = newTheme === 'dark' ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+                    initializeTradingView(newTheme);
+                }
+            });
+
+            // Toggle sidebar
+            document.querySelector(".sidebar-toggle").addEventListener("click", function() {
+                document.querySelector(".sidebar").classList.toggle("active");
+            });
+            
+            
+            // Add CSS animations
+            const style = document.createElement("style");
+            style.textContent = `
+                @keyframes fadeInUp {
+                    from {
+                        opacity: 0;
+                        transform: translateY(20px);
+                    }
+                    to {
+                        opacity: 1;
+                        transform: translateY(0);
+                    }
+                }
+                
+                @keyframes fadeIn {
+                    from {
+                        opacity: 0;
+                    }
+                    to {
+                        opacity: 1;
+                    }
+                }
+            `;
+            document.head.appendChild(style);
+        });
+
+    </script>
+</body>
+</html>

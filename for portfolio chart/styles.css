@@ -1,0 +1,139 @@
+body {
+    font-family: 'Poppins', sans-serif;
+    background: #121212;
+    color: white;
+    margin: 0;
+    padding: 0;
+}
+
+.top-nav {
+    background: #003366;
+    padding: 10px;
+    text-align: center;
+}
+
+.top-nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+}
+
+.top-nav li {
+    margin: 0 15px;
+}
+
+.top-nav a {
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+}
+
+.container {
+    max-width: 1000px;
+    margin: 20px auto;
+    padding: 20px;
+}
+
+.portfolio-section {
+    background: #1b1b1b;
+    color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.portfolio-metrics {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+}
+
+.metric h3 {
+    font-size: 16px;
+    color: #ffcc00;
+}
+
+.metric p {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.positive {
+    color: #4caf50;
+}
+
+.negative {
+    color: #ff4444;
+}
+
+.performance-chart {
+    margin-top: 20px;
+}
+
+.timeframe-buttons button {
+    background: #004080;
+    color: white;
+    padding: 5px 10px;
+    border: none;
+    cursor: pointer;
+    margin: 5px;
+}
+
+.timeframe-buttons button:hover {
+    background: #ffcc00;
+    color: #1b1b1b;
+}
+
+#togglePerformanceHistory {
+    margin-top: 10px;
+    background: #007acc;
+    color: white;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+}
+
+#performanceHistory {
+    margin-top: 15px;
+}
+
+.trade-section, .research-section, .learn-section {
+    background: #252525;
+    padding: 20px;
+    border-radius: 8px;
+    margin-top: 20px;
+}
+#portfolioChart {
+    max-height: 300px !important; /* Adjust height as needed */
+    width: 100% !important;
+}
+
+.chart-container {
+    height: 350px;
+    overflow: hidden;
+}
+
+#portfolioChartContainer {
+    max-height: 350px; /* Prevents the chart from getting too big */
+    overflow: hidden;
+}
+#portfolioPerformanceChart {
+    width: 100% !important;
+    max-height: 100% !important;
+}
+.stock-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+.stock-item {
+    width: 250px;
+    text-align: center;
+    background-color: #004080;
+}
+
+.chart-container {
+    height: 350px;
+    overflow: hidden;
+}

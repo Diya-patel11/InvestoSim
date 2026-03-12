@@ -1,0 +1,529 @@
+<!---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stocks vs. Mutual Funds vs. ETFs</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #0081c6;
+            color: #ffffff;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+            background: #002855;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgb(255, 255, 255);
+            margin-top: 20px;
+        }
+        h1, h2 {
+            color: #ffcc00;
+        }
+        h1 {
+            text-align: center;
+        }
+        p, li {
+            line-height: 1.6;
+        }
+        ul {
+            padding-left: 20px;
+        }
+        .highlight {
+            color: #00eeff;
+            font-weight: bold;
+        }
+        .back-button {
+    display: inline-block;
+    padding: 12px 20px;
+    margin-top: 20px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #ffffff;
+    background: linear-gradient(135deg, #ffcc00, #ff9900);
+    border-radius: 8px;
+    text-decoration: none;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0px 4px 10px rgba(255, 153, 0, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.back-button:hover {
+    background: linear-gradient(135deg, #ff9900, #ff6600);
+    transform: translateY(-3px);
+    box-shadow: 0px 6px 15px rgba(255, 102, 0, 0.5);
+}
+
+.back-button::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 300%;
+    height: 300%;
+    background: rgba(255, 255, 255, 0.2);
+    transition: all 0.5s ease-in-out;
+    border-radius: 50%;
+    transform: translate(-50%, -50%) scale(0);
+}
+
+.back-button:hover::before {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0;
+}
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Stocks vs. Mutual Funds vs. ETFs</h1>
+        
+        <p>Investing can feel confusing, but understanding the differences between <strong>stocks, mutual funds, and ETFs</strong> makes it easier to decide where to put your money. Let’s break it down!</p>
+        
+        <h2>1️⃣ Stocks – Own a Piece of a Company</h2>
+        <p>A stock represents ownership in a company. When you buy a stock, you own a small part of that company. If the company grows, the value of your stock increases. However, if the company performs poorly, your stock value decreases.</p>
+        <p><span class="highlight">Example:</span> Imagine you buy 10 shares of TCS at ₹3,500 per share. If TCS does well and the price rises to ₹4,000 per share, you make a profit of ₹500 per share.</p>
+        
+        <h2>2️⃣ Mutual Funds – A Group Investment</h2>
+        <p>Mutual funds pool money from many investors and invest in multiple stocks, bonds, or other assets. A professional fund manager decides where to invest the money, making it a good choice for beginners.</p>
+        <p><span class="highlight">Example:</span> Think of a mutual fund like a <strong>pizza with different toppings</strong>. Instead of buying one ingredient (a single stock), you get a slice with various ingredients (a mix of stocks and bonds), reducing your risk.</p>
+        
+        <h2>3️⃣ ETFs – The Best of Both Worlds</h2>
+        <p>Exchange-Traded Funds (ETFs) are similar to mutual funds but trade like stocks on the stock market. They offer diversification like mutual funds but allow you to buy and sell throughout the day, just like stocks.</p>
+        <p><span class="highlight">Example:</span> Imagine an ETF as a <strong>fruit basket</strong>. Instead of buying just apples (one stock), you get a mix of apples, bananas, and grapes (multiple stocks in one ETF).</p>
+        
+        <h2>📊 Key Differences</h2>
+        <ul>
+            <li><span class="highlight">Stocks:</span> Higher risk, higher reward. You pick individual companies.</li>
+            <li><span class="highlight">Mutual Funds:</span> Managed by experts, diversified but may have higher fees.</li>
+            <li><span class="highlight">ETFs:</span> Diversified like mutual funds, but traded like stocks with lower costs.</li>
+        </ul>
+        
+        <h2>🔍 Which One is Right for You?</h2>
+        <ul>
+            <li><span class="highlight">If you enjoy researching and picking companies</span> → Stocks</li>
+            <li><span class="highlight">If you want a hands-off approach with expert management</span> → Mutual Funds</li>
+            <li><span class="highlight">If you want diversification with easy trading</span> → ETFs</li>
+        </ul>
+        
+        <h2>💡 Final Thoughts</h2>
+        <p>Each investment type has pros and cons. Start small, diversify, and choose what fits your financial goals!</p>
+    </div>
+    <a href="learn.html" class="back-button">⬅ Back to Learn More</a>
+
+</body>
+</html>-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Investment Comparison | InvestoSim</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #0066cc;
+            --primary-dark: #003366;
+            --secondary: #ffcc00;
+            --accent: #00eeff;
+            --light: #f8f9fa;
+            --dark: #121212;
+            --success: #4caf50;
+            --warning: #ff9800;
+            --danger: #f44336;
+            --card-bg: rgba(0, 102, 204, 0.15);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #002244, #001a33);
+            color: white;
+            line-height: 1.7;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1100px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: rgba(0, 26, 51, 0.85);
+            border-radius: 16px;
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            animation: fadeIn 0.8s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        h1, h2, h3 {
+            color: var(--secondary);
+            margin-bottom: 1.25rem;
+        }
+        
+        h1 {
+            text-align: center;
+            font-size: 2.5rem;
+            position: relative;
+            padding-bottom: 1rem;
+        }
+        
+        h1:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 4px;
+            background: var(--accent);
+            border-radius: 2px;
+        }
+        
+        h2 {
+            font-size: 1.8rem;
+            border-left: 4px solid var(--accent);
+            padding-left: 1rem;
+            margin-top: 2.5rem;
+        }
+        
+        h3 {
+            font-size: 1.4rem;
+            color: var(--accent);
+        }
+        
+        p {
+            margin-bottom: 1.25rem;
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+        
+        .highlight {
+            color: var(--accent);
+            font-weight: 500;
+        }
+        
+        .investment-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+        
+        .investment-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+            border-top: 4px solid;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+        
+        .investment-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+        }
+        
+        .stocks-card {
+            border-top-color: var(--danger);
+        }
+        
+        .mutual-funds-card {
+            border-top-color: var(--warning);
+        }
+        
+        .etfs-card {
+            border-top-color: var(--success);
+        }
+        
+        .card-icon {
+            font-size: 2.75rem;
+            margin-bottom: 1.5rem;
+            color: var(--secondary);
+        }
+        
+        .pros-cons {
+            margin-top: 1.5rem;
+        }
+        
+        .pros, .cons {
+            padding: 1.25rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+        
+        .pros {
+            background: rgba(46, 204, 113, 0.1);
+            border-left: 4px solid var(--success);
+        }
+        
+        .cons {
+            background: rgba(244, 67, 54, 0.1);
+            border-left: 4px solid var(--danger);
+        }
+        
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 3rem 0;
+            background: rgba(0, 0, 0, 0.15);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+        
+        .comparison-table th, .comparison-table td {
+            padding: 1.25rem;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        
+        .comparison-table th {
+            background: rgba(0, 102, 204, 0.3);
+            font-weight: 600;
+            color: var(--secondary);
+        }
+        
+        .comparison-table tr:hover td {
+            background: rgba(255, 255, 255, 0.03);
+        }
+        
+        .final-tip {
+            background: rgba(255, 204, 0, 0.08);
+            border-left: 4px solid var(--secondary);
+            padding: 2rem;
+            border-radius: 0 12px 12px 0;
+            margin: 3rem 0;
+        }
+        
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.9rem 2rem;
+            margin: 2rem auto;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--primary-dark);
+            background: linear-gradient(135deg, var(--secondary), #ffaa00);
+            border-radius: 8px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 204, 0, 0.3);
+        }
+        
+        .back-button:hover {
+            background: linear-gradient(135deg, #ffaa00, #ff8800);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(255, 170, 0, 0.4);
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 1.5rem;
+                margin: 1rem;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .investment-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1><i class="fas fa-balance-scale"></i> Investment Options Compared</h1>
+        
+        <p class="intro-text">Understanding the differences between <strong>stocks, mutual funds, and ETFs</strong> is crucial for making informed investment decisions. This guide breaks down each option to help you choose what's right for your financial goals.</p>
+        
+        <div class="investment-grid">
+            <!-- Stocks Card -->
+            <div class="investment-card stocks-card">
+                <div class="card-icon"><i class="fas fa-chart-line"></i></div>
+                <h2>Individual Stocks</h2>
+                <p>When you buy a stock, you're purchasing direct ownership in a company. Your returns depend on that company's performance.</p>
+                
+                <p class="highlight">Example:</p>
+                <p>Buying 10 shares of TCS at ₹3,500 each means you own a small piece of Tata Consultancy Services. If the price rises to ₹4,000, your investment grows by ₹5,000.</p>
+                
+                <div class="pros-cons">
+                    <div class="pros">
+                        <h3><i class="fas fa-check-circle"></i> Advantages</h3>
+                        <ul>
+                            <li>Highest potential returns</li>
+                            <li>Complete investment control</li>
+                            <li>No ongoing management fees</li>
+                            <li>Possible dividend income</li>
+                        </ul>
+                    </div>
+                    <div class="cons">
+                        <h3><i class="fas fa-exclamation-circle"></i> Considerations</h3>
+                        <ul>
+                            <li>Higher volatility and risk</li>
+                            <li>Requires significant research</li>
+                            <li>No built-in diversification</li>
+                            <li>Emotionally challenging</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Mutual Funds Card -->
+            <div class="investment-card mutual-funds-card">
+                <div class="card-icon"><i class="fas fa-users"></i></div>
+                <h2>Mutual Funds</h2>
+                <p>Mutual funds pool money from many investors to buy a diversified portfolio managed by professionals.</p>
+                
+                <p class="highlight">Example:</p>
+                <p>Like a pizza with many toppings, a mutual fund gives you exposure to multiple companies in a single investment, reducing your risk.</p>
+                
+                <div class="pros-cons">
+                    <div class="pros">
+                        <h3><i class="fas fa-check-circle"></i> Advantages</h3>
+                        <ul>
+                            <li>Professional management</li>
+                            <li>Automatic diversification</li>
+                            <li>Good for regular investing</li>
+                            <li>Access to complex strategies</li>
+                        </ul>
+                    </div>
+                    <div class="cons">
+                        <h3><i class="fas fa-exclamation-circle"></i> Considerations</h3>
+                        <ul>
+                            <li>Higher expense ratios</li>
+                            <li>Potential sales charges</li>
+                            <li>Less control over holdings</li>
+                            <li>Tax inefficiency</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- ETFs Card -->
+            <div class="investment-card etfs-card">
+                <div class="card-icon"><i class="fas fa-boxes"></i></div>
+                <h2>Exchange-Traded Funds</h2>
+                <p>ETFs combine features of stocks and mutual funds - diversified portfolios that trade throughout the day.</p>
+                
+                <p class="highlight">Example:</p>
+                <p>An ETF is like a fruit basket - instead of buying individual fruits (stocks), you get a pre-mixed selection (diversified portfolio) in one purchase.</p>
+                
+                <div class="pros-cons">
+                    <div class="pros">
+                        <h3><i class="fas fa-check-circle"></i> Advantages</h3>
+                        <ul>
+                            <li>Lower costs than mutual funds</li>
+                            <li>Intraday trading flexibility</li>
+                            <li>Tax efficient structure</li>
+                            <li>Transparent holdings</li>
+                        </ul>
+                    </div>
+                    <div class="cons">
+                        <h3><i class="fas fa-exclamation-circle"></i> Considerations</h3>
+                        <ul>
+                            <li>Brokerage commissions apply</li>
+                            <li>Potential for wide bid-ask spreads</li>
+                            <li>May encourage overtrading</li>
+                            <li>Some niche ETFs carry risks</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <h2><i class="fas fa-table"></i> Detailed Comparison</h2>
+        
+        <table class="comparison-table">
+            <thead>
+                <tr>
+                    <th>Feature</th>
+                    <th>Stocks</th>
+                    <th>Mutual Funds</th>
+                    <th>ETFs</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Ownership</td>
+                    <td>Direct company ownership</td>
+                    <td>Shares in a pooled fund</td>
+                    <td>Shares in a pooled fund</td>
+                </tr>
+                <tr>
+                    <td>Diversification</td>
+                    <td>Single company</td>
+                    <td>Typically 50-100+ holdings</td>
+                    <td>Typically 20-500+ holdings</td>
+                </tr>
+                <tr>
+                    <td>Management Style</td>
+                    <td>Self-directed</td>
+                    <td>Active or passive</td>
+                    <td>Mostly passive</td>
+                </tr>
+                <tr>
+                    <td>Expense Ratio</td>
+                    <td>None</td>
+                    <td>0.5%-2.0%</td>
+                    <td>0.03%-0.50%</td>
+                </tr>
+                <tr>
+                    <td>Trading</td>
+                    <td>Anytime market open</td>
+                    <td>End-of-day pricing</td>
+                    <td>Anytime market open</td>
+                </tr>
+                <tr>
+                    <td>Minimum Investment</td>
+                    <td>1 share price</td>
+                    <td>₹500-₹5,000 typically</td>
+                    <td>1 share price</td>
+                </tr>
+                <tr>
+                    <td>Tax Efficiency</td>
+                    <td>High (you control sales)</td>
+                    <td>Low (fund manager decisions)</td>
+                    <td>High (in-kind creations)</td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <h2><i class="fas fa-user-check"></i> Choosing What's Right For You</h2>
+        
+        <div class="choice-recommendations">
+            <p><span class="highlight">Choose Stocks if:</span> You enjoy research, want maximum control, can handle volatility, and have time to monitor investments.</p>
+            <p><span class="highlight">Choose Mutual Funds if:</span> You prefer professional management, want automatic diversification, and are investing regularly.</p>
+            <p><span class="highlight">Choose ETFs if:</span> You want low-cost diversification with trading flexibility and tax efficiency.</p>
+        </div>
+        
+        <div class="final-tip">
+            <h3><i class="fas fa-lightbulb"></i> Smart Investing Strategy</h3>
+            <p>Many successful investors use a combination approach: core holdings in low-cost index ETFs, supplemented with carefully selected individual stocks for growth potential, and actively managed mutual funds for specific strategies.</p>
+            <p><strong>Practice first with InvestoSim</strong> to develop your investment approach before risking real capital.</p>
+        </div>
+        
+        <center>
+            <a href="learn.html" class="back-button"><i class="fas fa-arrow-left"></i> Return to Learning Center</a>
+        </center>
+    </div>
+</body>
+</html>

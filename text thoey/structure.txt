@@ -1,0 +1,41 @@
+INVESTOR SIM PROJECT SEM_6/
+│── investment-simulator-backend/    # Backend (Login/Sign-in)
+│   │── models/  
+│   │   ├── user.js  
+│   │── node_modules/
+│   │── .env
+│   │── .gitignore
+│   │── package-lock.json
+│   │── package.json
+│   │── server.js
+│
+│── model/  
+│   │── Transaction.js  
+│
+│── routes/  
+│   ├── transactionRoutes.js  
+│
+│── .env
+│── blog1.html
+│── blog2.html
+│── blog3.html
+│── blog4.html
+│── blog5.html
+│── blog6.html
+│── blog7.html
+│── blog11.html
+│── chart.js
+│── dashboard.html
+│── dashboard.js
+│── index.html
+│── indian_stocks.json
+│── indianStock_RAW.json
+│── indianStocks.json
+│── learn.html
+│── login.html
+│── portfolio.html
+│── script.js
+│── servers.js
+│── signuser.html
+│── style.css
+│── trade.html

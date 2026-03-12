@@ -1,0 +1,183 @@
+/* General Styles */
+body , html{
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden; /* Prevent horizontal scroll */
+}
+
+/* Navbar */
+.navbar {
+    width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 40px;
+    /*background-color: #02488f;*/
+    background-color: #f4f6fc;
+    /*background-image: url("https://i.ibb.co/99FLRQRJ/background.jpg");*/
+    color: rgb(255, 255, 255);
+    height: 100px;  /* Set a fixed height for the navbar */
+}
+
+
+/* Navbar Logo */
+.navbar .logo img {
+    height: 150px;  /* Adjust the size of the logo */
+    max-height: 250px;  /* Ensure it doesn't grow too large */
+    width: auto;   /* Maintain aspect ratio */
+}
+
+
+.nav-buttons .btn {
+    text-decoration: none;
+    color: white;
+    background-color: #ffcc00;
+    padding: 8px 15px;
+    border-radius: 5px;
+    margin-left: 10px;
+}
+
+.nav-buttons .login {
+    background-color: #555;
+}
+
+
+
+/* Hero Section */
+.hero-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 60px 10%;
+    background-image: url("https://i.ibb.co/vCR8L2BW/image-1.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 100vw; /* Ensures full width */
+    min-height: 500px;
+    color: white;
+    flex-wrap: wrap;
+    box-sizing: border-box; /* Ensures padding doesn't add extra width */
+}
+
+/* Text Section */
+.hero-text {
+    max-width: 50%;
+    min-width: 300px;
+}
+
+/* Headings & Paragraph */
+.hero-text h2 {
+    font-size: 35px;
+    color: #ffcc00;
+}
+
+.hero-text p {
+    font-size: 20px;
+    margin-top: 10px;
+}
+
+/* Button */
+.hero-text .btn {
+    display: inline-block;
+    margin-top: 15px;
+    background-color: #ffcc00;
+    color: #002244;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+/* Image Section */
+.hero-image {
+    flex: 1;
+    text-align: right; /* Aligns the image to the right */
+}
+
+.hero-image img {
+    width: 100%;
+    max-width: 450px; /* Limits image size */
+    height: auto;
+    /*display: block;*/
+}
+
+/* Intro Message Section */
+.intro-message {
+    background-color: #f4f6fc;
+    border-bottom: 1px solid #ababab;
+    padding: 60px 10%;
+    text-align: center;
+}
+
+.intro-text h2 {
+    font-size: 30px;
+    color: #02488f;
+    margin-bottom: 20px;
+}
+
+.intro-text p {
+    font-size: 18px;
+    color: #404040;
+    margin-bottom: 20px;
+}
+
+
+/* Features Section */
+.features {
+    padding: 60px 10%;
+    background-color: #f4f6fc;
+}
+
+.feature {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 40px 0;
+    border-bottom: 1px solid #ababab;
+}
+
+.feature:last-child {
+    border-bottom: none;
+}
+
+.feature-text {
+    flex: 1;
+    padding: 25px;
+}
+
+.feature-text h2 {
+    font-size: 28px;
+    color: #02488f;
+}
+
+.feature-text p {
+    font-size: 18px;
+    color: #404040;
+}
+
+.feature-image img {
+    width: 350px;
+    border-radius: 10px;
+}
+/* Portfolio Overview Section */
+.portfolio-overview {
+    background-color: #f4f6fc;
+}
+
+/* Footer */
+.footer {
+    text-align: center;
+    padding: 15px;
+    background-color: #003366;
+    color: white;
+    margin-top: 20px;
+}
+
+
+/*dashboard*/

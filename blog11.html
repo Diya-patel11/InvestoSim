@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Market Cycles Explained | InvestoSim</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #0066cc;
+            --primary-dark: #003366;
+            --secondary: #ffcc00;
+            --accent: #00eeff;
+            --light: #f8f9fa;
+            --dark: #121212;
+            --success: #4caf50;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #003366, #001a33);
+            color: white;
+            line-height: 1.7;
+            padding: 0;
+            margin: 0;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem;
+            background: rgba(0, 26, 51, 0.8);
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+            animation: fadeIn 0.8s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        h1, h2, h3 {
+            color: var(--secondary);
+            margin-top: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        h1 {
+            text-align: center;
+            font-size: 2.5rem;
+            position: relative;
+            padding-bottom: 1rem;
+        }
+        
+        h1:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: var(--accent);
+            border-radius: 2px;
+        }
+        
+        h2 {
+            font-size: 1.8rem;
+            border-left: 4px solid var(--accent);
+            padding-left: 1rem;
+        }
+        
+        h3 {
+            font-size: 1.4rem;
+            color: var(--accent);
+        }
+        
+        p {
+            margin-bottom: 1.2rem;
+            font-size: 1.1rem;
+        }
+        
+        strong {
+            color: var(--secondary);
+            font-weight: 600;
+        }
+        
+        ul {
+            margin: 1.5rem 0;
+            padding-left: 2rem;
+        }
+        
+        li {
+            margin-bottom: 0.8rem;
+            position: relative;
+            list-style-type: none;
+            padding-left: 1.5rem;
+        }
+        
+        li:before {
+            content: '•';
+            color: var(--accent);
+            font-size: 1.5rem;
+            position: absolute;
+            left: 0;
+            top: -3px;
+        }
+        
+        .highlight {
+            color: var(--accent);
+            font-weight: 500;
+        }
+        
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.8rem 1.5rem;
+            margin: 2rem auto;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--primary-dark);
+            background: linear-gradient(135deg, var(--secondary), #ffaa00);
+            border-radius: 8px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 204, 0, 0.3);
+            border: none;
+            cursor: pointer;
+        }
+        
+        .back-button i {
+            margin-right: 8px;
+        }
+        
+        .back-button:hover {
+            background: linear-gradient(135deg, #ffaa00, #ff8800);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(255, 170, 0, 0.4);
+        }
+        
+        .back-button:active {
+            transform: translateY(1px);
+        }
+        
+        .callout {
+            background: rgba(0, 238, 255, 0.1);
+            border-left: 4px solid var(--accent);
+            padding: 1.5rem;
+            border-radius: 0 8px 8px 0;
+            margin: 2rem 0;
+        }
+        
+        .quote {
+            font-style: italic;
+            position: relative;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .quote:before, .quote:after {
+            content: '"';
+            font-size: 3rem;
+            color: var(--secondary);
+            opacity: 0.3;
+            position: absolute;
+        }
+        
+        .quote:before {
+            top: -1rem;
+            left: -0.5rem;
+        }
+        
+        .quote:after {
+            bottom: -2rem;
+            right: -0.5rem;
+        }
+        
+        .tip-box {
+            background: rgba(0, 102, 204, 0.2);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .tip-box:before {
+            content: 'TIP';
+            position: absolute;
+            top: 0;
+            left: 0;
+            background: var(--accent);
+            color: var(--primary-dark);
+            padding: 0.2rem 1rem;
+            font-weight: 700;
+            font-size: 0.8rem;
+            border-radius: 0 0 8px 0;
+        }
+
+        .cycle-diagram {
+            width: 100%;
+            max-width: 600px;
+            margin: 2rem auto;
+            position: relative;
+        }
+
+        .cycle-phase {
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 8px;
+            border-left: 4px solid;
+        }
+
+        .accumulation {
+            border-left-color: var(--success);
+            background: rgba(76, 175, 80, 0.1);
+        }
+
+        .markup {
+            border-left-color: var(--secondary);
+            background: rgba(255, 204, 0, 0.1);
+        }
+
+        .distribution {
+            border-left-color: #ff9800;
+            background: rgba(255, 152, 0, 0.1);
+        }
+
+        .markdown {
+            border-left-color: #f44336;
+            background: rgba(244, 67, 54, 0.1);
+        }
+
+        .phase-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .phase-title i {
+            margin-right: 10px;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 1.5rem;
+                margin: 1rem;
+                border-radius: 12px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            h2 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1><i class="fas fa-arrows-rotate"></i> Market Cycles Explained</h1>
+        
+        <div class="callout">
+            <p><strong>Markets move in predictable cycles</strong>, just like seasons. Understanding these patterns can help you make better investment decisions and avoid emotional reactions to market movements.</p>
+        </div>
+        
+        <h2><i class="fas fa-chart-wave"></i> The Four Market Phases</h2>
+        
+        <div class="cycle-diagram">
+            <div class="cycle-phase accumulation">
+                <div class="phase-title"><i class="fas fa-seedling" style="color: var(--success);"></i> Accumulation Phase</div>
+                <p><strong>Characteristics:</strong> Prices are low, smart money starts buying, negative sentiment prevails</p>
+                <p><strong>Investor Action:</strong> Best time to accumulate quality stocks at discounts</p>
+            </div>
+            
+            <div class="cycle-phase markup">
+                <div class="phase-title"><i class="fas fa-chart-line" style="color: var(--secondary);"></i> Markup Phase</div>
+                <p><strong>Characteristics:</strong> Prices rise steadily, media turns positive, retail investors join</p>
+                <p><strong>Investor Action:</strong> Hold positions, let winners run with trailing stop-losses</p>
+            </div>
+            
+            <div class="cycle-phase distribution">
+                <div class="phase-title"><i class="fas fa-balance-scale" style="color: #ff9800;"></i> Distribution Phase</div>
+                <p><strong>Characteristics:</strong> Prices peak, extreme optimism, high valuations</p>
+                <p><strong>Investor Action:</strong> Gradually take profits, reduce exposure</p>
+            </div>
+            
+            <div class="cycle-phase markdown">
+                <div class="phase-title"><i class="fas fa-chart-line-down" style="color: #f44336;"></i> Markdown Phase</div>
+                <p><strong>Characteristics:</strong> Prices decline sharply, panic selling, negative news dominates</p>
+                <p><strong>Investor Action:</strong> Preserve capital, wait for next accumulation phase</p>
+            </div>
+        </div>
+        
+        <div class="tip-box">
+            <p><strong>Historical Insight:</strong> The average bull market lasts about 6.6 years in India, while bear markets average about 1.5 years. However, cycles can vary significantly.</p>
+        </div>
+        
+        <h2><i class="fas fa-indian-rupee-sign"></i> Indian Market Cycle Characteristics</h2>
+        <ul>
+            <li><span class="highlight">Monsoon Impact:</span> Agricultural performance affects market sentiment</li>
+            <li><span class="highlight">Election Cycles:</span> Markets often rally pre-elections</li>
+            <li><span class="highlight">FII Flows:</span> Foreign institutional investments significantly impact cycles</li>
+            <li><span class="highlight">Sector Rotation:</span> Different sectors lead at different cycle stages</li>
+        </ul>
+        
+        <div class="quote">
+            "The four most dangerous words in investing are: 'This time it's different.'" — Sir John Templeton
+        </div>
+        
+        <h2><i class="fas fa-hourglass-half"></i> Identifying Cycle Phases</h2>
+        <p>Use these indicators to recognize market phases:</p>
+        
+        <ul>
+            <li><span class="highlight">Valuation Metrics:</span> P/E ratios, P/B ratios, dividend yields</li>
+            <li><span class="highlight">Sentiment Indicators:</span> Put/call ratios, investor surveys</li>
+            <li><span class="highlight">Economic Data:</span> GDP growth, interest rates, corporate earnings</li>
+            <li><span class="highlight">Technical Patterns:</span> 200-day moving averages, support/resistance levels</li>
+        </ul>
+        
+        <div class="callout">
+            <h3><i class="fas fa-flask"></i> Practice Cycle Analysis with InvestoSim</h3>
+            <p>Use our simulator to:</p>
+            <ul>
+                <li>Experience complete market cycles in compressed time</li>
+                <li>Test strategies for different phases</li>
+                <li>Develop emotional discipline during volatility</li>
+            </ul>
+        </div>
+        
+        <h2><i class="fas fa-lightbulb"></i> Cycle-Based Investing Strategies</h2>
+        
+        <ul>
+            <li><span class="highlight">Accumulation Phase:</span> Value investing, dividend stocks</li>
+            <li><span class="highlight">Markup Phase:</span> Growth investing, momentum strategies</li>
+            <li><span class="highlight">Distribution Phase:</span> Defensive stocks, profit booking</li>
+            <li><span class="highlight">Markdown Phase:</span> Short-term trading, hedging strategies</li>
+        </ul>
+        
+        <center>
+            <a href="learn.html" class="back-button"><i class="fas fa-arrow-left"></i> Back to Learn More</a>
+        </center>
+    </div>
+</body>
+</html>
