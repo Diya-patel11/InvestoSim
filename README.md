@@ -1,6 +1,9 @@
 ﻿# InvestoSim
 InvestoSim is a web-based investment simulator that allows users to practice stock trading using virtual money. It is designed for beginners to understand how the stock market works without risking real funds.
 
+## 🎥 Demo
+https://youtu.be/SZhHyf6VhDw
+
 ## Features
 
 User registration and login
